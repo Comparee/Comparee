@@ -27,9 +27,10 @@ final class RegistrationViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setConstraints()
+        
+        //nicknameTextField.publisher(for: .)
+        
     }
-    
-    
 }
 
 extension RegistrationViewController {

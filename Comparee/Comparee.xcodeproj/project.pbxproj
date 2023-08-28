@@ -17,6 +17,9 @@
 		0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F52A9CC0F100709A00 /* ErrorLabel.swift */; };
 		0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F72A9CD12000709A00 /* AuthButton.swift */; };
 		0D9B89FB2A9CDBA500709A00 /* UImage + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89FA2A9CDBA500709A00 /* UImage + Ext.swift */; };
+		0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89FF2A9D01BE00709A00 /* Gesture.swift */; };
+		0D9B8A022A9D01D800709A00 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A012A9D01D800709A00 /* UITextField.swift */; };
+		0D9B8A042A9D025C00709A00 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A032A9D025C00709A00 /* UIControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		0D9B89F52A9CC0F100709A00 /* ErrorLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLabel.swift; sourceTree = "<group>"; };
 		0D9B89F72A9CD12000709A00 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		0D9B89FA2A9CDBA500709A00 /* UImage + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UImage + Ext.swift"; sourceTree = "<group>"; };
+		0D9B89FF2A9D01BE00709A00 /* Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
+		0D9B8A012A9D01D800709A00 /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		0D9B8A032A9D025C00709A00 /* UIControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,11 +70,15 @@
 		0D9B89D72A9B6A2900709A00 /* Comparee */ = {
 			isa = PBXGroup;
 			children = (
+				0D9B89FE2A9CFFA400709A00 /* Screens */,
+				0D9B89FD2A9CFF7C00709A00 /* Managers */,
+				0D9B89FC2A9CFF6100709A00 /* Coordinator */,
+				0D9B89D82A9B6A2900709A00 /* AppDelegate.swift */,
+				0D9B89DA2A9B6A2900709A00 /* SceneDelegate.swift */,
+				0D9B89F92A9CDB8F00709A00 /* Extensions */,
 				0D9B89F02A9CA9E300709A00 /* Views */,
 				0D9B89ED2A9C94BB00709A00 /* Resources */,
 				0D9B89EE2A9C94CC00709A00 /* Flows */,
-				0D9B89E32A9B6A2A00709A00 /* LaunchScreen.storyboard */,
-				0D9B89E62A9B6A2A00709A00 /* Info.plist */,
 			);
 			path = Comparee;
 			sourceTree = "<group>";
@@ -76,10 +86,9 @@
 		0D9B89ED2A9C94BB00709A00 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0D9B89F92A9CDB8F00709A00 /* Extensions */,
+				0D9B89E62A9B6A2A00709A00 /* Info.plist */,
+				0D9B89E32A9B6A2A00709A00 /* LaunchScreen.storyboard */,
 				0D9B89E12A9B6A2A00709A00 /* Assets.xcassets */,
-				0D9B89D82A9B6A2900709A00 /* AppDelegate.swift */,
-				0D9B89DA2A9B6A2900709A00 /* SceneDelegate.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -96,6 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				0D9B89DC2A9B6A2900709A00 /* RegistrationViewController.swift */,
+				0D9B89FF2A9D01BE00709A00 /* Gesture.swift */,
+				0D9B8A012A9D01D800709A00 /* UITextField.swift */,
+				0D9B8A032A9D025C00709A00 /* UIControl.swift */,
 			);
 			path = RegistrationFlow;
 			sourceTree = "<group>";
@@ -117,6 +129,27 @@
 				0D9B89FA2A9CDBA500709A00 /* UImage + Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0D9B89FC2A9CFF6100709A00 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		0D9B89FD2A9CFF7C00709A00 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		0D9B89FE2A9CFFA400709A00 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,8 +223,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D9B89DD2A9B6A2900709A00 /* RegistrationViewController.swift in Sources */,
+				0D9B8A022A9D01D800709A00 /* UITextField.swift in Sources */,
 				0D9B89FB2A9CDBA500709A00 /* UImage + Ext.swift in Sources */,
 				0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */,
+				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
+				0D9B8A042A9D025C00709A00 /* UIControl.swift in Sources */,
 				0D9B89F22A9CAA0400709A00 /* DefinitionLabel.swift in Sources */,
 				0D9B89D92A9B6A2900709A00 /* AppDelegate.swift in Sources */,
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
@@ -337,7 +373,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4LBW5W7LV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Comparee/Info.plist;
+				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -368,7 +404,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4LBW5W7LV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Comparee/Info.plist;
+				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
