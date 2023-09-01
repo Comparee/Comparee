@@ -9,21 +9,27 @@ import UIKit
 
 final class DefinitionLabel: UILabel {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
+    init(type: RegInput) {
+        super.init(frame: .zero)
+        configure(type: type)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+    private func configure(type: RegInput) {
         frame = CGRect(x: 0, y: 0, width: 90, height: 17)
         textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        font = UIFont(name: "SFProText-Regular", size: 14)
-        
-        text = "Nickname*"
+        font = UIFont.customFont(.sfProTextRegular, size: 14)
+        switch type {
+        case .nickName:
+            text = "Nickname*"
+        case .age:
+            text = "Age*"
+        case .instagram:
+            text = "Instagram"
+        }
         translatesAutoresizingMaskIntoConstraints = false
         
     }

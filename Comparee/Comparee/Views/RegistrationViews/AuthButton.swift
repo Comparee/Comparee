@@ -19,12 +19,11 @@ final class AuthButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func configure() {
         let buttonSize = CGSize(width: 64, height: 64)
         
-        if let arrowImage = UIImage(systemName: "arrow.right")?.withRenderingMode(.alwaysTemplate) {
-            let resizedArrowImage = arrowImage.resize(toWidth: 22) // Resize the image to width 22
+        if let arrowImage = IconManager.Auth.rightArrow?.withRenderingMode(.alwaysTemplate) {
+            let resizedArrowImage = arrowImage.resize(to: CGSize(width: 22, height: arrowImage.size.height))
             setImage(resizedArrowImage, for: .normal)
             tintColor = .black
         }
