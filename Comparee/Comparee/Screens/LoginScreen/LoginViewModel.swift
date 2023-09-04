@@ -10,8 +10,8 @@ import FirebaseAuth
 import Foundation
 
 final class LoginViewModel {
+    
     // MARK: - Dependencies
-    // Inject the Pokemon service using property wrapper
     @Injected(\.authManager)
     private var authManager: AuthManagerProtocol
     

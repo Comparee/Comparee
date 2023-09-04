@@ -10,6 +10,7 @@ import UIKit
 enum LoginFlowRoute: Route {
     case main
     case showRegistrationScreen
+    case showPhotoUploadScreen
     case base(BaseRoutes)
 }
 
@@ -44,8 +45,11 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
             let authVC = LoginViewController(viewModel: loginVM )
             router.setRootModule(authVC)
         case .showRegistrationScreen:
-            let pokemonDetailVC = RegistrationViewController()
-            router.push(pokemonDetailVC, animated: true)
+            let regVC = RegistrationViewController(viewModel: RegistrationViewModel(router: self))
+            router.push(regVC, animated: true)
+        case .showPhotoUploadScreen:
+            let photoUploadVC = ProfilePictureUploadViewController()
+            router.push(photoUploadVC, animated: true)
         case .base(let base):
             switch base {
             case .alert(let alert):

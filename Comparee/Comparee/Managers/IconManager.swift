@@ -21,6 +21,10 @@ extension UIImage {
     // Registration screen
     static let arrowImage = UIImage(systemName: "arrow.right")
     
+    // ProfilePictureUoload screen
+    static let plusImage = UIImage(systemName: "plus")
+    static let adviceImage = UIImage(named: "adviceImage")
+    
     // Splash screen
     static let splashScreenImage = UIImage(named: "SplashScreenImage")
     
@@ -51,6 +55,11 @@ enum IconManager {
     
     enum Auth {
         static let rightArrow = UIImage.arrowImage
+    }
+    
+    enum PhotoUpload {
+        static let plus = UIImage.plusImage
+        static let advice = UIImage.adviceImage
     }
     
     enum TabBar {

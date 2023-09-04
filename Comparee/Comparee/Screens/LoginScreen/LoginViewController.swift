@@ -64,7 +64,7 @@ private extension LoginViewController {
             backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
-        if let window = UIApplication.shared.keyWindow?.windowScene?.windows.first {
+        if let window = UIApplication.shared.windows.first {
             if window.safeAreaInsets.bottom > 0 {
                 NSLayoutConstraint.activate([
                     welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
@@ -82,36 +82,26 @@ private extension LoginViewController {
             appleSignInButton.bottomAnchor.constraint(equalTo: policyLabel.topAnchor, constant: -4),
             appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             appleSignInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            appleSignInButton.heightAnchor.constraint(equalToConstant: 51)
-        ])
-        
-        NSLayoutConstraint.activate([
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 51),
+            
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
             welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22),
-            welcomeLabel.heightAnchor.constraint(equalToConstant: 90)])
-        NSLayoutConstraint.activate([
+            welcomeLabel.heightAnchor.constraint(equalToConstant: 90),
+            
             policyLabel.leadingAnchor.constraint(equalTo: appleSignInButton.leadingAnchor),
-            policyLabel.trailingAnchor.constraint(equalTo: appleSignInButton.trailingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            policyLabel.trailingAnchor.constraint(equalTo: appleSignInButton.trailingAnchor),
+            
             firstRingImage.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 2),
-            firstRingImage.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            firstRingImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
             secondRingImage.topAnchor.constraint(equalTo: firstPreviewImageVIew.topAnchor, constant: 178),
-            secondRingImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
-        ])
-        
-        NSLayoutConstraint.activate([
+            secondRingImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             firstPreviewImageVIew.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 40),
             firstPreviewImageVIew.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             firstPreviewImageVIew.widthAnchor.constraint(equalToConstant: 263),
-            firstPreviewImageVIew.heightAnchor.constraint(equalToConstant: 263)
-        ])
-        
-        NSLayoutConstraint.activate([
+            firstPreviewImageVIew.heightAnchor.constraint(equalToConstant: 263),
+            
             secondPreviewImageVIew.bottomAnchor.constraint(equalTo: firstPreviewImageVIew.bottomAnchor, constant: 86),
             secondPreviewImageVIew.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             secondPreviewImageVIew.widthAnchor.constraint(equalToConstant: 218),

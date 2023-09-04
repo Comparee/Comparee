@@ -16,5 +16,20 @@ final class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBar.tintColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.8)
+        if let originalImage = UIImage(systemName: "arrow.backward") {
+            let resizedImage = originalImage.withRenderingMode(.alwaysOriginal).resize(to: CGSize(width: 33, height: originalImage.size.height * (33 / originalImage.size.width)))
+            navigationBar.backIndicatorImage = resizedImage
+            navigationBar.backIndicatorTransitionMaskImage = resizedImage
+        }
+        
+        
+        
+        if #available(iOS 14.0, *) {
+            navigationBar.topItem?.backButtonDisplayMode = .minimal
+        } else {
+            // Fallback on earlier versions
+        }
+       
     }
 }
