@@ -6,14 +6,8 @@
 //
 
 import UIKit
-protocol SignInButtonDelegate: AnyObject {
-    func signInButtonTapped()
-}
-
 
 final class SignInButton: UIButton {
-    
-    var delegate: SignInButtonDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,9 +18,12 @@ final class SignInButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    private func configure() {
+
+}
+
+// MARK: - View Configuration
+private extension SignInButton {
+    func configure() {
         frame = CGRect(x: 0, y: 0, width: 335, height: 51)
         layer.backgroundColor = UIColor.white.cgColor
         layer.cornerRadius = frame.height / 2
@@ -41,12 +38,5 @@ final class SignInButton: UIButton {
         let resizedAppleImage = appleImage?.resize(to: CGSize(width: 28, height: 28))
         setImage(resizedAppleImage, for: .normal)
         imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
-        
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-    
-    @objc private func buttonTapped() {
-        delegate?.signInButtonTapped()
-
     }
 }

@@ -21,7 +21,27 @@ final class AuthManager: NSObject {
 }
 
 extension AuthManager: AuthManagerProtocol {
+    func signOut() async throws {
+        try Auth.auth().signOut()
+    }
     
+    func startSignInWithAppleFlow() async throws -> AuthDataResult? {
+        try await withCheckedThrowingContinuation {[weak self] continuation in
+            self?.startSignInWithAppleFlow {result in
+                switch result {
+                case .success(let signInAppleResult):
+                    continuation.resume(returning: signInAppleResult)
+                    return
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                    return
+                }
+            }
+        }
+    }
+}
+
+private extension AuthManager {
     func startSignInWithAppleFlow(completion: @escaping (Result<AuthDataResult?, Error>) -> Void) {
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -36,10 +56,8 @@ extension AuthManager: AuthManagerProtocol {
         authorizationController.performRequests()
         self.completion = completion
     }
-}
-
-extension AuthManager {
-    private func randomNonceString(length: Int = 32) -> String {
+    
+    func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)
         let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
@@ -60,12 +78,13 @@ extension AuthManager {
         return String(nonce)
     }
     
-    private func sha256(_ input: String) -> String {
+    func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
             String(format: "%02x", $0)
-        }.joined()
+        }
+            .joined()
         
         return hashString
     }
@@ -99,7 +118,6 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                 } else {
                     self?.completion?(.success(authResult))
                 }
-                
             }
         }
     }
@@ -108,6 +126,12 @@ extension AuthManager: ASAuthorizationControllerDelegate {
 
 extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        UIApplication.shared.windows.first!
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            return window
+        } else {
+            // Fallback to a default window if there is no valid window scene.
+            return UIWindow()
+        }
     }
 }

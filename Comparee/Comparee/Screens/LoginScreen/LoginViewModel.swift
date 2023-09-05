@@ -25,11 +25,16 @@ final class LoginViewModel {
 
 extension LoginViewModel: LoginViewModelProtocol {
     func isButtonTapped() {
-        authManager.startSignInWithAppleFlow { [weak self] result in
-            switch result {
-            case .success(_):
-                self?.router?.trigger(.showRegistrationScreen)
-            case .failure(let error):
+        Task {
+            do {
+                let result = try await authManager.startSignInWithAppleFlow()
+                switch result {
+                case .some(_):
+                    await self.router?.trigger(.showRegistrationScreen)
+                default:
+                    break
+                }
+            } catch {
                 print(error.localizedDescription)
             }
         }

@@ -18,8 +18,10 @@ final class PolicyLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configure() {
+}
+
+private extension PolicyLabel {
+    func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         textColor = .white
         font = UIFont.customFont(.sfProTextRegular, size: 12)
@@ -56,7 +58,7 @@ final class PolicyLabel: UILabel {
     }
     
     @objc
-    private func handleLinkTap(_ gesture: UITapGestureRecognizer) {
+    func handleLinkTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
               let attributedText = label.attributedText else {
             return

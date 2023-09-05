@@ -18,8 +18,10 @@ final class WelcomeLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configure() {
+}
+
+private extension WelcomeLabel {
+    func configure() {
         frame = CGRect(x: 0, y: 0, width: 331, height: 120)
         font = UIFont.customFont(.cormorantSemiBoldItalic, size: 44)
         textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -36,6 +38,5 @@ final class WelcomeLabel: UILabel {
             string: "Welcome to\nComparee",
             attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
         )
-        
     }
 }

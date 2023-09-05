@@ -9,6 +9,6 @@ import Foundation
 
 extension String? {
     var unwrappedValue: String {
-        return self ?? ""
+        self ?? ""
     }
 }

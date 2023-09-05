@@ -19,7 +19,10 @@ final class SecondRingImage: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+}
+
+private extension SecondRingImage {
+    func configure() {
         image = IconManager.Login.secondRing
         contentMode = .scaleAspectFill
         clipsToBounds = true

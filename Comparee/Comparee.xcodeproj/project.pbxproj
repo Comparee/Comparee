@@ -43,7 +43,6 @@
 		0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A0C2A9D2E7B00709A00 /* NavigationController.swift */; };
 		0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A0E2A9D2E9000709A00 /* AppRouter.swift */; };
 		0D9B8A112A9D2EC100709A00 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A102A9D2EC100709A00 /* RootCoordinator.swift */; };
-		0D9B8A132A9D2EF800709A00 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A122A9D2EF800709A00 /* TabBarCoordinator.swift */; };
 		0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B8A152A9D380000709A00 /* LoginViewController.swift */; };
 		0D9B8A182A9DEF5A00709A00 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */; };
 		0D9B8A1A2A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B8A192A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf */; };
@@ -104,7 +103,6 @@
 		0D9B8A0C2A9D2E7B00709A00 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		0D9B8A0E2A9D2E9000709A00 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		0D9B8A102A9D2EC100709A00 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
-		0D9B8A122A9D2EF800709A00 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		0D9B8A152A9D380000709A00 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
 		0D9B8A192A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cormorant-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 				0D9B8A0C2A9D2E7B00709A00 /* NavigationController.swift */,
 				0D9B8A0E2A9D2E9000709A00 /* AppRouter.swift */,
 				0D9B8A102A9D2EC100709A00 /* RootCoordinator.swift */,
-				0D9B8A122A9D2EF800709A00 /* TabBarCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -478,7 +475,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -531,7 +528,6 @@
 				0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */,
 				0DBEA9852AA320040026C441 /* Extension + UIViewController.swift in Sources */,
 				0DBEA9952AA5CCE30026C441 /* AdviceImageView.swift in Sources */,
-				0D9B8A132A9D2EF800709A00 /* TabBarCoordinator.swift in Sources */,
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,
@@ -603,7 +599,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -657,7 +653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -682,7 +678,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -714,7 +710,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

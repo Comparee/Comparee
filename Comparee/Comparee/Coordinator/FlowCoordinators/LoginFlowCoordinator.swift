@@ -16,7 +16,7 @@ enum LoginFlowRoute: Route {
 
 protocol LoginFlowCoordinatorOutput: AnyObject {
     var finishFlow: CompletionBlock? { get set }
-    func trigger(_ route: LoginFlowRoute)
+    func trigger(_ route: LoginFlowRoute) async
 }
 
 final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
@@ -38,7 +38,8 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
         super.init()
     }
     
-    func trigger(_ route: LoginFlowRoute) {
+    @MainActor
+    func trigger(_ route: LoginFlowRoute) async {
         switch route {
         case .main:
             let loginVM = LoginViewModel(router: self)
@@ -63,7 +64,9 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
 // MARK: - Coordinatable
 extension LoginFlowCoordinator: Coordinatable {
     func start() {
-        trigger(.main)
+        Task {
+            await trigger(.main)
+        }
     }
 }
 

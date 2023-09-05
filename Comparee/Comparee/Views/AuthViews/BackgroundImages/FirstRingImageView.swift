@@ -18,8 +18,10 @@ final class FirstRingImage: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configure() {
+}
+
+private extension FirstRingImage {
+    func configure() {
         image = IconManager.Login.firstRing
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFit

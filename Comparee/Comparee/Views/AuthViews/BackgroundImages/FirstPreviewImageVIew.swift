@@ -19,7 +19,10 @@ final class FirstPreviewImageVIew: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+}
+
+private extension FirstPreviewImageVIew {
+    func configure() {
         image = IconManager.Login.firstPreview
         translatesAutoresizingMaskIntoConstraints = false
         contentMode = .scaleAspectFit

@@ -36,7 +36,6 @@ extension UIViewController {
         return view
     }
 
-    
     func createCustomButton(imageName: String, selector: Selector) -> UIBarButtonItem {
         
         let button = UIButton(type: .system)

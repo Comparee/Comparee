@@ -5,8 +5,7 @@
 //  Created by Андрей Логвинов on 8/28/23.
 //
 
-import CryptoKit
-import FirebaseAuth
+import Combine
 import UIKit
 
 final class LoginViewController: UIViewController {
@@ -25,6 +24,9 @@ final class LoginViewController: UIViewController {
     private lazy var firstPreviewImageVIew: UIImageView = FirstPreviewImageVIew()
     private lazy var secondPreviewImageVIew: UIImageView = SecondPreviewImageVIew()
     
+    // Private properties for Combine
+    private var cancellables: Set<AnyCancellable> = []
+    
     // MARK: - Initialization
     init(viewModel: LoginViewModelProtocol) {
         self.viewModel = viewModel
@@ -37,9 +39,9 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appleSignInButton.delegate = self
         setupViews()
         setConstraints()
+        bindButton()
     }
 }
 
@@ -64,7 +66,8 @@ private extension LoginViewController {
             backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
-        if let window = UIApplication.shared.windows.first {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
             if window.safeAreaInsets.bottom > 0 {
                 NSLayoutConstraint.activate([
                     welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
@@ -77,7 +80,7 @@ private extension LoginViewController {
                 ])
             }
         }
-        
+
         NSLayoutConstraint.activate([
             appleSignInButton.bottomAnchor.constraint(equalTo: policyLabel.topAnchor, constant: -4),
             appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -110,10 +113,16 @@ private extension LoginViewController {
     }
 }
 
-// MARK: - SignInButtonDelegate
-extension LoginViewController: SignInButtonDelegate {
-    func signInButtonTapped() {
-        viewModel.isButtonTapped()
+// MARK: - Bind button
+extension LoginViewController {
+    func bindButton() {
+        appleSignInButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.isButtonTapped()
+                self.view.endEditing(true)
+            }
+            .store(in: &cancellables)
     }
     
 }

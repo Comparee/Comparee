@@ -10,7 +10,7 @@ import UIKit
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
     
     var loadingIndicator: UIActivityIndicatorView?
-    var isObservingKeyboard: Bool { return false }
+    var isObservingKeyboard: Bool { false }
     
     fileprivate let notificationCenter = NotificationCenter.default
     fileprivate var keyboardWillShowObserver: NSObjectProtocol?
@@ -20,7 +20,7 @@ class BaseViewController: UIViewController, BaseViewControllerProtocol {
     fileprivate(set) var keyboardAnimationDuration: TimeInterval = 0.25
     fileprivate(set) var keyboardAppeared = false
     
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .default }
+    override var preferredStatusBarStyle: UIStatusBarStyle { .default }
     var loadingIndicatorColor: UIColor { .black }
     
     override func viewDidLoad() {
@@ -93,10 +93,10 @@ fileprivate extension BaseViewController {
 // MARK: - UIPopoverPresentationControllerDelegate
 extension BaseViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
+        .none
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
+        .none
     }
 }
