@@ -12,13 +12,13 @@ class BaseViewController: UIViewController, BaseViewControllerProtocol {
     var loadingIndicator: UIActivityIndicatorView?
     var isObservingKeyboard: Bool { false }
     
-    fileprivate let notificationCenter = NotificationCenter.default
-    fileprivate var keyboardWillShowObserver: NSObjectProtocol?
-    fileprivate var keyboardDidShowObserver: NSObjectProtocol?
-    fileprivate var keyboardWillHideObserver: NSObjectProtocol?
-    fileprivate(set) var keyboardFrame: CGRect = .zero
-    fileprivate(set) var keyboardAnimationDuration: TimeInterval = 0.25
-    fileprivate(set) var keyboardAppeared = false
+    private let notificationCenter = NotificationCenter.default
+    private var keyboardWillShowObserver: NSObjectProtocol?
+    private var keyboardDidShowObserver: NSObjectProtocol?
+    private var keyboardWillHideObserver: NSObjectProtocol?
+    private(set) var keyboardFrame: CGRect = .zero
+    private(set) var keyboardAnimationDuration: TimeInterval = 0.25
+    private(set) var keyboardAppeared = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle { .default }
     var loadingIndicatorColor: UIColor { .black }
@@ -47,7 +47,7 @@ extension BaseViewController {
     @objc func keyboardWillHideAction() { }
 }
 
-fileprivate extension BaseViewController {
+private extension BaseViewController {
     func addObservers() {
         guard isObservingKeyboard else { return }
         

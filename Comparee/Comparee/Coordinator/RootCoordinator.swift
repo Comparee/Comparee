@@ -5,13 +5,11 @@
 //  Created by Андрей Логвинов on 8/28/23.
 //
 
-import Combine
 import UIKit
 
 final class RootCoordinator: BaseCoordinator {
 
     private var router: Routable
-    private var cancellables: Set<AnyCancellable> = []
 
     init(router: Routable) {
         self.router = router

@@ -18,28 +18,19 @@ final class AuthButton: UIButton {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configure() {
+}
+
+private extension AuthButton {
+    func configure() {
         let buttonSize = CGSize(width: 64, height: 64)
-        
         if let arrowImage = IconManager.Auth.rightArrow?.withRenderingMode(.alwaysTemplate) {
             let resizedArrowImage = arrowImage.resize(to: CGSize(width: 22, height: arrowImage.size.height))
             setImage(resizedArrowImage, for: .normal)
             tintColor = .black
         }
-        
-        frame = CGRect(origin: .zero, size: buttonSize)
-        layer.cornerRadius = buttonSize.width / 2
+        frame.size = buttonSize
+        layer.cornerRadius = 26
         layer.backgroundColor = UIColor.white.cgColor
-        
-        let strokeSize = CGSize(width: buttonSize.width + 24, height: buttonSize.height + 24)
-        let stroke = UIView(frame: CGRect(origin: .zero, size: strokeSize))
-        stroke.center = center
-        stroke.layer.cornerRadius = strokeSize.width / 2
-        stroke.layer.borderWidth = 12
-        stroke.layer.borderColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1).cgColor
-        addSubview(stroke)
-        
         translatesAutoresizingMaskIntoConstraints = false
     }
 }

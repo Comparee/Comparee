@@ -13,16 +13,16 @@ final class LoginViewController: UIViewController {
     private let viewModel: LoginViewModelProtocol
     
     // Background image configuration
-    private lazy var backgroundImageView: UIImageView = BackgroundImageView()
+    private lazy var backgroundImageView = BackgroundImageView()
     
     // Private properties for UI
     private lazy var appleSignInButton: SignInButton = SignInButton()
-    private lazy var welcomeLabel: UILabel = WelcomeLabel()
-    private lazy var policyLabel: UILabel = PolicyLabel()
-    private lazy var firstRingImage: UIImageView = FirstRingImage()
-    private lazy var secondRingImage: UIImageView = SecondRingImage()
-    private lazy var firstPreviewImageVIew: UIImageView = FirstPreviewImageVIew()
-    private lazy var secondPreviewImageVIew: UIImageView = SecondPreviewImageVIew()
+    private lazy var welcomeLabel = WelcomeLabel()
+    private lazy var policyLabel = PolicyLabel()
+    private lazy var firstRingImage = FirstRingImage()
+    private lazy var secondRingImage = SecondRingImage()
+    private lazy var firstPreviewImageVIew = FirstPreviewImageVIew()
+    private lazy var secondPreviewImageVIew = SecondPreviewImageVIew()
     
     // Private properties for Combine
     private var cancellables: Set<AnyCancellable> = []
@@ -39,14 +39,18 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setConstraints()
-        bindButton()
+        configureUI()
     }
 }
 
 // MARK: - Extension for views configurations
 private extension LoginViewController {
+    func configureUI() {
+        setupViews()
+        setConstraints()
+        bindButton()
+    }
+    
     func setupViews() {
         view.addSubview(backgroundImageView)
         view.addSubview(appleSignInButton)
@@ -59,13 +63,6 @@ private extension LoginViewController {
     }
     
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
             if window.safeAreaInsets.bottom > 0 {
@@ -82,6 +79,11 @@ private extension LoginViewController {
         }
 
         NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
             appleSignInButton.bottomAnchor.constraint(equalTo: policyLabel.topAnchor, constant: -4),
             appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             appleSignInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),

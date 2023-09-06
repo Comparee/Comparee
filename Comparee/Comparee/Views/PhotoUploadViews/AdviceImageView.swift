@@ -1,14 +1,14 @@
 //
-//  BackgroundImageView.swift
+//  adviceImageView.swift
 //  Comparee
 //
-//  Created by Андрей Логвинов on 8/29/23.
+//  Created by Андрей Логвинов on 9/4/23.
 //
 
 import UIKit
 
-final class BackgroundImageView: UIImageView {
-
+final class AdviceImageView: UIImageView {
+    
     init() {
         super.init(frame: .zero)
         
@@ -18,12 +18,13 @@ final class BackgroundImageView: UIImageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
-private extension BackgroundImageView {
+private extension AdviceImageView {
     func configure() {
-        image = IconManager.Background.image
-        contentMode = .scaleAspectFill
+        image = IconManager.PhotoUpload.advice
         translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFill
     }
 }

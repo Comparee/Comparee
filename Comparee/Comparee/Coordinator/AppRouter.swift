@@ -10,9 +10,8 @@ import UIKit
 typealias RouterCompletions = [UIViewController: CompletionBlock]
 
 final class AppRouter: NSObject {
-    // MARK: - Private variables
+    // MARK: - Private properties
     private weak var rootController: UINavigationController?
-    
     private var completions: RouterCompletions
     
     var toPresent: UIViewController? {

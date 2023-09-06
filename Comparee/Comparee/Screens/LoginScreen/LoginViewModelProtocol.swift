@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// Protocol for the LoginViewModel.
 protocol LoginViewModelProtocol {
     
     /// Notifies the view model that the login button has been tapped.

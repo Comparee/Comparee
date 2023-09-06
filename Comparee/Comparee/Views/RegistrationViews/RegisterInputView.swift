@@ -7,20 +7,18 @@
 
 import UIKit
 
-class RegInputView: UIView {
+final class RegisterInputView: UIView {
     
     // MARK: - Properties
-    
     private var definitionLabel: DefinitionLabel
-    private var nicknameTextField: NicknameTextField
+    var nicknameTextField: NicknameTextField
     
     private let errorLabel: ErrorLabel = {
         let label = ErrorLabel()
         return label
     }()
     
-    // MARK: - Init
-    
+    // MARK: - Initialization
     init(type: RegInput) {
         definitionLabel = DefinitionLabel(type: type)
         nicknameTextField = NicknameTextField(type: type)
@@ -33,17 +31,18 @@ class RegInputView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Configuration
-    
-    private func configureSubviews() {
+}
+
+// MARK: - Configuration
+private extension RegisterInputView {
+    func configureSubviews() {
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(definitionLabel)
         addSubview(nicknameTextField)
         addSubview(errorLabel)
     }
     
-    private func configureConstraints() {
+    func configureConstraints() {
         let spacing: CGFloat = 4.0
         
         definitionLabel.translatesAutoresizingMaskIntoConstraints = false

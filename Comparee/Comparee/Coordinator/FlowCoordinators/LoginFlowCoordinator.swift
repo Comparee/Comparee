@@ -9,7 +9,7 @@ import UIKit
 
 enum LoginFlowRoute: Route {
     case main
-    case showRegistrationScreen
+    case showRegistrationScreen(authModel: AuthDataResultModel)
     case showPhotoUploadScreen
     case base(BaseRoutes)
 }
@@ -23,8 +23,8 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
     
     var finishFlow: CompletionBlock?
     
-    fileprivate let router: Routable
-    fileprivate let rootController: UIViewController?
+    private let router: Routable
+    private let rootController: UIViewController?
     
     init(router: Routable) {
         self.router = router
@@ -45,8 +45,8 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
             let loginVM = LoginViewModel(router: self)
             let authVC = LoginViewController(viewModel: loginVM )
             router.setRootModule(authVC)
-        case .showRegistrationScreen:
-            let regVC = RegistrationViewController(viewModel: RegistrationViewModel(router: self))
+        case .showRegistrationScreen(let authModel):
+            let regVC = RegistrationViewController(viewModel: RegistrationViewModel(router: self, authDataResultModel: authModel))
             router.push(regVC, animated: true)
         case .showPhotoUploadScreen:
             let photoUploadVC = ProfilePictureUploadViewController()

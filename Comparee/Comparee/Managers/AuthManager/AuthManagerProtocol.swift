@@ -14,7 +14,7 @@ protocol AuthManagerProtocol {
     /// Starts the Sign In with Apple authentication flow asynchronously.
     ///
     /// - Returns: An asynchronous result containing `AuthDataResult` upon successful sign-in or an error upon failure.
-    func startSignInWithAppleFlow() async throws -> AuthDataResult?
+    func startSignInWithAppleFlow() async throws -> AuthDataResultModel
     
     /// Signs the user out of the application.
     ///

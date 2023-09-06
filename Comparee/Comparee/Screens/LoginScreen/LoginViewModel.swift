@@ -28,12 +28,7 @@ extension LoginViewModel: LoginViewModelProtocol {
         Task {
             do {
                 let result = try await authManager.startSignInWithAppleFlow()
-                switch result {
-                case .some(_):
-                    await self.router?.trigger(.showRegistrationScreen)
-                default:
-                    break
-                }
+                await self.router?.trigger(.showRegistrationScreen(authModel: result))
             } catch {
                 print(error.localizedDescription)
             }

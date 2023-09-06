@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NicknameTextField: UITextField {
+final class NicknameTextField: UITextField {
     
     init(type: RegInput) {
         super.init(frame: .zero)
@@ -18,14 +18,16 @@ class NicknameTextField: UITextField {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configure(type: RegInput) {
-        
+}
+
+private extension NicknameTextField {
+    func configure(type: RegInput) {
         switch type {
         case .nickName:
             placeholder = "Your nickname"
         case .age:
             placeholder = "Your age"
+            keyboardType = .numberPad
         case .instagram:
             placeholder = "Your instagram"
         }
@@ -41,6 +43,5 @@ class NicknameTextField: UITextField {
         returnKeyType = .continue
         textColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1)
         font = UIFont.customFont(.sfProTextRegular, size: 16)
-        
     }
 }

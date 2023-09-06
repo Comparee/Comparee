@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     
     func createCustomNavigationBar() {
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     func createCustomTitleView(contactName: String) -> UIView {

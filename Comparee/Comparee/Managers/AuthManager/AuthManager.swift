@@ -12,8 +12,12 @@ import Foundation
 
 final class AuthManager: NSObject {
     
+    // MARK: - Properties
+    
     private var currentNonce: String?
-    private var completion: ((Result<AuthDataResult?, Error>) -> Void)?
+    private var completion: ((Result<AuthDataResultModel, Error>) -> Void)?
+    
+    // MARK: - Initialization
     
     override init() {
         super.init()
@@ -21,13 +25,23 @@ final class AuthManager: NSObject {
 }
 
 extension AuthManager: AuthManagerProtocol {
+    
+    // MARK: - Authentication Methods
+    
+    /// Sign out the current user asynchronously.
+    ///
+    /// - Throws: An error if signing out fails.
     func signOut() async throws {
         try Auth.auth().signOut()
     }
     
-    func startSignInWithAppleFlow() async throws -> AuthDataResult? {
-        try await withCheckedThrowingContinuation {[weak self] continuation in
-            self?.startSignInWithAppleFlow {result in
+    /// Start the Sign-In with Apple authentication flow asynchronously.
+    ///
+    /// - Returns: An `AuthDataResultModel` object representing the result of the authentication.
+    /// - Throws: An error if the authentication flow encounters an issue.
+    func startSignInWithAppleFlow() async throws -> AuthDataResultModel {
+        try await withCheckedThrowingContinuation { [weak self] continuation in
+            self?.startSignInWithAppleFlow { result in
                 switch result {
                 case .success(let signInAppleResult):
                     continuation.resume(returning: signInAppleResult)
@@ -42,7 +56,11 @@ extension AuthManager: AuthManagerProtocol {
 }
 
 private extension AuthManager {
-    func startSignInWithAppleFlow(completion: @escaping (Result<AuthDataResult?, Error>) -> Void) {
+    
+    // MARK: - Private Methods
+    
+    /// Start the Sign-In with Apple authentication flow.
+    func startSignInWithAppleFlow(completion: @escaping (Result<AuthDataResultModel, Error>) -> Void) {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -57,6 +75,7 @@ private extension AuthManager {
         self.completion = completion
     }
     
+    /// Generate a random nonce string.
     func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)
@@ -78,53 +97,54 @@ private extension AuthManager {
         return String(nonce)
     }
     
+    /// Calculate the SHA256 hash of a string.
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
             String(format: "%02x", $0)
         }
-            .joined()
+        .joined()
         
         return hashString
     }
-    
 }
 
 extension AuthManager: ASAuthorizationControllerDelegate {
+    
+    // MARK: - ASAuthorizationControllerDelegate Methods
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
-            }
-            guard let appleIDToken = appleIDCredential.identityToken else {
-                print("Unable to fetch identity token")
+        guard
+            let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+            let appleIDToken = appleIDCredential.identityToken,
+            let idTokenString = String(data: appleIDToken, encoding: .utf8),
+            let nonce = currentNonce else {
+                completion?(.failure(URLError(.badServerResponse)))
                 return
-            }
-            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                return
-            }
-            // Initialize a Firebase credential, including the user's full name.
-            let credential = OAuthProvider.appleCredential(
-                withIDToken: idTokenString,
-                rawNonce: nonce,
-                fullName: appleIDCredential.fullName
-            )
-            
-            Auth.auth().signIn(with: credential) { [weak self] authResult, error in
-                if let error = error {
-                    self?.completion?(.failure(error))
-                } else {
-                    self?.completion?(.success(authResult))
-                }
+        }
+       
+        // Initialize a Firebase credential, including the user's full name.
+        let credential = OAuthProvider.appleCredential(
+            withIDToken: idTokenString,
+            rawNonce: nonce,
+            fullName: appleIDCredential.fullName
+        )
+        
+        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+            if let error = error {
+                self?.completion?(.failure(error))
+            } else {
+                self?.completion?(.success(AuthDataResultModel(user: authResult?.user)))
             }
         }
     }
-    
 }
 
 extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
+    
+    // MARK: - ASAuthorizationControllerPresentationContextProviding Methods
+    
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
