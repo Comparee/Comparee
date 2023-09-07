@@ -65,7 +65,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
 extension LoginFlowCoordinator: Coordinatable {
     func start() {
         Task {
-            await trigger(.showPhotoUploadScreen)
+            await trigger(.showLoginScreen)
         }
     }
 }
