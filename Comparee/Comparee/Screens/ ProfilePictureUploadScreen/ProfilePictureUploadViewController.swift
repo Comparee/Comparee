@@ -32,6 +32,8 @@ final class ProfilePictureUploadViewController: UIViewController {
         bindButton()
         setupViews()
         setConstraints()
+        
+        
     }
 }
 
