@@ -29,6 +29,7 @@ final class AppRouter: NSObject {
 private extension AppRouter {
     func runCompletion(for controller: UIViewController) {
         guard let completion = completions[controller] else { return }
+        
         completion()
         completions.removeValue(forKey: controller)
     }
@@ -37,17 +38,20 @@ private extension AppRouter {
 extension AppRouter: Routable {
     func setRootModule(_ module: Presentable?, hideBar: Bool) {
         guard let controller = module?.toPresent else { return }
+        
         rootController?.setViewControllers([controller], animated: false)
         rootController?.isNavigationBarHidden = hideBar
     }
     
     func presentOnRoot(_ module: Presentable?) {
         guard let controller = module?.toPresent else { return }
+        
         rootController?.parent?.present(controller, animated: true, completion: nil)
     }
     
     func present(_ module: Presentable?, animated: Bool) {
         guard let controller = module?.toPresent else { return }
+        
         rootController?.visibleViewController?.present(controller, animated: animated, completion: nil)
     }
     

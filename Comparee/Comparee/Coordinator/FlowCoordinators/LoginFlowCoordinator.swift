@@ -8,7 +8,7 @@
 import UIKit
 
 enum LoginFlowRoute: Route {
-    case main
+    case showLoginScreen
     case showRegistrationScreen(authModel: AuthDataResultModel)
     case showPhotoUploadScreen
     case base(BaseRoutes)
@@ -41,7 +41,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
     @MainActor
     func trigger(_ route: LoginFlowRoute) async {
         switch route {
-        case .main:
+        case .showLoginScreen:
             let loginVM = LoginViewModel(router: self)
             let authVC = LoginViewController(viewModel: loginVM )
             router.setRootModule(authVC)
@@ -65,7 +65,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
 extension LoginFlowCoordinator: Coordinatable {
     func start() {
         Task {
-            await trigger(.main)
+            await trigger(.showPhotoUploadScreen)
         }
     }
 }

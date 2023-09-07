@@ -29,7 +29,7 @@ extension RootCoordinator {
     func makeLoginFlowCoordinator() -> LoginFlowCoordinator {
         let coordinator = LoginFlowCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.removeDependency(coordinator)
         }
         addDependency(coordinator)

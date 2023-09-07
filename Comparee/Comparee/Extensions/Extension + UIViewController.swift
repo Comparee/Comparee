@@ -18,7 +18,7 @@ extension UIViewController {
         view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60)
 
         let nameLabel = UILabel()
-        nameLabel.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+        nameLabel.textColor = .white
         nameLabel.font = UIFont(name: "Cormorant-SemiBoldItalic", size: 44)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.83

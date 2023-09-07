@@ -22,7 +22,7 @@ final class DefinitionLabel: UILabel {
 private extension DefinitionLabel {
     func configure(type: RegInput) {
         frame = CGRect(x: 0, y: 0, width: 90, height: 17)
-        textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        textColor = ColorManager.Registration.regDefinitionTint
         font = UIFont.customFont(.sfProTextRegular, size: 14)
         switch type {
         case .nickName:

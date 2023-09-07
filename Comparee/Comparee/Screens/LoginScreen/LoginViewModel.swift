@@ -11,18 +11,20 @@ import Foundation
 
 final class LoginViewModel {
     
-    // MARK: - Dependencies
+    // MARK: - Managers
     @Injected(\.authManager)
     private var authManager: AuthManagerProtocol
     
+    // MARK: - Private propersties
     private weak var router: LoginFlowCoordinatorOutput?
     
+    // MARK: - Initialization
     init(router: LoginFlowCoordinatorOutput) {
         self.router = router
     }
-    
 }
 
+// MARK: - implementing LoginViewModelProtocol
 extension LoginViewModel: LoginViewModelProtocol {
     func isButtonTapped() {
         Task {

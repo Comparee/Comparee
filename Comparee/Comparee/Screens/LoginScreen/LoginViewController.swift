@@ -12,19 +12,82 @@ final class LoginViewController: UIViewController {
     // MARK: - ViewModel
     private let viewModel: LoginViewModelProtocol
     
-    // Background image configuration
+    // MARK: - Private UI properties
     private lazy var backgroundImageView = BackgroundImageView()
     
-    // Private properties for UI
-    private lazy var appleSignInButton: SignInButton = SignInButton()
-    private lazy var welcomeLabel = WelcomeLabel()
-    private lazy var policyLabel = PolicyLabel()
-    private lazy var firstRingImage = FirstRingImage()
-    private lazy var secondRingImage = SecondRingImage()
-    private lazy var firstPreviewImageVIew = FirstPreviewImageVIew()
-    private lazy var secondPreviewImageVIew = SecondPreviewImageVIew()
+    private lazy var appleSignInButton: UIButton = {
+        let button = UIButton()
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.layer.cornerRadius = 25.5
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.tintColor = ColorManager.Login.appleButtonTint
+        button.setTitle("Continue with Apple", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.customFont(.sfProTextMedium, size: 16)
+        let appleImage = IconManager.Login.appleLogo
+        let resizedAppleImage = appleImage?.resize(to: CGSize(width: 28, height: 28))
+        button.setImage(resizedAppleImage, for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+        return button
+    }()
     
-    // Private properties for Combine
+    private lazy var welcomeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.customFont(.cormorantSemiBoldItalic, size: 44)
+        label.textColor = .white
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.lineBreakMode = .byWordWrapping
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.83
+        paragraphStyle.alignment = .center
+        
+        label.attributedText = NSMutableAttributedString(
+            string: "Welcome to\nComparee",
+            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        )
+        return label
+    }()
+    
+    private lazy var policyLabel = PolicyLabel()
+    
+    private lazy var firstRingImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = IconManager.Login.firstRing
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var secondRingImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = IconManager.Login.secondRing
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var firstPreviewImageVIew: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = IconManager.Login.firstPreview
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var secondPreviewImageVIew: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = IconManager.Login.secondPreview
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    // MARK: - Private Combine Properties
     private var cancellables: Set<AnyCancellable> = []
     
     // MARK: - Initialization
@@ -37,6 +100,7 @@ final class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -77,7 +141,7 @@ private extension LoginViewController {
                 ])
             }
         }
-
+        
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -120,11 +184,10 @@ extension LoginViewController {
     func bindButton() {
         appleSignInButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
+                
                 self.viewModel.isButtonTapped()
-                self.view.endEditing(true)
             }
             .store(in: &cancellables)
     }
-    
 }

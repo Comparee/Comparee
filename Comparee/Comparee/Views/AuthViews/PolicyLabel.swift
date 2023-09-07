@@ -42,11 +42,9 @@ private extension PolicyLabel {
         let termsRange = (attributedText.string as NSString).range(of: "Terms of Use")
         attributedText.addAttribute(.foregroundColor, value: UIColor.white, range: termsRange)
         attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: termsRange)
-        attributedText.addAttribute(.link, value: "https://augmentedcode.io/2020/12/20/opening-hyperlinks-in-uilabel-on-ios/", range: termsRange)
-        
         let privacyRange = (attributedText.string as NSString).range(of: "Privacy Policy")
         attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: privacyRange)
-        attributedText.addAttribute(.link, value: "https://augmentedcode.io", range: privacyRange)
+        
         attributedText.addAttribute(.foregroundColor, value: UIColor.white, range: termsRange)
         
         self.attributedText = attributedText
@@ -59,36 +57,15 @@ private extension PolicyLabel {
     
     @objc
     func handleLinkTap(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-              let attributedText = label.attributedText else {
-            return
-        }
-        
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: CGSize.zero)
-        
-        let textStorage = NSTextStorage(attributedString: attributedText)
-        textStorage.addLayoutManager(layoutManager)
-        layoutManager.addTextContainer(textContainer)
-        
-        let tapLocation = gesture.location(in: label)
-        
-        let characterIndex = layoutManager.characterIndex(
-            for: tapLocation,
-            in: textContainer,
-            fractionOfDistanceBetweenInsertionPoints: nil
-        )
-        
-        attributedText.enumerateAttribute(
-            .link,
-            in: NSRange(location: 0, length: attributedText.length),
-            options: []
-        ) { value, range, _ in
-            if let link = value as? String, NSLocationInRange(characterIndex, range) {
-                if let url = URL(string: link) {
-                    UIApplication.shared.open(url)
-                }
-            }
+        let termsRange = ("Terms of Use" as NSString).range(of: "Terms of Use")
+        if gesture.didTapAttributedTextInLabel(label: self, inRange: termsRange) {
+            guard let url = URL(string: "https://getblogger.ru/page/privacy_policy") else { return }
+            
+            UIApplication.shared.open(url)
+        } else {
+            guard let url = URL(string: "https://getblogger.ru/page/terms_blogger") else { return }
+            
+            UIApplication.shared.open(url)
         }
     }
 }
