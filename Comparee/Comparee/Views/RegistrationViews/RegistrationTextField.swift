@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NicknameTextField: UITextField {
+final class RegistrationTextField: UITextField {
     
     init(type: RegInput) {
         super.init(frame: .zero)
@@ -20,28 +20,34 @@ final class NicknameTextField: UITextField {
     }
 }
 
-private extension NicknameTextField {
+private extension RegistrationTextField {
     func configure(type: RegInput) {
         switch type {
         case .nickName:
             placeholder = "Your nickname"
+            keyboardType = .namePhonePad
         case .age:
             placeholder = "Your age"
             keyboardType = .numberPad
         case .instagram:
             placeholder = "Your instagram"
+            keyboardType = .namePhonePad
         }
         
-        frame = CGRect(x: 0, y: 0, width: 335, height: 51)
-        backgroundColor = UIColor(red: 0.183, green: 0.176, blue: 0.176, alpha: 1)
+        backgroundColor = ColorManager.Registration.backPlaceholderColor
         layer.cornerRadius = 25
         translatesAutoresizingMaskIntoConstraints = false
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: ColorManager.Registration.textPlaceholderColor
+        ]
+        let attributedPlaceholder = NSAttributedString(string: placeholder!, attributes: attributes)
         
+        self.attributedPlaceholder = attributedPlaceholder
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: self.frame.height))
         leftViewMode = .always
-        clearButtonMode = .always
-        returnKeyType = .continue
-        textColor = UIColor(red: 0.463, green: 0.463, blue: 0.463, alpha: 1)
+        clearButtonMode = .never
+        returnKeyType = .go
+        textColor = ColorManager.Registration.textPlaceholderColor
         font = UIFont.customFont(.sfProTextRegular, size: 16)
     }
 }
