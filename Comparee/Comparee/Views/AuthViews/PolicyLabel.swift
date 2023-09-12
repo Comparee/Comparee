@@ -59,11 +59,11 @@ private extension PolicyLabel {
     func handleLinkTap(_ gesture: UITapGestureRecognizer) {
         let termsRange = ("Terms of Use" as NSString).range(of: "Terms of Use")
         if gesture.didTapAttributedTextInLabel(label: self, inRange: termsRange) {
-            guard let url = URL(string: "https://getblogger.ru/page/privacy_policy") else { return }
+            guard let url = URL(string: "https://www.apple.com") else { return }
             
             UIApplication.shared.open(url)
         } else {
-            guard let url = URL(string: "https://getblogger.ru/page/terms_blogger") else { return }
+            guard let url = URL(string: "https://www.apple.com/airpods-pro") else { return }
             
             UIApplication.shared.open(url)
         }

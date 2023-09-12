@@ -10,7 +10,7 @@ import UIKit
 
 final class RegistrationViewController: BaseViewController {
     
-    //MARK: - Private properties for UI configuration
+    // MARK: - Private properties for UI configuration
     private lazy var backgroundImageView: UIImageView = BackgroundImageView()
     private lazy var nickNameField: RegisterInputView = RegisterInputView(type: .nickName)
     private lazy var ageField: RegisterInputView = RegisterInputView(type: .age)
@@ -21,7 +21,7 @@ final class RegistrationViewController: BaseViewController {
     private var viewModel: RegistrationFlowViewModelProtocol!
     private var cancellables: Set<AnyCancellable> = []
     
-    //keyboard observing
+    // Keyboard observing
     override var isObservingKeyboard: Bool { true }
     
     // MARK: - Initialization
@@ -39,39 +39,19 @@ final class RegistrationViewController: BaseViewController {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         setupViews()
-        setConstraints()
-        
-        createCustomNavigationBar()
-        
         bindViewModel()
-        subscribeToAppWillResignActiveStatus()
-        
     }
-    
-    // MARK: - Override functions for keyboard configuration
-    override func keyboardWillHideAction() {
-        super.keyboardWillHideAction()
-        self.view.frame.origin.y = 0
-        self.navigationItem.titleView?.isHidden = false
-    }
-    
-    override func keyboardWillShowAction() {
-        super.keyboardWillShowAction()
-        configureKeyboardAction()
-    }
-    
-    // MARK: - Binding view for viewModel
-    private func bindViewModel() {
+}
+
+// MARK: - UI Setup
+private extension RegistrationViewController {
+    // Binding views for viewModel
+    func bindViewModel() {
         bindButtons()
         bindTextFields()
     }
     
-}
-
-//MARK: - UI Setup
-extension RegistrationViewController {
-    
-    private func setupViews() {
+    func setupViews() {
         view.addSubview(backgroundImageView)
         view.addSubview(nickNameField)
         view.addSubview(ageField)
@@ -80,14 +60,13 @@ extension RegistrationViewController {
         
         let customTitleView = createCustomTitleView(contactName: "Sign Up")
         navigationItem.titleView = customTitleView
+        
+        setUpDelegates()
+        setConstraints()
+        createCustomNavigationBar()
     }
     
-    func hideKeyboardWhenTappedAround() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    private func setConstraints() {
+    func setConstraints() {
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -97,33 +76,31 @@ extension RegistrationViewController {
             nickNameField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             nickNameField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             nickNameField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            nickNameField.heightAnchor.constraint(equalToConstant: 92),
             
             ageField.topAnchor.constraint(equalTo: nickNameField.bottomAnchor, constant: 4),
             ageField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             ageField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-        
+            
             instagramField.topAnchor.constraint(equalTo: ageField.bottomAnchor, constant: 4),
             instagramField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             instagramField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-       
+            
             buttonView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
             buttonView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
             buttonView.widthAnchor.constraint(equalToConstant: 76),
             buttonView.heightAnchor.constraint(equalToConstant: 76)
         ])
-        
-    }
-    
-}
-
-extension UIViewController {
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
 
 // MARK: - Keyboard configuration
 private extension RegistrationViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     func subscribeToAppWillResignActiveStatus() {
         NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
             .receive(on: DispatchQueue.main)
@@ -133,55 +110,83 @@ private extension RegistrationViewController {
             .store(in: &cancellables)
     }
     
-    func configureKeyboardAction() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            
-            if nickNameField.nicknameTextField.isFirstResponder
-                || ageField.nicknameTextField.isFirstResponder
-                || instagramField.nicknameTextField.isFirstResponder {
-                UIView.animate(withDuration: 0.3) {
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let window = windowScene.windows.first {
-                        if window.safeAreaInsets.bottom < 0 {
-                            self.view.frame.origin.y = -100
-                            self.navigationItem.titleView?.isHidden = true
-                        }
-                    }
-                }
-            }
-        }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
 // MARK: - Views binding
 private extension RegistrationViewController {
     func bindTextFields() {
-        nickNameField.nicknameTextField.textPublisher
+        nickNameField.textField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.name, on: viewModel.input)
             .store(in: &cancellables)
         
-        ageField.nicknameTextField.textPublisher
+        ageField.textField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.age, on: viewModel.input)
             .store(in: &cancellables)
         
-        instagramField.nicknameTextField.textPublisher
+        instagramField.textField.textPublisher
             .receive(on: DispatchQueue.main)
             .assign(to: \.instagram, on: viewModel.input)
             .store(in: &cancellables)
-        
     }
     
     func bindButtons() {
         buttonView.authButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 guard let self else { return }
-                
+                view.endEditing(true)
                 self.viewModel.input.logInButtonPressed()
-                self.view.endEditing(true)
+                for item in viewModel.output.testReg {
+                    switch item.fieldsTypes {
+                    case .nickName:
+                        nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                    case .age:
+                        ageField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                    case .instagram:
+                        instagramField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                    }
+                }
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension RegistrationViewController: UITextFieldDelegate {
+    private func setUpDelegates() {
+        nickNameField.textField.delegate = self
+        ageField.textField.delegate = self
+        instagramField.textField.delegate = self
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField {
+        case nickNameField.textField:
+            viewModel.input.changeRegInput(type: .nickName, text: textField.text)
+        case ageField.textField:
+            viewModel.input.changeRegInput(type: .age, text: textField.text)
+        case instagramField.textField:
+            viewModel.input.changeRegInput(type: .instagram, text: textField.text)
+        default:
+            break
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case nickNameField.textField:
+            ageField.textField.becomeFirstResponder()
+        case ageField.textField:
+            instagramField.textField.becomeFirstResponder()
+        case instagramField.textField:
+            self.viewModel.input.logInButtonPressed()
+        default:
+            break
+        }
+        return true
     }
 }

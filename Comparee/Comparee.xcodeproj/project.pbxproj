@@ -24,7 +24,7 @@
 		0D9B89E22A9B6A2A00709A00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B89E12A9B6A2A00709A00 /* Assets.xcassets */; };
 		0D9B89E52A9B6A2A00709A00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B89E32A9B6A2A00709A00 /* LaunchScreen.storyboard */; };
 		0D9B89F22A9CAA0400709A00 /* DefinitionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F12A9CAA0400709A00 /* DefinitionLabel.swift */; };
-		0D9B89F42A9CB21B00709A00 /* NicknameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F32A9CB21B00709A00 /* NicknameTextField.swift */; };
+		0D9B89F42A9CB21B00709A00 /* RegistrationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F32A9CB21B00709A00 /* RegistrationTextField.swift */; };
 		0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F52A9CC0F100709A00 /* ErrorLabel.swift */; };
 		0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89F72A9CD12000709A00 /* AuthButton.swift */; };
 		0D9B89FB2A9CDBA500709A00 /* Extensions + UImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B89FA2A9CDBA500709A00 /* Extensions + UImage.swift */; };
@@ -67,6 +67,12 @@
 		0DBEA9932AA5AF140026C441 /* PhotoAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEA9922AA5AF140026C441 /* PhotoAddButton.swift */; };
 		0DBEA9952AA5CCE30026C441 /* AdviceImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEA9942AA5CCE30026C441 /* AdviceImageView.swift */; };
 		0DBEA9972AA6292F0026C441 /* RoundedWhiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBEA9962AA6292F0026C441 /* RoundedWhiteView.swift */; };
+		0DCA69552AAF4B5F00E19FA8 /* FieldsTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69542AAF4B5F00E19FA8 /* FieldsTypeModel.swift */; };
+		0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69562AAF64E700E19FA8 /* DBUser.swift */; };
+		0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69582AAF901300E19FA8 /* PreviewView.swift */; };
+		0DCA695E2AB0914100E19FA8 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA695D2AB0914100E19FA8 /* CropViewController.swift */; };
+		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
+		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,7 +93,7 @@
 		0D9B89E42A9B6A2A00709A00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D9B89E62A9B6A2A00709A00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D9B89F12A9CAA0400709A00 /* DefinitionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionLabel.swift; sourceTree = "<group>"; };
-		0D9B89F32A9CB21B00709A00 /* NicknameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTextField.swift; sourceTree = "<group>"; };
+		0D9B89F32A9CB21B00709A00 /* RegistrationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextField.swift; sourceTree = "<group>"; };
 		0D9B89F52A9CC0F100709A00 /* ErrorLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLabel.swift; sourceTree = "<group>"; };
 		0D9B89F72A9CD12000709A00 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		0D9B89FA2A9CDBA500709A00 /* Extensions + UImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions + UImage.swift"; sourceTree = "<group>"; };
@@ -128,6 +134,12 @@
 		0DBEA9922AA5AF140026C441 /* PhotoAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAddButton.swift; sourceTree = "<group>"; };
 		0DBEA9942AA5CCE30026C441 /* AdviceImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceImageView.swift; sourceTree = "<group>"; };
 		0DBEA9962AA6292F0026C441 /* RoundedWhiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedWhiteView.swift; sourceTree = "<group>"; };
+		0DCA69542AAF4B5F00E19FA8 /* FieldsTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldsTypeModel.swift; sourceTree = "<group>"; };
+		0DCA69562AAF64E700E19FA8 /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		0DCA69582AAF901300E19FA8 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		0DCA695D2AB0914100E19FA8 /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +149,7 @@
 			files = (
 				0D8AAB332A9F1D330088987F /* FirebaseDatabase in Frameworks */,
 				0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */,
+				0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */,
 				0D8AAB352A9F1D330088987F /* FirebaseStorage in Frameworks */,
 				0DB204CB2AA9F7360040551D /* CropViewController in Frameworks */,
 				0DB204BB2AA7B9FA0040551D /* FirebaseFirestoreSwift in Frameworks */,
@@ -152,7 +165,7 @@
 				0D8AAB3C2A9F52880088987F /* RegInputEnum.swift */,
 				0D8AAB3A2A9F44F20088987F /* RegisterInputView.swift */,
 				0D9B89F12A9CAA0400709A00 /* DefinitionLabel.swift */,
-				0D9B89F32A9CB21B00709A00 /* NicknameTextField.swift */,
+				0D9B89F32A9CB21B00709A00 /* RegistrationTextField.swift */,
 				0D9B89F52A9CC0F100709A00 /* ErrorLabel.swift */,
 				0D9B89F72A9CD12000709A00 /* AuthButton.swift */,
 				0DBEA9962AA6292F0026C441 /* RoundedWhiteView.swift */,
@@ -231,6 +244,7 @@
 				0D9B89DC2A9B6A2900709A00 /* RegistrationViewController.swift */,
 				0DBEA97A2AA247140026C441 /* RegistrationViewModel.swift */,
 				0DBEA97C2AA247260026C441 /* RegistrationViewModelProtocol.swift */,
+				0DCA69542AAF4B5F00E19FA8 /* FieldsTypeModel.swift */,
 			);
 			path = RegistrationScreen;
 			sourceTree = "<group>";
@@ -316,6 +330,7 @@
 		0D9B8A1B2A9DEFB300709A00 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */,
 				0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */,
 				0D9B8A1C2A9DFA9E00709A00 /* SFProText-Regular.ttf */,
 				0D9B8A192A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf */,
@@ -354,6 +369,7 @@
 			children = (
 				0DBEA97E2AA247430026C441 /* FirebaseManager.swift */,
 				0DBEA9802AA247510026C441 /* FirebaseManagerProtocol.swift */,
+				0DCA69562AAF64E700E19FA8 /* DBUser.swift */,
 			);
 			path = FirebaseManager;
 			sourceTree = "<group>";
@@ -378,6 +394,7 @@
 		0DBEA98E2AA5ABFD0026C441 /*  ProfilePictureUploadScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0DCA695D2AB0914100E19FA8 /* CropViewController.swift */,
 				0DBEA98F2AA5AC450026C441 /* ProfilePictureUploadViewController.swift */,
 				0DB204C22AA9E9660040551D /* ProfilePictureUploadViewModel.swift */,
 				0DB204C42AA9E98A0040551D /* ProfilePictureUploadViewModelProtocol.swift */,
@@ -389,7 +406,9 @@
 			isa = PBXGroup;
 			children = (
 				0DBEA9922AA5AF140026C441 /* PhotoAddButton.swift */,
+				0DF7B69E2AAB4221008D7979 /* AlertView.swift */,
 				0DBEA9942AA5CCE30026C441 /* AdviceImageView.swift */,
+				0DCA69582AAF901300E19FA8 /* PreviewView.swift */,
 			);
 			path = PhotoUploadViews;
 			sourceTree = "<group>";
@@ -417,6 +436,7 @@
 				0D8AAB342A9F1D330088987F /* FirebaseStorage */,
 				0DB204BA2AA7B9FA0040551D /* FirebaseFirestoreSwift */,
 				0DB204CA2AA9F7360040551D /* CropViewController */,
+				0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */,
 			);
 			productName = Comparee;
 			productReference = 0D9B89D52A9B6A2900709A00 /* Comparee.app */;
@@ -450,6 +470,7 @@
 				0D8AAB2F2A9F1D330088987F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				0DBEA9742AA201AB0026C441 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				0DB204C92AA9F7360040551D /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				0DF7B69B2AAB2980008D7979 /* XCRemoteSwiftPackageReference "SwiftEntryKit" */,
 			);
 			productRefGroup = 0D9B89D62A9B6A2900709A00 /* Products */;
 			projectDirPath = "";
@@ -493,7 +514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n";
+			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n#\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -507,11 +528,14 @@
 				0D9B89DD2A9B6A2900709A00 /* RegistrationViewController.swift in Sources */,
 				0D9B8A022A9D01D800709A00 /* Extensions + UITextField.swift in Sources */,
 				0D8AAB3B2A9F44F20088987F /* RegisterInputView.swift in Sources */,
+				0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */,
 				0D9B89FB2A9CDBA500709A00 /* Extensions + UImage.swift in Sources */,
 				0DB204C12AA9DBC10040551D /* ColorManager.swift in Sources */,
 				0DBEA97D2AA247260026C441 /* RegistrationViewModelProtocol.swift in Sources */,
 				0DBEA9692AA0E4360026C441 /* LoginFlowCoordinator.swift in Sources */,
 				0DBEA9652AA085BE0026C441 /* AuthManager.swift in Sources */,
+				0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */,
+				0DCA69552AAF4B5F00E19FA8 /* FieldsTypeModel.swift in Sources */,
 				0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */,
 				0D8AAB372A9F27140088987F /* LoginViewModel.swift in Sources */,
 				0DB204C32AA9E9660040551D /* ProfilePictureUploadViewModel.swift in Sources */,
@@ -528,6 +552,7 @@
 				0DBEA98C2AA4DDD90026C441 /* Extensions + String.swift in Sources */,
 				0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */,
 				0D8AAB3D2A9F52880088987F /* RegInputEnum.swift in Sources */,
+				0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */,
 				0DBEA96D2AA1F3030026C441 /* LoginViewModelProtocol.swift in Sources */,
 				0DB204BF2AA921F30040551D /* Extensions + UITapGestureRecognizer.swift in Sources */,
 				0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */,
@@ -542,6 +567,7 @@
 				0DBEA9972AA6292F0026C441 /* RoundedWhiteView.swift in Sources */,
 				0D9B8A072A9D2DAE00709A00 /* BaseCoordinator.swift in Sources */,
 				0D9B89D92A9B6A2900709A00 /* AppDelegate.swift in Sources */,
+				0DCA695E2AB0914100E19FA8 /* CropViewController.swift in Sources */,
 				0D8AAB462A9FE0CB0088987F /* IconManager.swift in Sources */,
 				0DBEA9902AA5AC450026C441 /* ProfilePictureUploadViewController.swift in Sources */,
 				0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */,
@@ -550,7 +576,7 @@
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,
-				0D9B89F42A9CB21B00709A00 /* NicknameTextField.swift in Sources */,
+				0D9B89F42A9CB21B00709A00 /* RegistrationTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +721,7 @@
 				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -727,6 +754,7 @@
 				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -794,6 +822,14 @@
 				minimumVersion = 0.52.4;
 			};
 		};
+		0DF7B69B2AAB2980008D7979 /* XCRemoteSwiftPackageReference "SwiftEntryKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/huri000/SwiftEntryKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -821,6 +857,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DB204C92AA9F7360040551D /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
+		};
+		0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DF7B69B2AAB2980008D7979 /* XCRemoteSwiftPackageReference "SwiftEntryKit" */;
+			productName = SwiftEntryKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

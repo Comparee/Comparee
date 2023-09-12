@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     
     func createCustomNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     func createCustomTitleView(contactName: String) -> UIView {
@@ -27,7 +27,6 @@ extension UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
 
-        // Установка ограничений для nameLabel, чтобы он был посередине view
         NSLayoutConstraint.activate([
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)

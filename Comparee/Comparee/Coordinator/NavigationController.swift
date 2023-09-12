@@ -15,12 +15,11 @@ final class NavigationController: UINavigationController {
         if let originalImage = UIImage(systemName: "arrow.backward") {
             let resizedImage = originalImage
                 .withRenderingMode(.alwaysOriginal)
-                .resize(to: CGSize(width: 33, height: originalImage.size.height * (33 / originalImage.size.width)))
+                .resize(to: CGSize(width: 30, height: originalImage.size.height * (30 / originalImage.size.width)))
             navigationBar.backIndicatorImage = resizedImage
             navigationBar.backIndicatorTransitionMaskImage = resizedImage
         }
         
         navigationBar.topItem?.backButtonDisplayMode = .minimal
-        
     }
 }

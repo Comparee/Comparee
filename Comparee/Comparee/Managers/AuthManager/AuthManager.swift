@@ -113,7 +113,6 @@ private extension AuthManager {
 extension AuthManager: ASAuthorizationControllerDelegate {
     
     // MARK: - ASAuthorizationControllerDelegate Methods
-    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard
             let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,

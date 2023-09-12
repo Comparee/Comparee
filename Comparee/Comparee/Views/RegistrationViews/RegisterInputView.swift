@@ -11,21 +11,23 @@ final class RegisterInputView: UIView {
     
     // MARK: - Properties
     private var definitionLabel: DefinitionLabel
-    var nicknameTextField: NicknameTextField
+    var textField: RegistrationTextField
     
-    private let errorLabel: ErrorLabel = {
-        let label = ErrorLabel()
-        return label
+    private lazy var errorLabel: ErrorLabel = {
+        let errorLabel = ErrorLabel()
+        errorLabel.setContentHuggingPriority(.required, for: .vertical)
+        errorLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        return errorLabel
     }()
     
     // MARK: - Initialization
     init(type: RegInput) {
         definitionLabel = DefinitionLabel(type: type)
-        nicknameTextField = NicknameTextField(type: type)
-        
+        textField = RegistrationTextField(type: type)
         super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +40,7 @@ private extension RegisterInputView {
     func configureSubviews() {
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(definitionLabel)
-        addSubview(nicknameTextField)
+        addSubview(textField)
         addSubview(errorLabel)
     }
     
@@ -46,7 +48,7 @@ private extension RegisterInputView {
         let spacing: CGFloat = 4.0
         
         definitionLabel.translatesAutoresizingMaskIntoConstraints = false
-        nicknameTextField.translatesAutoresizingMaskIntoConstraints = false
+        textField.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -54,15 +56,27 @@ private extension RegisterInputView {
             definitionLabel.topAnchor.constraint(equalTo: topAnchor),
             definitionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            nicknameTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            nicknameTextField.topAnchor.constraint(equalTo: definitionLabel.bottomAnchor, constant: spacing),
-            nicknameTextField.trailingAnchor.constraint(equalTo: trailingAnchor),
-            nicknameTextField.heightAnchor.constraint(equalToConstant: 51),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            textField.topAnchor.constraint(equalTo: definitionLabel.bottomAnchor, constant: spacing),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+            textField.heightAnchor.constraint(equalToConstant: 51),
             
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            errorLabel.topAnchor.constraint(equalTo: nicknameTextField.bottomAnchor, constant: spacing),
+            errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: spacing),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            errorLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
+    }
+}
+
+// MARK: - Error handling
+extension RegisterInputView {
+    func textFieldIsEmty(isEmpty: Bool) {
+        if isEmpty {
+            errorLabel.text = "! This field cannot be empty"
+        } else {
+            errorLabel.text = ""
+        }
     }
 }

@@ -29,7 +29,7 @@ final class LoginViewController: UIViewController {
         let appleImage = IconManager.Login.appleLogo
         let resizedAppleImage = appleImage?.resize(to: CGSize(width: 28, height: 28))
         button.setImage(resizedAppleImage, for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 10)
+        button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -10, bottom: 0, trailing: 10)
         return button
     }()
     

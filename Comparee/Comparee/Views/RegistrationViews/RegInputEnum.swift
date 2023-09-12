@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RegInput {
+enum RegInput: CaseIterable {
     case nickName
     case age
     case instagram

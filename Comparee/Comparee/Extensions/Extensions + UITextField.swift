@@ -10,7 +10,7 @@ import UIKit
 extension UITextField {
     var textPublisher: AnyPublisher<String, Never> {
         publisher(for: .editingChanged)
-            .map { _ in self.text.unwrappedValue}
+            .map { _ in self.text.unwrappedValue }
             .eraseToAnyPublisher()
     }
 }

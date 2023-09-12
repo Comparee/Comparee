@@ -7,8 +7,21 @@
 
 import Foundation
 
+/// Protocol for managing user-related operations in Firebase.
 protocol FirebaseManagerProtocol {
+    
+    /// Creates a new user in Firebase.
+    ///
+    /// - Parameter user: The user object to create.
+    /// - Throws: An error if the user creation fails.
     func createNewUser(user: DBUser) async throws
+    
+    /// Retrieves a user from Firebase based on their user ID.
+    ///
+    /// - Parameter userId: The unique identifier of the user to retrieve.
+    /// - Returns: The user object if found.
+    /// - Throws: An error if the user retrieval fails or the user doesn't exist.
+    func getUser(userId: String) async throws -> DBUser
 }
 
 private struct FirebaseManagerKey: InjectionKey {

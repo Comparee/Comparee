@@ -7,6 +7,7 @@
 		<string>SFProText-Regular.ttf</string>
 		<string>Cormorant-SemiBoldItalic.ttf</string>
 		<string>SFProText-Medium.ttf</string>
+		<string>SFProText-Semibold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -38,5 +39,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

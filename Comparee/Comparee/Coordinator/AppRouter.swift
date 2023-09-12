@@ -55,6 +55,20 @@ extension AppRouter: Routable {
         rootController?.visibleViewController?.present(controller, animated: animated, completion: nil)
     }
     
+    func dismissModule(animated: Bool, completion: CompletionBlock?) {
+        rootController?.dismiss(animated: animated, completion: completion)
+    }
+
+    func dismissScreen() {
+        rootController?.navigationController?.visibleViewController?.dismiss(animated: true)
+    }
+
+    func popModule(animated: Bool) {
+        if let controller = rootController?.popViewController(animated: animated) {
+            runCompletion(for: controller)
+        }
+    }
+    
     func push(_ module: Presentable?, animated: Bool, completion: CompletionBlock?) {
         guard
             let controller = module?.toPresent,

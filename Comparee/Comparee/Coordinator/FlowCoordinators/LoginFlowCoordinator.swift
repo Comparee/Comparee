@@ -5,12 +5,16 @@
 //  Created by Андрей Логвинов on 8/31/23.
 //
 
+import SwiftEntryKit
+import TOCropViewController
 import UIKit
 
 enum LoginFlowRoute: Route {
     case showLoginScreen
     case showRegistrationScreen(authModel: AuthDataResultModel)
     case showPhotoUploadScreen
+    case showPhotoPicker(viewController: UIViewController)
+    case showPhotoCrop(image: UIImage, viewController: UIViewController)
     case base(BaseRoutes)
 }
 
@@ -49,12 +53,22 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
             let regVC = RegistrationViewController(viewModel: RegistrationViewModel(router: self, authDataResultModel: authModel))
             router.push(regVC, animated: true)
         case .showPhotoUploadScreen:
-            let photoUploadVC = ProfilePictureUploadViewController()
+            let photoUploadVM = ProfilePictureUploadViewModel(router: self)
+            let photoUploadVC = ProfilePictureUploadViewController(viewModel: photoUploadVM)
             router.push(photoUploadVC, animated: true)
+        case .showPhotoPicker(let viewController):
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.delegate = viewController as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            router.present(picker, animated: true)
+        case .showPhotoCrop(let image, let viewController):
+            let cropVC = UploadCropViewController(image: image)
+            cropVC.delegate = viewController as? any TOCropViewControllerDelegate
+            router.present(cropVC, animated: true)
         case .base(let base):
             switch base {
             case .alert(let alert):
-                router.present(alert)
+                SwiftEntryKit.display(entry: alert, using: AlertView.setupAttributes())
             default: break
             }
         }
