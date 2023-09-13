@@ -5,10 +5,10 @@
 //  Created by Андрей Логвинов on 9/12/23.
 //
 
-import TOCropViewController
+import CropViewController
 import UIKit
 
-final class UploadCropViewController: TOCropViewController {
+final class UploadCropViewController: CropViewController {
     
     override init(image: UIImage) {
         super.init(croppingStyle: .default, image: image)

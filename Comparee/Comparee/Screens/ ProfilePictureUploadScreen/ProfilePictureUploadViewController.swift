@@ -8,13 +8,12 @@
 import CropViewController
 import Combine
 import UIKit
-import FirebaseAuth
 
 final class ProfilePictureUploadViewController: UIViewController {
     // MARK: - Private properties for UI configuration
-    private lazy var backgroundImageView: UIImageView = BackgroundImageView()
-    private lazy var addPhotoButton: UIButton = PhotoAddButton()
-    private lazy var adviceImageView: UIImageView = AdviceImageView()
+    private lazy var backgroundImageView = BackgroundImageView()
+    private lazy var addPhotoButton = PhotoAddButton()
+    private lazy var adviceImageView = AdviceImageView()
     private lazy var regButton = RoundedWhiteView()
     private lazy var selectedImage = PreviewView()
     
@@ -104,13 +103,13 @@ extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, U
         //viewModel.input.startCrop(image: image, viewController: self)
     }
     
-    // Only for test , should be deleting
+    //   Only for test , should be deleted
     func startCrop(image: UIImage) {
         let vc = CropViewController(croppingStyle: .default, image: image)
         vc.delegate = self
         vc.aspectRatioPreset = .preset4x3
         vc.aspectRatioLockEnabled = true
-        vc.aspectRatioPickerButtonHidden = true
+        vc.aspectRatioPickerButtonHidden = false
         vc.toolbarPosition = .bottom
         vc.doneButtonTitle = "Continue"
         vc.cancelButtonTitle = "Back"
@@ -144,6 +143,12 @@ private extension ProfilePictureUploadViewController {
     }
     
     func setConstraints() {
+        if isDeviceWithSafeArea() {
+            regButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66).isActive = true
+        } else {
+            regButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
+        }
+        
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -160,7 +165,6 @@ private extension ProfilePictureUploadViewController {
             adviceImageView.widthAnchor.constraint(equalToConstant: 150),
             adviceImageView.heightAnchor.constraint(equalToConstant: 60),
             
-            regButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66),
             regButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -36),
             regButton.widthAnchor.constraint(equalToConstant: 76),
             regButton.heightAnchor.constraint(equalToConstant: 76)

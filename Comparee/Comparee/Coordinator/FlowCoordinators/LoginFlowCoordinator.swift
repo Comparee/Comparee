@@ -8,6 +8,7 @@
 import SwiftEntryKit
 import TOCropViewController
 import UIKit
+import CropViewController
 
 enum LoginFlowRoute: Route {
     case showLoginScreen
@@ -63,8 +64,8 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
             router.present(picker, animated: true)
         case .showPhotoCrop(let image, let viewController):
             let cropVC = UploadCropViewController(image: image)
-            cropVC.delegate = viewController as? any TOCropViewControllerDelegate
-            router.present(cropVC, animated: true)
+            cropVC.delegate = viewController as? any CropViewControllerDelegate
+            self.router.present(cropVC, animated: true)
         case .base(let base):
             switch base {
             case .alert(let alert):
@@ -79,7 +80,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
 extension LoginFlowCoordinator: Coordinatable {
     func start() {
         Task {
-            await trigger(.showLoginScreen)
+            await trigger(.showPhotoUploadScreen)
         }
     }
 }

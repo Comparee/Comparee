@@ -51,4 +51,15 @@ extension UIViewController {
         let menuBarItem = UIBarButtonItem(customView: button)
         return menuBarItem
     }
+    
+    func isDeviceWithSafeArea() -> Bool {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            if window.safeAreaInsets.bottom > 0 {
+                return true
+            }
+            return false
+        }
+        return false
+    }
 }
