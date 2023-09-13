@@ -79,7 +79,38 @@
                   endingLineNumber = "11"
                   offsetFromSymbolStart = "32">
                </Location>
+               <Location
+                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - ef2e689fec9ab6b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Comparee.ProfilePictureUploadViewModel.deinit"
+                  moduleName = "Comparee"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6E1A82F2-07FA-47F2-813E-359D5A106ED8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Comparee/Screens/RegistrationScreen/RegistrationViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3"
+            endingLineNumber = "3"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

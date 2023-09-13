@@ -9,7 +9,6 @@ import CropViewController
 import Combine
 import UIKit
 import FirebaseAuth
-import SwiftEntryKit
 
 final class ProfilePictureUploadViewController: UIViewController {
     // MARK: - Private properties for UI configuration
@@ -102,7 +101,7 @@ extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, U
         picker.dismiss(animated: true)
         
         startCrop(image: image)
-        //viewModel.input.startCrop(image: image, vc: self)
+        //viewModel.input.startCrop(image: image, viewController: self)
     }
     
     // Only for test , should be deleting
@@ -141,7 +140,6 @@ private extension ProfilePictureUploadViewController {
         
         let customTitleView = createCustomTitleView(contactName: "Sign Up")
         navigationItem.titleView = customTitleView
-        
         createCustomNavigationBar()
     }
     

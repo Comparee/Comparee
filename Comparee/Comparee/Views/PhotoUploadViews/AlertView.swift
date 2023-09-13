@@ -10,6 +10,14 @@ import UIKit
 
 final class AlertView: UIView {
     
+    private lazy var viewForCancel: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.systemGray4
+        view.layer.cornerRadius = 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +32,7 @@ final class AlertView: UIView {
         let label = UILabel()
         label.text = "Failed to upload photo. Please check the information provided and try again."
         label.font = UIFont.customFont(.sfProTextRegular, size: 15)
-        label.textColor = UIColor(red: 0.492, green: 0.492, blue: 0.492, alpha: 1)
+        label.textColor = ColorManager.PhotoUpload.photoUploadDefinition
         label.numberOfLines = 2
         label.textAlignment = .center
         return label
@@ -37,7 +45,7 @@ final class AlertView: UIView {
         button.titleLabel?.font = UIFont.customFont(.sfProTextMedium, size: 16)
         button.backgroundColor = .systemIndigo
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(AlertView.self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -58,16 +66,24 @@ final class AlertView: UIView {
 }
 
 // MARK: - Setup Constraints
-extension AlertView {
+private extension AlertView {
     func setupConstraints() {
         let height: CGFloat = 45
         
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         addSubview(actionButton)
+        addSubview(viewForCancel)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            viewForCancel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            viewForCancel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            viewForCancel.heightAnchor.constraint(equalToConstant: 4),
+            viewForCancel.widthAnchor.constraint(equalToConstant: 42)
+        ])
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30)
         ])
@@ -84,14 +100,17 @@ extension AlertView {
         actionButton.layoutToSuperview(.leading, offset: 16)
         
         actionButton.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
-
+        
         actionButton.layer.cornerRadius = height * 0.5
     }
-    
+}
+
+// MARK: - Setup Attributes
+extension AlertView{
     static func setupAttributes() -> EKAttributes {
         var attributes = EKAttributes.bottomFloat
         attributes.displayDuration = .infinity
-        attributes.screenBackground = .color(color: .init(light: UIColor(white: 100.0 / 255.0, alpha: 0.3), dark: UIColor(white: 50.0/255.0, alpha: 0.3)))
+        attributes.screenBackground = .color(color: .init(light: ColorManager.PhotoUpload.lightAlertColor, dark: ColorManager.PhotoUpload.darkAlertColor))
         attributes.shadow = .active(
             with: .init(
                 color: .black,
