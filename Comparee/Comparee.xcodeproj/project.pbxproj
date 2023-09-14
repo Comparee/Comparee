@@ -72,6 +72,13 @@
 		0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69582AAF901300E19FA8 /* PreviewView.swift */; };
 		0DCA69622AB2DE2300E19FA8 /* DataTypeReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69612AB2DE2300E19FA8 /* DataTypeReference.swift */; };
 		0DCA69642AB2DEEB00E19FA8 /* FirestoreReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */; };
+		0DCA69662AB3012100E19FA8 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69652AB3012100E19FA8 /* TabBarCoordinator.swift */; };
+		0DCA696C2AB3070400E19FA8 /* CompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA696B2AB3070400E19FA8 /* CompareViewController.swift */; };
+		0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */; };
+		0DCA69702AB3073900E19FA8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */; };
+		0DCA69722AB3079100E19FA8 /* CompareFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */; };
+		0DCA69742AB307A700E19FA8 /* RatingFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */; };
+		0DCA69762AB307CB00E19FA8 /* ProfileFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -140,6 +147,13 @@
 		0DCA69582AAF901300E19FA8 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		0DCA69612AB2DE2300E19FA8 /* DataTypeReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTypeReference.swift; sourceTree = "<group>"; };
 		0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReference.swift; sourceTree = "<group>"; };
+		0DCA69652AB3012100E19FA8 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		0DCA696B2AB3070400E19FA8 /* CompareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareViewController.swift; sourceTree = "<group>"; };
+		0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareFlowCoordinator.swift; sourceTree = "<group>"; };
+		0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingFlowCoordinator.swift; sourceTree = "<group>"; };
+		0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -280,6 +294,7 @@
 				0DBEA98D2AA4DE080026C441 /* FlowCoordinators */,
 				0D9B8A052A9D2D9000709A00 /* Base */,
 				0D9B8A0C2A9D2E7B00709A00 /* NavigationController.swift */,
+				0DCA69652AB3012100E19FA8 /* TabBarCoordinator.swift */,
 				0D9B8A0E2A9D2E9000709A00 /* AppRouter.swift */,
 				0D9B8A102A9D2EC100709A00 /* RootCoordinator.swift */,
 			);
@@ -302,9 +317,10 @@
 		0D9B89FE2A9CFFA400709A00 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				0DBEA98E2AA5ABFD0026C441 /*  ProfilePictureUploadScreen */,
-				0D9B89EF2A9C94D600709A00 /* RegistrationScreen */,
-				0D9B8A142A9D37D200709A00 /* LoginScreen */,
+				0DCA696A2AB306CF00E19FA8 /* ProfileScreen */,
+				0DCA69692AB306A100E19FA8 /* RatingScreen */,
+				0DCA69682AB3066C00E19FA8 /* CompareScreen */,
+				0DCA69672AB3065100E19FA8 /* LoginFlow */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -391,6 +407,9 @@
 			isa = PBXGroup;
 			children = (
 				0DBEA9682AA0E4360026C441 /* LoginFlowCoordinator.swift */,
+				0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */,
+				0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */,
+				0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -414,6 +433,40 @@
 				0DCA69582AAF901300E19FA8 /* PreviewView.swift */,
 			);
 			path = PhotoUploadViews;
+			sourceTree = "<group>";
+		};
+		0DCA69672AB3065100E19FA8 /* LoginFlow */ = {
+			isa = PBXGroup;
+			children = (
+				0DBEA98E2AA5ABFD0026C441 /*  ProfilePictureUploadScreen */,
+				0D9B89EF2A9C94D600709A00 /* RegistrationScreen */,
+				0D9B8A142A9D37D200709A00 /* LoginScreen */,
+			);
+			path = LoginFlow;
+			sourceTree = "<group>";
+		};
+		0DCA69682AB3066C00E19FA8 /* CompareScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DCA696B2AB3070400E19FA8 /* CompareViewController.swift */,
+			);
+			path = CompareScreen;
+			sourceTree = "<group>";
+		};
+		0DCA69692AB306A100E19FA8 /* RatingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */,
+			);
+			path = RatingScreen;
+			sourceTree = "<group>";
+		};
+		0DCA696A2AB306CF00E19FA8 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */,
+			);
+			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,12 +585,16 @@
 				0D9B8A022A9D01D800709A00 /* Extensions + UITextField.swift in Sources */,
 				0D8AAB3B2A9F44F20088987F /* RegisterInputView.swift in Sources */,
 				0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */,
+				0DCA69722AB3079100E19FA8 /* CompareFlowCoordinator.swift in Sources */,
 				0D9B89FB2A9CDBA500709A00 /* Extensions + UImage.swift in Sources */,
 				0DB204C12AA9DBC10040551D /* ColorManager.swift in Sources */,
 				0DBEA97D2AA247260026C441 /* RegistrationViewModelProtocol.swift in Sources */,
+				0DCA69762AB307CB00E19FA8 /* ProfileFlowCoordinator.swift in Sources */,
 				0DBEA9692AA0E4360026C441 /* LoginFlowCoordinator.swift in Sources */,
+				0DCA69662AB3012100E19FA8 /* TabBarCoordinator.swift in Sources */,
 				0DBEA9652AA085BE0026C441 /* AuthManager.swift in Sources */,
 				0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */,
+				0DCA69702AB3073900E19FA8 /* ProfileViewController.swift in Sources */,
 				0DCA69552AAF4B5F00E19FA8 /* FieldsTypeModel.swift in Sources */,
 				0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */,
 				0D8AAB372A9F27140088987F /* LoginViewModel.swift in Sources */,
@@ -552,7 +609,9 @@
 				0DBEA9812AA247510026C441 /* FirebaseManagerProtocol.swift in Sources */,
 				0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */,
 				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
+				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
+				0DCA69742AB307A700E19FA8 /* RatingFlowCoordinator.swift in Sources */,
 				0DBEA98C2AA4DDD90026C441 /* Extensions + String.swift in Sources */,
 				0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */,
 				0D8AAB3D2A9F52880088987F /* RegInputEnum.swift in Sources */,
@@ -573,6 +632,7 @@
 				0D9B89D92A9B6A2900709A00 /* AppDelegate.swift in Sources */,
 				0DCA69642AB2DEEB00E19FA8 /* FirestoreReference.swift in Sources */,
 				0D8AAB462A9FE0CB0088987F /* IconManager.swift in Sources */,
+				0DCA696C2AB3070400E19FA8 /* CompareViewController.swift in Sources */,
 				0DBEA9902AA5AC450026C441 /* ProfilePictureUploadViewController.swift in Sources */,
 				0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */,
 				0DBEA9852AA320040026C441 /* Extension + UIViewController.swift in Sources */,

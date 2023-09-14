@@ -22,7 +22,7 @@ final class RootCoordinator: BaseCoordinator {
 // MARK: - Coordinatable
 extension RootCoordinator: Coordinatable {
     func start() {
-        makeLoginFlowCoordinator().start()
+        makeTabBarFlowCoordinator().start()
     }
 }
 
@@ -33,6 +33,17 @@ extension RootCoordinator {
         coordinator.finishFlow = { [weak self, weak coordinator] in
             guard let self else { return }
             self.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        return coordinator
+    }
+    
+    func makeTabBarFlowCoordinator() -> TabBarCoordinator {
+        let coordinator = TabBarCoordinator(router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            guard let self = self else { return }
+            self.removeDependency(coordinator)
+            self.makeLoginFlowCoordinator().start()
         }
         addDependency(coordinator)
         return coordinator

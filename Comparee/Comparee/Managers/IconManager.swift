@@ -32,11 +32,9 @@ extension UIImage {
     static let splashScreenImage = UIImage(named: "SplashScreenImage")
     
     // TabBar
-    static let homeTabBarIcon = UIImage(systemName: "house")
-    static let settingsTabBarIcon = UIImage(systemName: "gear")
-    static let filesTabBarIcon = UIImage(systemName: "list.bullet")
-    static let importFilesTabBarIcon = UIImage(systemName: "folder")
-    
+    static let homeTabBarIcon = UIImage(named: "HomeTabBar")
+    static let ratingTabBarIcon = UIImage(named: "star.fill")
+    static let profileTabBarIcon = UIImage(systemName: "person.fill")
 }
 
 enum IconManager {
@@ -70,8 +68,7 @@ enum IconManager {
     
     enum TabBar {
         static let homeTabBarIcon = UIImage.homeTabBarIcon
-        static let settingsTabBarIcon = UIImage.settingsTabBarIcon
-        static let filesTabBarIcon = UIImage.filesTabBarIcon
-        static let importFilesTabBarIcon = UIImage.importFilesTabBarIcon
+        static let ratingTabBarIcon = UIImage.ratingTabBarIcon
+        static let profileTabBarIcon = UIImage.profileTabBarIcon
     }
 }
