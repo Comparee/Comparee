@@ -108,9 +108,11 @@ extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, U
     func startCrop(_ image: UIImage) {
         let vc = CropViewController(croppingStyle: .default, image: image)
         vc.delegate = self
-        vc.aspectRatioPreset = .preset4x3
+        
+        let customAspectRatio = CGSize(width: 3, height: 4)
+        vc.customAspectRatio = customAspectRatio
         vc.aspectRatioLockEnabled = true
-        vc.aspectRatioPickerButtonHidden = false
+        vc.aspectRatioPickerButtonHidden = true
         vc.toolbarPosition = .bottom
         vc.doneButtonTitle = "Continue"
         vc.cancelButtonTitle = "Back"
