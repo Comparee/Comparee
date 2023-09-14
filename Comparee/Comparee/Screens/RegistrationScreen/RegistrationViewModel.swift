@@ -11,15 +11,14 @@ import UIKit
 
 final class RegistrationViewModel: RegistrationFlowViewModelProtocol, RegistrationFlowViewModelInput, RegistrationFlowViewModelOutput {
     
+    // MARK: - Injection
+    @Injected(\.firebaseManager) private var firebaseManager: FirebaseManagerProtocol
+    
     // MARK: - Public Properties
     @Published var name: String = ""
     @Published var age: String = ""
     @Published var instagram: String = ""
     var testReg: [FieldsTypesModel] = RegInput.allCases.map { FieldsTypesModel(fieldsTypes: $0) }
-    
-    // MARK: - Injection
-    @Injected(\.firebaseManager)
-    private var firebaseManager: FirebaseManagerProtocol
     
     // MARK: - Private Properties
     private weak var router: LoginFlowCoordinatorOutput?
@@ -35,7 +34,10 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
         self.router = router
         self.authDataResultModel = authDataResultModel
     }
-    
+}
+
+// MARK: - Public methods
+extension RegistrationViewModel {
     func changeRegInput(type: RegInput, text: String?) {
         guard let index = testReg.firstIndex(where: { $0.fieldsTypes == type }), let text else { return }
       
@@ -49,6 +51,7 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
     }
 }
 
+// MARK: - Private methods
 private extension RegistrationViewModel {
     func logIn() {
         Task {

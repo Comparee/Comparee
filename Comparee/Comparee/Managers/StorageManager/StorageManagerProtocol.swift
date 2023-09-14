@@ -15,7 +15,7 @@ protocol StorageManagerProtocol {
     ///   - image: The image to be saved.
     ///   - userId: The unique identifier of the user.
     /// - Returns: A tuple containing the path and name of the saved image.
-    func saveImage(image: UIImage, userId: String) async throws -> (path: String, name: String)
+    func saveImage(_ image: UIImage, userId: String) async throws -> (path: String, name: String)
     
     /// Asynchronously retrieves an image for a given user and path.
     ///

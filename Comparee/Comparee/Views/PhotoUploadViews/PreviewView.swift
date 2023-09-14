@@ -7,18 +7,20 @@
 
 import UIKit
 
-class PreviewView: UIView {
-    lazy var backgroundImage: UIImageView = {
+final class PreviewView: UIView {
+    // MARK: - Private properties
+    private lazy var backgroundImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Image")
+        imageView.image = IconManager.PhotoUpload.preview
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    // MARK: - Public properties
     lazy var cancellButton: UIButton = {
         let button = UIButton()
         let buttonSize = CGSize(width: 60, height: 60)
-        if let arrowImage = UIImage(named: "cross") {
+        if let arrowImage = IconManager.PhotoUpload.cross {
             let resizedArrowImage = arrowImage.resize(to: CGSize(width: 60, height: 60))
             button.setImage(resizedArrowImage, for: .normal)
         }
@@ -28,6 +30,7 @@ class PreviewView: UIView {
         return button
     }()
     
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -37,17 +40,23 @@ class PreviewView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setupView() {
+}
+
+// MARK: - Public methods
+extension PreviewView {
+    func setImage(_ image: UIImage) {
+        backgroundImage.image = image
+    }
+}
+
+// MARK: - Private methods
+private extension PreviewView {
+    func setupView() {
         addSubview(backgroundImage)
         addSubview(cancellButton)
     }
     
-    func setImage(image: UIImage) {
-        backgroundImage.image = image
-    }
-    
-    private func setContraints() {
+    func setContraints() {
         NSLayoutConstraint.activate([
             backgroundImage.topAnchor.constraint(equalTo: self.topAnchor),
             backgroundImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),

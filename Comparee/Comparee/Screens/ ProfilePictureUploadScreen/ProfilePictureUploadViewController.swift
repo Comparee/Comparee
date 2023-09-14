@@ -21,6 +21,7 @@ final class ProfilePictureUploadViewController: UIViewController {
     private var viewModel: ProfilePictureUploadViewModelProtocol!
     private var cancellables: Set<AnyCancellable> = []
     
+    // MARK: - Initialization
     init(viewModel: ProfilePictureUploadViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -37,6 +38,7 @@ final class ProfilePictureUploadViewController: UIViewController {
     }
 }
 
+// MARK: - Private methods
 private extension ProfilePictureUploadViewController {
     func configureViews() {
         bindButton()
@@ -44,8 +46,8 @@ private extension ProfilePictureUploadViewController {
         setConstraints()
     }
     
-    func showImage(image: UIImage) {
-        selectedImage.setImage(image: image)
+    func showImage(_ image: UIImage) {
+        selectedImage.setImage(image)
         selectedImage.translatesAutoresizingMaskIntoConstraints = false
         selectedImage.layer.cornerRadius = 16
         selectedImage.clipsToBounds = true
@@ -65,7 +67,7 @@ private extension ProfilePictureUploadViewController {
             .sink { [weak self] _ in
                 guard let self else { return }
                 
-                viewModel.input.plusButtonPressed(viewController: self)
+                viewModel.input.addPhotoButtonPressed(viewController: self)
             }
             .store(in: &cancellables)
         
@@ -88,7 +90,7 @@ private extension ProfilePictureUploadViewController {
     }
     
 }
-
+// MARK: - UIImagePickerControllerDelegate and CropViewControllerDelegate methods
 extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, CropViewControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
@@ -99,12 +101,11 @@ extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, U
         
         picker.dismiss(animated: true)
         
-        startCrop(image: image)
-        //viewModel.input.startCrop(image: image, viewController: self)
+        startCrop(image)
     }
     
-    //   Only for test , should be deleted
-    func startCrop(image: UIImage) {
+    // TODO: - Replace this method to coordinator
+    func startCrop(_ image: UIImage) {
         let vc = CropViewController(croppingStyle: .default, image: image)
         vc.delegate = self
         vc.aspectRatioPreset = .preset4x3
@@ -122,8 +123,8 @@ extension ProfilePictureUploadViewController: UIImagePickerControllerDelegate, U
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         cropViewController.dismiss(animated: true)
-        viewModel.input.image = image
-        showImage(image: image)
+        viewModel.input.setImage(image)
+        showImage(image)
         selectedImage.isHidden = false
     }
 }
@@ -143,7 +144,7 @@ private extension ProfilePictureUploadViewController {
     }
     
     func setConstraints() {
-        if isDeviceWithSafeArea() {
+        if isDeviceWithSafeArea {
             regButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -66).isActive = true
         } else {
             regButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true

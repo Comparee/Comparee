@@ -13,9 +13,13 @@ final class StorageManager: StorageManagerProtocol {
     // MARK: - Private properties
     private let storage = Storage.storage().reference()
     private var imagesReference: StorageReference {
-        storage.child("images")
+        storage.child(DataTypeReference.images.rawValue)
     }
-    
+    private var maxSize: Int64 = 3 * 1024 * 1024
+}
+
+// MARK: - Public methods
+extension StorageManager {
     func getImage(userId: String, path: String) async throws -> UIImage {
         let data = try await getData(userId: userId, path: path)
         
@@ -26,7 +30,7 @@ final class StorageManager: StorageManagerProtocol {
         return image
     }
     
-    func saveImage(image: UIImage, userId: String) async throws -> (path: String, name: String) {
+    func saveImage(_ image: UIImage, userId: String) async throws -> (path: String, name: String) {
         guard let data = image.jpegData(compressionQuality: 1) else {
             throw URLError(.backgroundSessionWasDisconnected)
         }
@@ -39,6 +43,7 @@ final class StorageManager: StorageManagerProtocol {
     }
 }
 
+// MARK: - Private methods
 private extension StorageManager {
     func userReference(userId: String) -> StorageReference {
         storage.child("users").child(userId)
@@ -53,7 +58,7 @@ private extension StorageManager {
     }
     
     func getData(userId: String, path: String) async throws -> Data {
-        try await storage.child(path).data(maxSize: 3 * 1024 * 1024)
+        try await storage.child(path).data(maxSize: maxSize )
     }
     
     func saveImage(data: Data, userId: String) async throws -> (path: String, name: String) {

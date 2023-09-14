@@ -17,11 +17,10 @@ enum FontName: String {
 
 extension UIFont {
     static func customFont(_ fontName: FontName, size: CGFloat) -> UIFont {
-        if let font = UIFont(name: fontName.rawValue, size: size) {
-            return font
-        } else {
-            print(#function)
+        guard let font = UIFont(name: fontName.rawValue, size: size) else {
             return UIFont.systemFont(ofSize: size)
         }
+        
+        return font
     }
 }

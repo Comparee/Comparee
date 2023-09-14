@@ -107,7 +107,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
-// MARK: - Extension for views configurations
+// MARK: - Private methods
 private extension LoginViewController {
     func configureUI() {
         setupViews()
@@ -179,8 +179,8 @@ private extension LoginViewController {
     }
 }
 
-// MARK: - Bind button
-extension LoginViewController {
+// MARK: - Bind views
+private extension LoginViewController {
     func bindButton() {
         appleSignInButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in

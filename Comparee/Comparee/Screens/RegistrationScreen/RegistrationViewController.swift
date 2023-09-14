@@ -43,12 +43,18 @@ final class RegistrationViewController: BaseViewController {
     }
 }
 
-// MARK: - UI Setup
+// MARK: - Private methods
 private extension RegistrationViewController {
     // Binding views for viewModel
     func bindViewModel() {
         bindButtons()
         bindTextFields()
+    }
+    
+    func setUpDelegates() {
+        nickNameField.textField.delegate = self
+        ageField.textField.delegate = self
+        instagramField.textField.delegate = self
     }
     
     func setupViews() {
@@ -103,7 +109,7 @@ private extension RegistrationViewController {
     
     func subscribeToAppWillResignActiveStatus() {
         NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.dismissKeyboard()
             }
@@ -119,17 +125,17 @@ private extension RegistrationViewController {
 private extension RegistrationViewController {
     func bindTextFields() {
         nickNameField.textField.textPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .assign(to: \.name, on: viewModel.input)
             .store(in: &cancellables)
         
         ageField.textField.textPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .assign(to: \.age, on: viewModel.input)
             .store(in: &cancellables)
         
         instagramField.textField.textPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .assign(to: \.instagram, on: viewModel.input)
             .store(in: &cancellables)
     }
@@ -157,12 +163,6 @@ private extension RegistrationViewController {
 
 // MARK: - UITextFieldDelegate
 extension RegistrationViewController: UITextFieldDelegate {
-    private func setUpDelegates() {
-        nickNameField.textField.delegate = self
-        ageField.textField.delegate = self
-        instagramField.textField.delegate = self
-    }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField {
         case nickNameField.textField:

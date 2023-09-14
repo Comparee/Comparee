@@ -70,7 +70,8 @@
 		0DCA69552AAF4B5F00E19FA8 /* FieldsTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69542AAF4B5F00E19FA8 /* FieldsTypeModel.swift */; };
 		0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69562AAF64E700E19FA8 /* DBUser.swift */; };
 		0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69582AAF901300E19FA8 /* PreviewView.swift */; };
-		0DCA695E2AB0914100E19FA8 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA695D2AB0914100E19FA8 /* CropViewController.swift */; };
+		0DCA69622AB2DE2300E19FA8 /* DataTypeReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69612AB2DE2300E19FA8 /* DataTypeReference.swift */; };
+		0DCA69642AB2DEEB00E19FA8 /* FirestoreReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -137,7 +138,8 @@
 		0DCA69542AAF4B5F00E19FA8 /* FieldsTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldsTypeModel.swift; sourceTree = "<group>"; };
 		0DCA69562AAF64E700E19FA8 /* DBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 		0DCA69582AAF901300E19FA8 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
-		0DCA695D2AB0914100E19FA8 /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		0DCA69612AB2DE2300E19FA8 /* DataTypeReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTypeReference.swift; sourceTree = "<group>"; };
+		0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReference.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -350,6 +352,7 @@
 			children = (
 				0DB204C72AA9EAB10040551D /* StorageManager.swift */,
 				0DB204CC2AAA15AD0040551D /* StorageManagerProtocol.swift */,
+				0DCA69612AB2DE2300E19FA8 /* DataTypeReference.swift */,
 			);
 			path = StorageManager;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				0DBEA97E2AA247430026C441 /* FirebaseManager.swift */,
+				0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */,
 				0DBEA9802AA247510026C441 /* FirebaseManagerProtocol.swift */,
 				0DCA69562AAF64E700E19FA8 /* DBUser.swift */,
 			);
@@ -394,7 +398,6 @@
 		0DBEA98E2AA5ABFD0026C441 /*  ProfilePictureUploadScreen */ = {
 			isa = PBXGroup;
 			children = (
-				0DCA695D2AB0914100E19FA8 /* CropViewController.swift */,
 				0DBEA98F2AA5AC450026C441 /* ProfilePictureUploadViewController.swift */,
 				0DB204C22AA9E9660040551D /* ProfilePictureUploadViewModel.swift */,
 				0DB204C42AA9E98A0040551D /* ProfilePictureUploadViewModelProtocol.swift */,
@@ -544,6 +547,7 @@
 				0DB204C82AA9EAB10040551D /* StorageManager.swift in Sources */,
 				0DB204CD2AAA15AD0040551D /* StorageManagerProtocol.swift in Sources */,
 				0DBEA98A2AA3CCF50026C441 /* BaseViewControllerProtocol.swift in Sources */,
+				0DCA69622AB2DE2300E19FA8 /* DataTypeReference.swift in Sources */,
 				0DBEA9672AA09E450026C441 /* AuthManagerProtocol.swift in Sources */,
 				0DBEA9812AA247510026C441 /* FirebaseManagerProtocol.swift in Sources */,
 				0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */,
@@ -567,7 +571,7 @@
 				0DBEA9972AA6292F0026C441 /* RoundedWhiteView.swift in Sources */,
 				0D9B8A072A9D2DAE00709A00 /* BaseCoordinator.swift in Sources */,
 				0D9B89D92A9B6A2900709A00 /* AppDelegate.swift in Sources */,
-				0DCA695E2AB0914100E19FA8 /* CropViewController.swift in Sources */,
+				0DCA69642AB2DEEB00E19FA8 /* FirestoreReference.swift in Sources */,
 				0D8AAB462A9FE0CB0088987F /* IconManager.swift in Sources */,
 				0DBEA9902AA5AC450026C441 /* ProfilePictureUploadViewController.swift in Sources */,
 				0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */,

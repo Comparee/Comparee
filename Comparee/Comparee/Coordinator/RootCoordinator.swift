@@ -8,9 +8,11 @@
 import UIKit
 
 final class RootCoordinator: BaseCoordinator {
-
+    
+    // MARK: - Private properties
     private var router: Routable
 
+    // MARK: - Initialization
     init(router: Routable) {
         self.router = router
         super.init()
@@ -24,7 +26,7 @@ extension RootCoordinator: Coordinatable {
     }
 }
 
-// MARK: - Extension for making a coordinators for every flow
+// MARK: - Public methods
 extension RootCoordinator {
     func makeLoginFlowCoordinator() -> LoginFlowCoordinator {
         let coordinator = LoginFlowCoordinator(router: router)

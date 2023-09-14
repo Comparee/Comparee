@@ -58,11 +58,11 @@ extension AppRouter: Routable {
     func dismissModule(animated: Bool, completion: CompletionBlock?) {
         rootController?.dismiss(animated: animated, completion: completion)
     }
-
+    
     func dismissScreen() {
         rootController?.navigationController?.visibleViewController?.dismiss(animated: true)
     }
-
+    
     func popModule(animated: Bool) {
         if let controller = rootController?.popViewController(animated: animated) {
             runCompletion(for: controller)
@@ -73,7 +73,9 @@ extension AppRouter: Routable {
         guard
             let controller = module?.toPresent,
             !(controller is UINavigationController)
-        else { assertionFailure("⚠️Deprecated push UINavigationController."); return }
+        else { assertionFailure("⚠️Deprecated push UINavigationController.")
+            return
+        }
         
         if let completion = completion {
             completions[controller] = completion

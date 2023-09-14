@@ -13,19 +13,23 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
     // MARK: - Injection
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
     
-    // MARK: - Private property
-    private var uid = Auth.auth().currentUser?.uid
+    // MARK: - Private properties
+    private let uid = Auth.auth().currentUser?.uid
     private weak var router: LoginFlowCoordinatorOutput?
-    
-    // MARK: - Public property
-    var image: UIImage?
+    private var image: UIImage?
     
     // MARK: - Initialization
     init(router: LoginFlowCoordinatorOutput) {
         self.router = router
     }
+}
+
+// MARK: - Public methods
+extension ProfilePictureUploadViewModel{
+    func setImage(_ image: UIImage) {
+        self.image = image
+    }
     
-    // MARK: - Public methods
     func continueButtonPressed() {
         saveImage()
     }
@@ -34,17 +38,14 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
         image = nil
     }
     
-    func plusButtonPressed(viewController: UIViewController) {
+    func addPhotoButtonPressed(viewController: UIViewController) {
         Task {
             await router?.trigger(.showPhotoPicker(viewController: viewController))
         }
     }
     
-    func startCrop(image: UIImage, viewController: UIViewController) {
-        Task {
-            await router?.trigger(.showPhotoCrop(image: image, viewController: viewController))
-        }
-    }
+    //TODO: - Fix calling trigger in coordinator
+    func startCrop(_ image: UIImage, viewController: UIViewController) {}
     
     func showAlert() async {
         await router?.trigger(.base(.alert(AlertView())))
@@ -61,7 +62,7 @@ private extension ProfilePictureUploadViewModel {
             }
             
             do {
-                _ = try await storageManager.saveImage(image: image, userId: uid)
+                _ = try await storageManager.saveImage(image, userId: uid)
             } catch {
                 await showAlert()
             }

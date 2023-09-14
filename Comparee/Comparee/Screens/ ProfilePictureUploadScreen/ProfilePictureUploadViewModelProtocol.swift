@@ -15,11 +15,6 @@ protocol ProfilePictureUploadViewModelInput: BaseViewModuleInputProtocol {
     /// This method should be implemented to handle the action when the continue button is pressed.
     func continueButtonPressed()
     
-    /// The image to be uploaded or displayed.
-    ///
-    /// This property allows getting and setting the image that will be uploaded or displayed in the UI.
-    var image: UIImage? { get set }
-    
     /// Dismiss the currently displayed image.
     ///
     /// Implement this method to dismiss or clear the currently displayed image in the UI.
@@ -33,14 +28,19 @@ protocol ProfilePictureUploadViewModelInput: BaseViewModuleInputProtocol {
     /// Triggered when the user presses the plus button.
     ///
     /// - Parameter viewController: The view controller where the plus button was pressed.
-    func plusButtonPressed(viewController: UIViewController)
+    func addPhotoButtonPressed(viewController: UIViewController)
+    
+    // Set the image to be displayed or processed.
+    ///
+    /// - Parameter image: The UIImage to be set.
+    func setImage(_ image: UIImage)
     
     /// Start the image cropping process.
     ///
     /// - Parameters:
     ///   - image: The image to be cropped.
     ///   - viewController: The view controller from which the cropping process is initiated.
-    func startCrop(image: UIImage, viewController: UIViewController)
+    func startCrop(_ image: UIImage, viewController: UIViewController)
 }
 
 protocol ProfilePictureUploadViewModelOutput {}

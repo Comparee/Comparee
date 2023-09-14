@@ -9,10 +9,12 @@ import UIKit
 
 extension UIViewController {
     
+    // Creates a custom "Back" button for the navigation bar
     func createCustomNavigationBar() {
         navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
+    // Creates a custom title view with the specified contact name
     func createCustomTitleView(contactName: String) -> UIView {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60)
@@ -35,8 +37,8 @@ extension UIViewController {
         return view
     }
 
+    // Creates a custom button with an image and a specified selector
     func createCustomButton(imageName: String, selector: Selector) -> UIBarButtonItem {
-        
         let button = UIButton(type: .system)
         button.setImage(
             UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate),
@@ -51,15 +53,14 @@ extension UIViewController {
         let menuBarItem = UIBarButtonItem(customView: button)
         return menuBarItem
     }
-    
-    func isDeviceWithSafeArea() -> Bool {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            if window.safeAreaInsets.bottom > 0 {
-                return true
-            }
+
+    // Determines if the device has a safe area
+    var isDeviceWithSafeArea: Bool {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
             return false
         }
-        return false
+        
+        return window.safeAreaInsets.bottom > 0
     }
 }

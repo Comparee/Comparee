@@ -7,94 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B"
-            shouldBeEnabled = "Yes"
+            uuid = "74CDB503-E30F-447C-B5EB-4DF7BA7CF7A5"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Comparee/Screens/ ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
+            filePath = "Comparee/Extensions/Extension + UIViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "10"
-            endingLineNumber = "10"
-            landmarkName = "unknown"
-            landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - ef2e689fec9ab579"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Comparee.ProfilePictureUploadViewModel.deinit"
-                  moduleName = "Comparee"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "10"
-                  endingLineNumber = "10"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - bc687d686f25b984"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Comparee.ProfilePictureUploadViewModel.__deallocating_deinit"
-                  moduleName = "Comparee"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - f64f07f589b00b51"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Comparee.ProfilePictureUploadViewModel.__allocating_init() -&gt; Comparee.ProfilePictureUploadViewModel"
-                  moduleName = "Comparee"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - 3ca1f8f29f64afaf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Comparee.ProfilePictureUploadViewModel.init() -&gt; Comparee.ProfilePictureUploadViewModel"
-                  moduleName = "Comparee"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "11"
-                  endingLineNumber = "11"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "CDF22AA4-1E2B-4EA4-8962-BED299EA5F5B - ef2e689fec9ab6b7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Comparee.ProfilePictureUploadViewModel.deinit"
-                  moduleName = "Comparee"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/andrejlogvinov/Desktop/Comparee/Comparee/Comparee/Screens/%20ProfilePictureUploadScreen/ProfilePictureUploadViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "createCustomTitleView(contactName:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

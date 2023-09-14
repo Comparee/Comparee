@@ -13,7 +13,7 @@ struct AuthDataResultModel {
     let email: String?
 
     init(user: User?) {
-        self.uid = user?.uid ?? "404"
+        self.uid = user?.uid ?? ""
         self.email = user?.email
     }
 }

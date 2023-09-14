@@ -9,12 +9,15 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
+
 final class FirebaseManager: FirebaseManagerProtocol {
     
     // MARK: - Private properties
-    private let userCollection: CollectionReference = Firestore.firestore().collection("users")
-    
-    // MARK: - Implementation of protocol functions
+    private let userCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.users.rawValue)
+}
+
+// MARK: - Public methods
+extension FirebaseManager {
     func createNewUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }

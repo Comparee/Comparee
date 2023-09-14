@@ -12,33 +12,22 @@ import Foundation
 
 final class AuthManager: NSObject {
     
-    // MARK: - Properties
-    
+    // MARK: - Private properties
     private var currentNonce: String?
     private var completion: ((Result<AuthDataResultModel, Error>) -> Void)?
     
     // MARK: - Initialization
-    
     override init() {
         super.init()
     }
 }
 
+// MARK: - Authentication Methods
 extension AuthManager: AuthManagerProtocol {
-    
-    // MARK: - Authentication Methods
-    
-    /// Sign out the current user asynchronously.
-    ///
-    /// - Throws: An error if signing out fails.
     func signOut() async throws {
         try Auth.auth().signOut()
     }
     
-    /// Start the Sign-In with Apple authentication flow asynchronously.
-    ///
-    /// - Returns: An `AuthDataResultModel` object representing the result of the authentication.
-    /// - Throws: An error if the authentication flow encounters an issue.
     func startSignInWithAppleFlow() async throws -> AuthDataResultModel {
         try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.startSignInWithAppleFlow { result in
@@ -55,10 +44,8 @@ extension AuthManager: AuthManagerProtocol {
     }
 }
 
+// MARK: - Private methods
 private extension AuthManager {
-    
-    // MARK: - Private Methods
-    
     /// Start the Sign-In with Apple authentication flow.
     func startSignInWithAppleFlow(completion: @escaping (Result<AuthDataResultModel, Error>) -> Void) {
         let nonce = randomNonceString()
@@ -104,25 +91,25 @@ private extension AuthManager {
         let hashString = hashedData.compactMap {
             String(format: "%02x", $0)
         }
-        .joined()
+            .joined()
         
         return hashString
     }
 }
 
+// MARK: - ASAuthorizationControllerDelegate methods
 extension AuthManager: ASAuthorizationControllerDelegate {
-    
-    // MARK: - ASAuthorizationControllerDelegate Methods
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard
             let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let appleIDToken = appleIDCredential.identityToken,
             let idTokenString = String(data: appleIDToken, encoding: .utf8),
-            let nonce = currentNonce else {
-                completion?(.failure(URLError(.badServerResponse)))
-                return
+            let nonce = currentNonce
+        else {
+            completion?(.failure(URLError(.badServerResponse)))
+            return
         }
-       
+        
         // Initialize a Firebase credential, including the user's full name.
         let credential = OAuthProvider.appleCredential(
             withIDToken: idTokenString,
@@ -131,26 +118,28 @@ extension AuthManager: ASAuthorizationControllerDelegate {
         )
         
         Auth.auth().signIn(with: credential) { [weak self] authResult, error in
-            if let error = error {
-                self?.completion?(.failure(error))
-            } else {
-                self?.completion?(.success(AuthDataResultModel(user: authResult?.user)))
+            guard let self = self else { return }
+            
+            guard error == nil else {
+                self.completion?(.failure(error!))
+                return
             }
+            
+            self.completion?(.success(AuthDataResultModel(user: authResult?.user)))
         }
     }
 }
 
+// MARK: - ASAuthorizationControllerPresentationContextProviding methods
 extension AuthManager: ASAuthorizationControllerPresentationContextProviding {
-    
-    // MARK: - ASAuthorizationControllerPresentationContextProviding Methods
-    
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            return window
-        } else {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first
+        else {
             // Fallback to a default window if there is no valid window scene.
             return UIWindow()
         }
+        
+        return window
     }
 }
