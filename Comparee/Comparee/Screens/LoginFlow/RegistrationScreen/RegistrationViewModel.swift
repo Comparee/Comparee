@@ -21,7 +21,7 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
     var testReg: [FieldsTypesModel] = RegInput.allCases
         .filter { $0 != .instagram }
         .map { FieldsTypesModel(fieldsTypes: $0) }
-
+    
     
     // MARK: - Private Properties
     private weak var router: LoginFlowCoordinatorOutput?
@@ -43,7 +43,7 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
 extension RegistrationViewModel {
     func changeRegInput(type: RegInput, text: String?) {
         guard let index = testReg.firstIndex(where: { $0.fieldsTypes == type }), let text else { return }
-      
+        
         testReg[index].changeTextState(needChange: text.isEmpty)
     }
     
@@ -59,7 +59,9 @@ private extension RegistrationViewModel {
     func logIn() {
         Task {
             try await firebaseManager.createNewUser(user: DBUser(userId: authDataResultModel.uid, email: authDataResultModel.email, name: self.name, age: self.age, instagram: self.instagram))
-            await router?.trigger(.showPhotoUploadScreen)
+            await MainActor.run {
+                router?.trigger(.showPhotoUploadScreen)
+            }
         }
     }
 }

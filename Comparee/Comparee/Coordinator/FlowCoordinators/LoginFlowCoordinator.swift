@@ -6,7 +6,6 @@
 //
 
 import SwiftEntryKit
-import TOCropViewController
 import UIKit
 import CropViewController
 
@@ -20,7 +19,7 @@ enum LoginFlowRoute: Route {
 
 protocol LoginFlowCoordinatorOutput: AnyObject {
     var finishFlow: CompletionBlock? { get set }
-    func trigger(_ route: LoginFlowRoute) async
+    func trigger(_ route: LoginFlowRoute)
 }
 
 final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
@@ -42,8 +41,8 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
         super.init()
     }
     
-    @MainActor
-    func trigger(_ route: LoginFlowRoute) async {
+    
+    func trigger(_ route: LoginFlowRoute) {
         switch route {
         case .showLoginScreen:
             let loginVM = LoginViewModel(router: self)
@@ -74,9 +73,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
 // MARK: - Coordinatable
 extension LoginFlowCoordinator: Coordinatable {
     func start() {
-        Task {
-            await trigger(.showLoginScreen)
-        }
+        trigger(.showLoginScreen)
     }
 }
 

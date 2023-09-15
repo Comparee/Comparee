@@ -36,6 +36,10 @@ private extension AppRouter {
 }
 
 extension AppRouter: Routable {
+    func clearRootModule(){
+        rootController?.viewControllers.removeAll()
+    }
+    
     func setRootModule(_ module: Presentable?, hideBar: Bool) {
         guard let controller = module?.toPresent else { return }
         

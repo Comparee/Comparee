@@ -20,8 +20,8 @@ final class CompareFlowCoordinator: BaseCoordinator, CompareFlowCoordinatorOutpu
     
     var finishFlow: CompletionBlock?
     
-    fileprivate let router: Routable
-    fileprivate let rootController: UIViewController?
+    private let router: Routable
+    private let rootController: UIViewController?
     
     private weak var tabBarRouter: TabBarCoordinatorOutput?
     
@@ -34,9 +34,9 @@ final class CompareFlowCoordinator: BaseCoordinator, CompareFlowCoordinatorOutpu
         let navVC = NavigationController()
         rootController = navVC
         rootController!.tabBarItem = UITabBarItem(
-            title: "Diffable",
-            image: UIImage(systemName: "wrench.adjustable"),
-            selectedImage: UIImage(systemName: "wrench.adjustable")
+            title: "Compare",
+            image: IconManager.TabBar.homeTabBarIcon,
+            selectedImage: IconManager.TabBar.homeTabBarIcon
         )
         
         router = AppRouter(rootController: navVC)
@@ -49,9 +49,7 @@ final class CompareFlowCoordinator: BaseCoordinator, CompareFlowCoordinatorOutpu
             let vc = CompareViewController()
             router.push(vc, animated: true)
         }
-        
     }
-   
 }
 
 // MARK: - Coordinatable

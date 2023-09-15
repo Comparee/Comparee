@@ -33,7 +33,7 @@ extension UIImage {
     
     // TabBar
     static let homeTabBarIcon = UIImage(named: "HomeTabBar")
-    static let ratingTabBarIcon = UIImage(named: "star.fill")
+    static let ratingTabBarIcon = UIImage(systemName: "star.fill")
     static let profileTabBarIcon = UIImage(systemName: "person.fill")
 }
 

@@ -11,7 +11,7 @@ final class RootCoordinator: BaseCoordinator {
     
     // MARK: - Private properties
     private var router: Routable
-
+    
     // MARK: - Initialization
     init(router: Routable) {
         self.router = router
@@ -22,7 +22,8 @@ final class RootCoordinator: BaseCoordinator {
 // MARK: - Coordinatable
 extension RootCoordinator: Coordinatable {
     func start() {
-        makeTabBarFlowCoordinator().start()
+        //makeTabBarFlowCoordinator().start()
+        makeLoginFlowCoordinator().start()
     }
 }
 
@@ -32,7 +33,12 @@ extension RootCoordinator {
         let coordinator = LoginFlowCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             guard let self else { return }
+            
             self.removeDependency(coordinator)
+            
+            self.router.clearRootModule()
+            self.makeTabBarFlowCoordinator().start()
+            print("Func is called")
         }
         addDependency(coordinator)
         return coordinator

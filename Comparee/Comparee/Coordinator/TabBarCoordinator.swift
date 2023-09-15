@@ -23,11 +23,12 @@ protocol TabBarCoordinatorOutput: AnyObject {
 }
 
 final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
-    
+    // MARK: - Public properties
     var finishFlow: CompletionBlock?
     
+    // MARK: - Private properties
     private var tabBarController: UITabBarController?
-    fileprivate let router : Routable
+    private let router : Routable
     private var isSettingsHidden = true
     private lazy var mainScreenCoordinator: CompareFlowCoordinator = {
         let coordinator = CompareFlowCoordinator()
@@ -53,11 +54,15 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
         return coordinator
     }()
     
+    // MARK: - Initialization
     init(router: Routable) {
         self.router = router
         super.init()
     }
-    
+}
+
+// MARK: - Public methods
+extension TabBarCoordinator {
     func trigger(_ route: TabBarRoute) {
         switch route {
         case .main:
@@ -65,7 +70,8 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
             
             tabBarController = UITabBarController()
             
-            tabBarController?.tabBar.backgroundColor = .systemBackground
+            tabBarController?.tabBar.backgroundColor = ColorManager.TabBar.backgroundColor
+            tabBarController?.tabBar.tintColor = .white
             
             if let mainCtrl = mainScreenCoordinator.getRootController() as? NavigationController {
                 ctrls.append(mainCtrl)
@@ -78,7 +84,6 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
             if let profileCtrl = profileCoordinator.getRootController() as? NavigationController {
                 ctrls.append(profileCtrl)
             }
-            
             
             tabBarController?.viewControllers = ctrls
             router.setRootModule(tabBarController, hideBar: true)

@@ -20,8 +20,8 @@ final class ProfileFlowCoordinator: BaseCoordinator, ProfileFlowCoordinatorOutpu
     
     var finishFlow: CompletionBlock?
     
-    fileprivate let router: Routable
-    fileprivate let rootController: UIViewController?
+    private let router: Routable
+    private let rootController: UIViewController?
     
     private weak var tabBarRouter: TabBarCoordinatorOutput?
     
@@ -34,9 +34,9 @@ final class ProfileFlowCoordinator: BaseCoordinator, ProfileFlowCoordinatorOutpu
         let navVC = NavigationController()
         rootController = navVC
         rootController!.tabBarItem = UITabBarItem(
-            title: "Diffable",
-            image: UIImage(systemName: "wrench.adjustable"),
-            selectedImage: UIImage(systemName: "wrench.adjustable")
+            title: "Profile",
+            image: IconManager.TabBar.profileTabBarIcon,
+            selectedImage: IconManager.TabBar.profileTabBarIcon
         )
         
         router = AppRouter(rootController: navVC)

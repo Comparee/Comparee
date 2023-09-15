@@ -30,6 +30,7 @@ protocol Routable: Presentable {
     
     func setRootModule(_ module: Presentable?)
     func setRootModule(_ module: Presentable?, hideBar: Bool)
+    func clearRootModule()
     
     func present(_ module: Presentable?)
     func present(_ module: Presentable?, animated: Bool)

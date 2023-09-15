@@ -39,32 +39,33 @@ extension ProfilePictureUploadViewModel{
     }
     
     func addPhotoButtonPressed(viewController: UIViewController) {
-        Task {
-            await router?.trigger(.showPhotoPicker(viewController: viewController))
-        }
+        router?.trigger(.showPhotoPicker(viewController: viewController))
     }
     
-    //TODO: - Fix calling trigger in coordinator
+    //TODO: - Fix calling of trigger in coordinator
     func startCrop(_ image: UIImage, viewController: UIViewController) {}
     
-    func showAlert() async {
-        await router?.trigger(.base(.alert(AlertView())))
+    func showAlert() {
+        router?.trigger(.base(.alert(AlertView())))
     }
 }
 
 // MARK: - Private methods
 private extension ProfilePictureUploadViewModel {
     func saveImage() {
+        guard let image = image, let uid = uid else {
+            showAlert()
+            return
+        }
+        
         Task {
-            guard let image = image, let uid = uid else {
-                await showAlert()
-                return
-            }
-            
             do {
                 _ = try await storageManager.saveImage(image, userId: uid)
+                await MainActor.run {
+                    router?.finishFlow?()
+                }
             } catch {
-                await showAlert()
+                await MainActor.run { showAlert() }
             }
         }
     }

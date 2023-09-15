@@ -31,7 +31,7 @@ extension StorageManager {
     }
     
     func saveImage(_ image: UIImage, userId: String) async throws -> (path: String, name: String) {
-        guard let data = image.jpegData(compressionQuality: 1) else {
+        guard let data = image.jpegData(compressionQuality: 0.2) else {
             throw URLError(.backgroundSessionWasDisconnected)
         }
         
