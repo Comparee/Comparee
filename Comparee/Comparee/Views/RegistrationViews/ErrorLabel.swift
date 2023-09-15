@@ -22,7 +22,7 @@ private extension ErrorLabel {
     func configure() {
         frame = CGRect(x: 0, y: 0, width: 149, height: 16)
         textColor = ColorManager.Registration.errorLabelColor
-        font = UIFont(name: "Inter-Regular", size: 12)
+        font = UIFont.systemFont(ofSize: 12, weight: .regular)
         translatesAutoresizingMaskIntoConstraints = false
         
         let paragraphStyle = NSMutableParagraphStyle()
