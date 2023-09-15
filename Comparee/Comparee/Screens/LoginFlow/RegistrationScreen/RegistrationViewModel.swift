@@ -18,7 +18,10 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
     @Published var name: String = ""
     @Published var age: String = ""
     @Published var instagram: String = ""
-    var testReg: [FieldsTypesModel] = RegInput.allCases.map { FieldsTypesModel(fieldsTypes: $0) }
+    var testReg: [FieldsTypesModel] = RegInput.allCases
+        .filter { $0 != .instagram }
+        .map { FieldsTypesModel(fieldsTypes: $0) }
+
     
     // MARK: - Private Properties
     private weak var router: LoginFlowCoordinatorOutput?

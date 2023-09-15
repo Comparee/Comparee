@@ -1,25 +1,2 @@
-# macOS Finder
-.DS_Store
 
-# Xcode
-xcuserdata/
-*.xcworkspace/
-*.xcuserstate
-project.xcworkspace/
-xcuserdata/
-
-# Swift Package Manager
-.build/
-Package.pins
-Package.resolved
-
-# Carthage
-Carthage/Build/
-
-# CocoaPods
-Pods/
-Podfile.lock
-
-# Accio dependency management
-Dependencies/
-.accio/
+Comparee/Comparee.xcodeproj/project.xcworkspace/xcuserdata/andrejlogvinov.xcuserdatad/UserInterfaceState.xcuserstate
