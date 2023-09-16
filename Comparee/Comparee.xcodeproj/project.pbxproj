@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */; };
+		0D1F7AFC2AB5B3420008D9F8 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */; };
 		0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */; };
 		0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */; };
 		0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0D8AAB302A9F1D330088987F /* FirebaseAuth */; };
@@ -84,6 +86,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManagerProtocol.swift; sourceTree = "<group>"; };
+		0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyLabel.swift; sourceTree = "<group>"; };
 		0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		0D8AAB362A9F27140088987F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -175,6 +179,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D1F7AF62AB5B0910008D9F8 /* UIManagers */ = {
+			isa = PBXGroup;
+			children = (
+				0DBEA9622AA0830A0026C441 /* FontManager.swift */,
+				0D8AAB452A9FE0CB0088987F /* IconManager.swift */,
+				0DB204C02AA9DBC10040551D /* ColorManager.swift */,
+			);
+			path = UIManagers;
+			sourceTree = "<group>";
+		};
+		0D1F7AF72AB5B26A0008D9F8 /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */,
+				0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */,
+			);
+			path = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
+		0D1F7AF82AB5B27A0008D9F8 /* UserManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserManager;
+			sourceTree = "<group>";
+		};
 		0D8AAB152A9E868F0088987F /* RegistrationViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,9 +334,9 @@
 		0D9B89FD2A9CFF7C00709A00 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0DB204C02AA9DBC10040551D /* ColorManager.swift */,
-				0D8AAB452A9FE0CB0088987F /* IconManager.swift */,
-				0DBEA9622AA0830A0026C441 /* FontManager.swift */,
+				0D1F7AF82AB5B27A0008D9F8 /* UserManager */,
+				0D1F7AF72AB5B26A0008D9F8 /* UserDefaultsManager */,
+				0D1F7AF62AB5B0910008D9F8 /* UIManagers */,
 				0DB204C62AA9EA810040551D /* StorageManager */,
 				0DBEA9822AA247570026C441 /* AuthManager */,
 				0DBEA9832AA247720026C441 /* FirebaseManager */,
@@ -585,6 +615,7 @@
 				0D9B8A022A9D01D800709A00 /* Extensions + UITextField.swift in Sources */,
 				0D8AAB3B2A9F44F20088987F /* RegisterInputView.swift in Sources */,
 				0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */,
+				0D1F7AFC2AB5B3420008D9F8 /* UserDefaultsManager.swift in Sources */,
 				0DCA69722AB3079100E19FA8 /* CompareFlowCoordinator.swift in Sources */,
 				0D9B89FB2A9CDBA500709A00 /* Extensions + UImage.swift in Sources */,
 				0DB204C12AA9DBC10040551D /* ColorManager.swift in Sources */,
@@ -609,6 +640,7 @@
 				0DBEA9812AA247510026C441 /* FirebaseManagerProtocol.swift in Sources */,
 				0D9B89F82A9CD12000709A00 /* AuthButton.swift in Sources */,
 				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
+				0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */,
 				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
 				0DCA69742AB307A700E19FA8 /* RatingFlowCoordinator.swift in Sources */,

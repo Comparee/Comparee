@@ -8,9 +8,14 @@
 import UIKit
 
 final class RootCoordinator: BaseCoordinator {
+    // MARK: - Injection
+    @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Private properties
     private var router: Routable
+    private var isUserAuthorised: Bool {
+        return userDefaultsManager.isUserAuthorised
+    }
     
     // MARK: - Initialization
     init(router: Routable) {
@@ -22,8 +27,11 @@ final class RootCoordinator: BaseCoordinator {
 // MARK: - Coordinatable
 extension RootCoordinator: Coordinatable {
     func start() {
-        //makeTabBarFlowCoordinator().start()
-        makeLoginFlowCoordinator().start()
+        if isUserAuthorised {
+            makeTabBarFlowCoordinator().start()
+        } else {
+            makeLoginFlowCoordinator().start()
+        }
     }
 }
 
@@ -38,7 +46,6 @@ extension RootCoordinator {
             
             self.router.clearRootModule()
             self.makeTabBarFlowCoordinator().start()
-            print("Func is called")
         }
         addDependency(coordinator)
         return coordinator

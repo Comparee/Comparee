@@ -12,6 +12,7 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
     
     // MARK: - Injection
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
+    @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Private properties
     private let uid = Auth.auth().currentUser?.uid
@@ -64,6 +65,7 @@ private extension ProfilePictureUploadViewModel {
                 await MainActor.run {
                     router?.finishFlow?()
                 }
+                userDefaultsManager.isUserAuthorised = true
             } catch {
                 await MainActor.run { showAlert() }
             }
