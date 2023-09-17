@@ -72,6 +72,7 @@ extension TabBarCoordinator {
             
             tabBarController?.tabBar.backgroundColor = ColorManager.TabBar.backgroundColor
             tabBarController?.tabBar.tintColor = .white
+            tabBarController?.tabBar.unselectedItemTintColor = ColorManager.TabBar.unselectedItem
             
             if let mainCtrl = mainScreenCoordinator.getRootController() as? NavigationController {
                 ctrls.append(mainCtrl)

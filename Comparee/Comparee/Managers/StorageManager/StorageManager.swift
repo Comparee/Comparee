@@ -16,10 +16,17 @@ final class StorageManager: StorageManagerProtocol {
         storage.child(DataTypeReference.images.rawValue)
     }
     private var maxSize: Int64 = 3 * 1024 * 1024
+    
 }
 
 // MARK: - Public methods
 extension StorageManager {
+    func checkForUserPhoto(_ user: DBUser?) async throws {
+        guard let user else { throw URLError(.cancelled) }
+        
+        _ = try await imagesReference.child(user.userId).listAll()
+    }
+    
     func getImage(userId: String, path: String) async throws -> UIImage {
         let data = try await getData(userId: userId, path: path)
         

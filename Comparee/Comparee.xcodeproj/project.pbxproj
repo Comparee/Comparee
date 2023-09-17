@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */; };
 		0D1F7AFC2AB5B3420008D9F8 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */; };
+		0D1F7B012AB728490008D9F8 /* SFProText-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */; };
 		0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */; };
 		0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */; };
 		0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0D8AAB302A9F1D330088987F /* FirebaseAuth */; };
@@ -198,13 +199,6 @@
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
 		};
-		0D1F7AF82AB5B27A0008D9F8 /* UserManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UserManager;
-			sourceTree = "<group>";
-		};
 		0D8AAB152A9E868F0088987F /* RegistrationViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,7 +328,6 @@
 		0D9B89FD2A9CFF7C00709A00 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0D1F7AF82AB5B27A0008D9F8 /* UserManager */,
 				0D1F7AF72AB5B26A0008D9F8 /* UserDefaultsManager */,
 				0D1F7AF62AB5B0910008D9F8 /* UIManagers */,
 				0DB204C62AA9EA810040551D /* StorageManager */,
@@ -572,6 +565,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D1F7B012AB728490008D9F8 /* SFProText-Semibold.ttf in Resources */,
 				0D9B8A182A9DEF5A00709A00 /* SFProText-Medium.ttf in Resources */,
 				0D9B89E52A9B6A2A00709A00 /* LaunchScreen.storyboard in Resources */,
 				0D9B89E22A9B6A2A00709A00 /* Assets.xcassets in Resources */,

@@ -22,6 +22,8 @@ protocol FirebaseManagerProtocol {
     /// - Returns: The user object if found.
     /// - Throws: An error if the user retrieval fails or the user doesn't exist.
     func getUser(userId: String) async throws -> DBUser
+    
+    func isUserAlreadyAdded(user: DBUser?) async throws
 }
 
 private struct FirebaseManagerKey: InjectionKey {
