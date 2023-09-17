@@ -21,11 +21,6 @@ final class StorageManager: StorageManagerProtocol {
 
 // MARK: - Public methods
 extension StorageManager {
-    func checkForUserPhoto(_ user: DBUser?) async throws {
-        guard let user else { throw URLError(.cancelled) }
-        
-        _ = try await imagesReference.child(user.userId).listAll()
-    }
     
     func getImage(userId: String, path: String) async throws -> UIImage {
         let data = try await getData(userId: userId, path: path)

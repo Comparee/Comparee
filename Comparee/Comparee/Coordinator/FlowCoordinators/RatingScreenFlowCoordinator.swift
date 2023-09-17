@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum RatingFlowRoute: Route {
+enum RatingScreenFlowRoute: Route {
     case showRatingScreen
 }
 
-protocol RatingFlowCoordinatorOutput: AnyObject {
+protocol RatingScreenFlowCoordinatorOutput: AnyObject {
     var finishFlow: CompletionBlock? { get set }
-    func trigger(_ route: RatingFlowRoute)
+    func trigger(_ route: RatingScreenFlowRoute)
 }
 
-final class RatingFlowCoordinator: BaseCoordinator, RatingFlowCoordinatorOutput {
+final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordinatorOutput {
     
     var finishFlow: CompletionBlock?
     
@@ -43,7 +43,7 @@ final class RatingFlowCoordinator: BaseCoordinator, RatingFlowCoordinatorOutput 
         super.init()
     }
     
-    func trigger(_ route: RatingFlowRoute) {
+    func trigger(_ route: RatingScreenFlowRoute) {
         switch route {
         case .showRatingScreen:
             let vc = RatingViewController()
@@ -53,7 +53,7 @@ final class RatingFlowCoordinator: BaseCoordinator, RatingFlowCoordinatorOutput 
 }
 
 // MARK: - Coordinatable
-extension RatingFlowCoordinator: Coordinatable {
+extension RatingScreenFlowCoordinator: Coordinatable {
     func start() {
         trigger(.showRatingScreen)
     }
@@ -63,7 +63,7 @@ extension RatingFlowCoordinator: Coordinatable {
     }
 }
 
-extension RatingFlowCoordinator {
+extension RatingScreenFlowCoordinator {
     func getRootController() -> UIViewController? {
         rootController
     }

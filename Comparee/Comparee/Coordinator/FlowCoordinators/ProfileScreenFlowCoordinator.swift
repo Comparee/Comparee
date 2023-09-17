@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum ProfileFlowRoute: Route {
+enum ProfileScreenFlowRoute: Route {
     case showProfileScreen
 }
 
-protocol ProfileFlowCoordinatorOutput: AnyObject {
+protocol ProfileScreenFlowCoordinatorOutput: AnyObject {
     var finishFlow: CompletionBlock? { get set }
-    func trigger(_ route: ProfileFlowRoute)
+    func trigger(_ route: ProfileScreenFlowRoute)
 }
 
-final class ProfileFlowCoordinator: BaseCoordinator, ProfileFlowCoordinatorOutput {
+final class ProfileScreenFlowCoordinator: BaseCoordinator, ProfileScreenFlowCoordinatorOutput {
     
     var finishFlow: CompletionBlock?
     
@@ -43,7 +43,7 @@ final class ProfileFlowCoordinator: BaseCoordinator, ProfileFlowCoordinatorOutpu
         super.init()
     }
     
-    func trigger(_ route: ProfileFlowRoute) {
+    func trigger(_ route: ProfileScreenFlowRoute) {
         switch route {
         case .showProfileScreen:
             let vc = ProfileViewController()
@@ -53,7 +53,7 @@ final class ProfileFlowCoordinator: BaseCoordinator, ProfileFlowCoordinatorOutpu
 }
 
 // MARK: - Coordinatable
-extension ProfileFlowCoordinator: Coordinatable {
+extension ProfileScreenFlowCoordinator: Coordinatable {
     func start() {
         trigger(.showProfileScreen)
     }
@@ -63,7 +63,7 @@ extension ProfileFlowCoordinator: Coordinatable {
     }
 }
 
-extension ProfileFlowCoordinator {
+extension ProfileScreenFlowCoordinator {
     func getRootController() -> UIViewController? {
         rootController
     }

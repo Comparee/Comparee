@@ -1,5 +1,3 @@
-
-
 //  TabBarCoordinator.swift
 //  Comparee
 //
@@ -28,8 +26,8 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
     
     // MARK: - Private properties
     private var tabBarController: UITabBarController?
-    private let router : Routable
-    private var isSettingsHidden = true
+    private let router: Routable
+    
     private lazy var mainScreenCoordinator: CompareFlowCoordinator = {
         let coordinator = CompareFlowCoordinator()
         addDependency(coordinator)
@@ -38,16 +36,16 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
         return coordinator
     }()
     
-    private lazy var ratingCoordinator: RatingFlowCoordinator = {
-        let coordinator = RatingFlowCoordinator()
+    private lazy var ratingCoordinator: RatingScreenFlowCoordinator = {
+        let coordinator = RatingScreenFlowCoordinator()
         addDependency(coordinator)
         coordinator.setTabBarRouter(self)
         coordinator.start()
         return coordinator
     }()
     
-    private lazy var profileCoordinator: ProfileFlowCoordinator = {
-        let coordinator = ProfileFlowCoordinator()
+    private lazy var profileCoordinator: ProfileScreenFlowCoordinator = {
+        let coordinator = ProfileScreenFlowCoordinator()
         addDependency(coordinator)
         coordinator.setTabBarRouter(self)
         coordinator.start()
@@ -98,4 +96,3 @@ extension TabBarCoordinator: Coordinatable {
         trigger(.main)
     }
 }
-

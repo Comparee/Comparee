@@ -25,7 +25,7 @@ extension UIColor {
     // Photo Upload
     static let photoUploadDefinitionTintColor = UIColor(red: 0.492, green: 0.492, blue: 0.492, alpha: 1)
     static let lightColorForAttributes = UIColor(white: 100.0 / 255.0, alpha: 0.3)
-    static let darkColorForAttributes = UIColor(white: 50.0/255.0, alpha: 0.3)
+    static let darkColorForAttributes = UIColor(white: 50.0 / 255.0, alpha: 0.3)
     
     // TabBar
     static let tabBarBackgroundColor = UIColor(red: 0.183, green: 0.176, blue: 0.176, alpha: 1)

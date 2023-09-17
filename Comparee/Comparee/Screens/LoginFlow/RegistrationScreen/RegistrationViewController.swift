@@ -192,7 +192,7 @@ extension RegistrationViewController: UITextFieldDelegate {
     
     // MARK: - Limiting of textField input
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let maxLength : Int
+        let maxLength: Int
         
         switch textField {
         case nickNameField.textField, instagramField.textField:
@@ -203,9 +203,12 @@ extension RegistrationViewController: UITextFieldDelegate {
             maxLength = 0
         }
         
-        let currentString: NSString = textField.text! as NSString
+        guard let currentText = textField.text as NSString? else {
+            return false
+        }
         
-        let newString: NSString =  currentString.replacingCharacters(in: range, with: string) as NSString
+        let newString = currentText.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
     }
+
 }

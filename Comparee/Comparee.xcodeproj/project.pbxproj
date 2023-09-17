@@ -80,8 +80,8 @@
 		0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */; };
 		0DCA69702AB3073900E19FA8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */; };
 		0DCA69722AB3079100E19FA8 /* CompareFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */; };
-		0DCA69742AB307A700E19FA8 /* RatingFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */; };
-		0DCA69762AB307CB00E19FA8 /* ProfileFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */; };
+		0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */; };
+		0DCA69762AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -157,8 +157,8 @@
 		0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareFlowCoordinator.swift; sourceTree = "<group>"; };
-		0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingFlowCoordinator.swift; sourceTree = "<group>"; };
-		0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowCoordinator.swift; sourceTree = "<group>"; };
+		0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreenFlowCoordinator.swift; sourceTree = "<group>"; };
+		0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -431,8 +431,8 @@
 			children = (
 				0DBEA9682AA0E4360026C441 /* LoginFlowCoordinator.swift */,
 				0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */,
-				0DCA69732AB307A700E19FA8 /* RatingFlowCoordinator.swift */,
-				0DCA69752AB307CB00E19FA8 /* ProfileFlowCoordinator.swift */,
+				0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */,
+				0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */,
 			);
 			path = FlowCoordinators;
 			sourceTree = "<group>";
@@ -594,7 +594,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n#\n";
+			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -614,7 +614,7 @@
 				0D9B89FB2A9CDBA500709A00 /* Extensions + UImage.swift in Sources */,
 				0DB204C12AA9DBC10040551D /* ColorManager.swift in Sources */,
 				0DBEA97D2AA247260026C441 /* RegistrationViewModelProtocol.swift in Sources */,
-				0DCA69762AB307CB00E19FA8 /* ProfileFlowCoordinator.swift in Sources */,
+				0DCA69762AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift in Sources */,
 				0DBEA9692AA0E4360026C441 /* LoginFlowCoordinator.swift in Sources */,
 				0DCA69662AB3012100E19FA8 /* TabBarCoordinator.swift in Sources */,
 				0DBEA9652AA085BE0026C441 /* AuthManager.swift in Sources */,
@@ -637,7 +637,7 @@
 				0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */,
 				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
-				0DCA69742AB307A700E19FA8 /* RatingFlowCoordinator.swift in Sources */,
+				0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */,
 				0DBEA98C2AA4DDD90026C441 /* Extensions + String.swift in Sources */,
 				0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */,
 				0D8AAB3D2A9F52880088987F /* RegInputEnum.swift in Sources */,

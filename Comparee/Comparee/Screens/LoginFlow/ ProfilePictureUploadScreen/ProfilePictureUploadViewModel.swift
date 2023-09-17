@@ -26,7 +26,7 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
 }
 
 // MARK: - Public methods
-extension ProfilePictureUploadViewModel{
+extension ProfilePictureUploadViewModel {
     func setImage(_ image: UIImage) {
         self.image = image
     }
@@ -43,7 +43,7 @@ extension ProfilePictureUploadViewModel{
         router?.trigger(.showPhotoPicker(viewController: viewController))
     }
     
-    //TODO: - Fix calling of trigger in coordinator
+    // TODO: - Fix calling of trigger in coordinator
     func startCrop(_ image: UIImage, viewController: UIViewController) {}
     
     func showAlert() {
@@ -54,7 +54,7 @@ extension ProfilePictureUploadViewModel{
 // MARK: - Private methods
 private extension ProfilePictureUploadViewModel {
     func saveImage() {
-        guard let image = image, let uid = uid else {
+        guard let image, let uid else {
             showAlert()
             return
         }

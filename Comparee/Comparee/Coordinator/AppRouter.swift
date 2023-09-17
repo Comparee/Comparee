@@ -36,7 +36,7 @@ private extension AppRouter {
 }
 
 extension AppRouter: Routable {
-    func clearRootModule(){
+    func clearRootModule() {
         rootController?.viewControllers.removeAll()
     }
     

@@ -30,8 +30,6 @@ protocol StorageManagerProtocol {
     /// - Parameters:
     ///   - path: The path to the image to be deleted.
     func deleteImage(path: String) async throws
-    
-    func checkForUserPhoto(_ user: DBUser?) async throws
 }
 
 /// A private struct that serves as an injection key for the storage manager instance.

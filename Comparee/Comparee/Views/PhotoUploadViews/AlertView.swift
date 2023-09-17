@@ -106,7 +106,7 @@ private extension AlertView {
 }
 
 // MARK: - Setup Attributes
-extension AlertView{
+extension AlertView {
     static func setupAttributes() -> EKAttributes {
         var attributes = EKAttributes.bottomFloat
         attributes.displayDuration = .infinity

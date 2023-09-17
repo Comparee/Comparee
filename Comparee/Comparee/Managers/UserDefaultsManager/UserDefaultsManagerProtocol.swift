@@ -1,8 +1,8 @@
 //
 //  UserDefaultsManagerProtocol.swift
-//  DEO Video
+//  Comparee
 //
-//  Created by Sergey Runovich on 06/09/2022.
+//  Created by Andrey Logvinov.
 //
 
 import Foundation

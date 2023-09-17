@@ -51,7 +51,7 @@ private extension ProfilePictureUploadViewController {
         selectedImage.translatesAutoresizingMaskIntoConstraints = false
         selectedImage.layer.cornerRadius = 16
         selectedImage.clipsToBounds = true
-        selectedImage.heightAnchor.constraint(equalTo: selectedImage.widthAnchor, multiplier: 4.0/3.0).isActive = true
+        selectedImage.heightAnchor.constraint(equalTo: selectedImage.widthAnchor, multiplier: 4.0 / 3.0).isActive = true
         NSLayoutConstraint.activate([
             selectedImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             selectedImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

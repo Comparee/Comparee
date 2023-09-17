@@ -1,13 +1,13 @@
 //
 //  UserDefaultsManager.swift
-//  DEO Video
+//  Comparee
 //
-//  Created by Oleg Home on 02.11.2020.
+//  Created by Andrey Logvinov
 //
 
 import Foundation
 
-public enum UserDefaultsKey: String {
+enum UserDefaultsKey: String {
     case isUserAuthorised
     case userInfo
 }
@@ -29,7 +29,6 @@ struct UserDefaultsValue<Value> {
         get { UserDefaults.standard.value(forKey: key.rawValue) as? Value ?? defaultValue }
         set { UserDefaults.standard.setValue(newValue, forKey: key.rawValue) }
     }
-    
 }
 
 @propertyWrapper
@@ -41,5 +40,4 @@ struct UserDefaultsOptionalValue<Value> {
         get { UserDefaults.standard.value(forKey: key.rawValue) as? Value }
         set { UserDefaults.standard.setValue(newValue, forKey: key.rawValue) }
     }
-    
 }

@@ -5,9 +5,9 @@
 //  Created by Андрей Логвинов on 8/31/23.
 //
 
+import CropViewController
 import SwiftEntryKit
 import UIKit
-import CropViewController
 
 enum LoginFlowRoute: Route {
     case showLoginScreen
@@ -40,7 +40,6 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
         router = AppRouter(rootController: navVC)
         super.init()
     }
-    
     
     func trigger(_ route: LoginFlowRoute) {
         switch route {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RatingViewController: UIViewController {
+final class RatingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

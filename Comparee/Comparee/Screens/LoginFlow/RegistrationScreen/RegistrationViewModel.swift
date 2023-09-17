@@ -22,7 +22,6 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
         .filter { $0 != .instagram }
         .map { FieldsTypesModel(fieldsTypes: $0) }
     
-    
     // MARK: - Private Properties
     private weak var router: LoginFlowCoordinatorOutput?
     private var authDataResultModel: AuthDataResultModel
