@@ -12,6 +12,7 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
     
     // MARK: - Injection
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
+    @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Private properties
     private let uid = Auth.auth().currentUser?.uid
@@ -25,7 +26,7 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
 }
 
 // MARK: - Public methods
-extension ProfilePictureUploadViewModel{
+extension ProfilePictureUploadViewModel {
     func setImage(_ image: UIImage) {
         self.image = image
     }
@@ -39,32 +40,34 @@ extension ProfilePictureUploadViewModel{
     }
     
     func addPhotoButtonPressed(viewController: UIViewController) {
-        Task {
-            await router?.trigger(.showPhotoPicker(viewController: viewController))
-        }
+        router?.trigger(.showPhotoPicker(viewController: viewController))
     }
     
-    //TODO: - Fix calling trigger in coordinator
+    // TODO: - Fix calling of trigger in coordinator
     func startCrop(_ image: UIImage, viewController: UIViewController) {}
     
-    func showAlert() async {
-        await router?.trigger(.base(.alert(AlertView())))
+    func showAlert() {
+        router?.trigger(.base(.alert(AlertView())))
     }
 }
 
 // MARK: - Private methods
 private extension ProfilePictureUploadViewModel {
     func saveImage() {
+        guard let image, let uid else {
+            showAlert()
+            return
+        }
+        
         Task {
-            guard let image = image, let uid = uid else {
-                await showAlert()
-                return
-            }
-            
             do {
                 _ = try await storageManager.saveImage(image, userId: uid)
+                await MainActor.run {
+                    router?.finishFlow?()
+                }
+                userDefaultsManager.isUserAuthorised = true
             } catch {
-                await showAlert()
+                await MainActor.run { showAlert() }
             }
         }
     }

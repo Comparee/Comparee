@@ -42,4 +42,3 @@ extension RegistrationFlowViewModelProtocol where Self: RegistrationFlowViewMode
     var input: RegistrationFlowViewModelInput { self }
     var output: RegistrationFlowViewModelOutput { self }
 }
-

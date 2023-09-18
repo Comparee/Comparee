@@ -9,7 +9,6 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
-
 final class FirebaseManager: FirebaseManagerProtocol {
     
     // MARK: - Private properties
@@ -18,6 +17,7 @@ final class FirebaseManager: FirebaseManagerProtocol {
 
 // MARK: - Public methods
 extension FirebaseManager {
+    
     func createNewUser(user: DBUser) async throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }

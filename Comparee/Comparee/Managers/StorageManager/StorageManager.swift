@@ -16,10 +16,12 @@ final class StorageManager: StorageManagerProtocol {
         storage.child(DataTypeReference.images.rawValue)
     }
     private var maxSize: Int64 = 3 * 1024 * 1024
+    
 }
 
 // MARK: - Public methods
 extension StorageManager {
+    
     func getImage(userId: String, path: String) async throws -> UIImage {
         let data = try await getData(userId: userId, path: path)
         
@@ -31,7 +33,7 @@ extension StorageManager {
     }
     
     func saveImage(_ image: UIImage, userId: String) async throws -> (path: String, name: String) {
-        guard let data = image.jpegData(compressionQuality: 1) else {
+        guard let data = image.jpegData(compressionQuality: 0.2) else {
             throw URLError(.backgroundSessionWasDisconnected)
         }
         

@@ -152,8 +152,8 @@ private extension RegistrationViewController {
                         nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty)
                     case .age:
                         ageField.textFieldIsEmty(isEmpty: item.isTextEmpty)
-                    case .instagram:
-                        instagramField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                    default:
+                        break
                     }
                 }
             }
@@ -189,4 +189,26 @@ extension RegistrationViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    // MARK: - Limiting of textField input
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength: Int
+        
+        switch textField {
+        case nickNameField.textField, instagramField.textField:
+            maxLength = 30
+        case ageField.textField:
+            maxLength = 3
+        default:
+            maxLength = 0
+        }
+        
+        guard let currentText = textField.text as NSString? else {
+            return false
+        }
+        
+        let newString = currentText.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+
 }

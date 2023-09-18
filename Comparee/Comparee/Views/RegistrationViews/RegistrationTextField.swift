@@ -11,7 +11,7 @@ final class RegistrationTextField: UITextField {
     
     init(type: RegInput) {
         super.init(frame: .zero)
-        
+
         configure(type: type)
     }
     
@@ -34,6 +34,7 @@ private extension RegistrationTextField {
             keyboardType = .namePhonePad
         }
         
+        autocorrectionType = .no
         backgroundColor = ColorManager.Registration.backPlaceholderColor
         layer.cornerRadius = 25
         translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +48,7 @@ private extension RegistrationTextField {
         leftViewMode = .always
         clearButtonMode = .never
         returnKeyType = .go
-        textColor = ColorManager.Registration.textPlaceholderColor
+        textColor = UIColor.white
         font = UIFont.customFont(.sfProTextRegular, size: 16)
     }
 }
