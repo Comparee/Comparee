@@ -35,6 +35,10 @@ extension UIImage {
     static let homeTabBarIcon = UIImage(named: "HomeTabBar")
     static let ratingTabBarIcon = UIImage(systemName: "star.fill")
     static let profileTabBarIcon = UIImage(systemName: "person.fill")
+    
+    // Compare Screen
+    static let instagramImage = UIImage(named: "instagram")
+    static let vsTextImage = UIImage(named: "title")
 }
 
 enum IconManager {
@@ -64,6 +68,11 @@ enum IconManager {
         static let advice = UIImage.adviceImage
         static let preview = UIImage.prevImage
         static let cross = UIImage.crossImage
+    }
+    
+    enum CompareScreen {
+        static let instagram = UIImage.instagramImage
+        static let vsTitle = UIImage.vsTextImage
     }
     
     enum TabBar {

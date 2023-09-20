@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFProText-Regular.ttf</string>
+		<string>Satoshi-Medium.ttf</string>
 		<string>Cormorant-SemiBoldItalic.ttf</string>
 		<string>SFProText-Medium.ttf</string>
 		<string>SFProText-Semibold.ttf</string>

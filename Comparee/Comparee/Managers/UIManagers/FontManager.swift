@@ -12,12 +12,14 @@ enum FontName: String {
     case sfProTextMedium = "SFProText-Medium"
     case sfProTextRegular = "SFProText-Regular"
     case sfProTextSemibold = "SFProText-Semibold"
+    case satoshiMedium = "Satoshi-Medium"
     
 }
 
 extension UIFont {
     static func customFont(_ fontName: FontName, size: CGFloat) -> UIFont {
         guard let font = UIFont(name: fontName.rawValue, size: size) else {
+            print("System font was added")
             return UIFont.systemFont(ofSize: size)
         }
         

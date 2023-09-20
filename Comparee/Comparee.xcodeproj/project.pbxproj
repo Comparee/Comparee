@@ -10,6 +10,8 @@
 		0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */; };
 		0D1F7AFC2AB5B3420008D9F8 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */; };
 		0D1F7B012AB728490008D9F8 /* SFProText-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */; };
+		0D1F7B042AB84A1A0008D9F8 /* CompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7B032AB84A1A0008D9F8 /* CompareView.swift */; };
+		0D1F7B062AB98FC40008D9F8 /* Satoshi-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D1F7B052AB98FC40008D9F8 /* Satoshi-Medium.ttf */; };
 		0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */; };
 		0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */; };
 		0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0D8AAB302A9F1D330088987F /* FirebaseAuth */; };
@@ -89,6 +91,8 @@
 /* Begin PBXFileReference section */
 		0D1F7AF92AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManagerProtocol.swift; sourceTree = "<group>"; };
 		0D1F7AFA2AB5B3420008D9F8 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		0D1F7B032AB84A1A0008D9F8 /* CompareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareView.swift; sourceTree = "<group>"; };
+		0D1F7B052AB98FC40008D9F8 /* Satoshi-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Satoshi-Medium.ttf"; sourceTree = "<group>"; };
 		0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyLabel.swift; sourceTree = "<group>"; };
 		0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		0D8AAB362A9F27140088987F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +203,14 @@
 			path = UserDefaultsManager;
 			sourceTree = "<group>";
 		};
+		0D1F7B022AB849FE0008D9F8 /* CompareScreenViews */ = {
+			isa = PBXGroup;
+			children = (
+				0D1F7B032AB84A1A0008D9F8 /* CompareView.swift */,
+			);
+			path = CompareScreenViews;
+			sourceTree = "<group>";
+		};
 		0D8AAB152A9E868F0088987F /* RegistrationViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,6 +304,7 @@
 		0D9B89F02A9CA9E300709A00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0D1F7B022AB849FE0008D9F8 /* CompareScreenViews */,
 				0D8AAB172A9E86B30088987F /* Base */,
 				0D8AAB162A9E86A00088987F /* AuthViews */,
 				0D8AAB152A9E868F0088987F /* RegistrationViews */,
@@ -371,6 +384,7 @@
 		0D9B8A1B2A9DEFB300709A00 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				0D1F7B052AB98FC40008D9F8 /* Satoshi-Medium.ttf */,
 				0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */,
 				0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */,
 				0D9B8A1C2A9DFA9E00709A00 /* SFProText-Regular.ttf */,
@@ -572,6 +586,7 @@
 				0D9B8A1D2A9DFA9E00709A00 /* SFProText-Regular.ttf in Resources */,
 				0D9B8A1A2A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf in Resources */,
 				0D8AAB402A9F8EF70088987F /* GoogleService-Info.plist in Resources */,
+				0D1F7B062AB98FC40008D9F8 /* Satoshi-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,6 +663,7 @@
 				0DBEA97B2AA247140026C441 /* RegistrationViewModel.swift in Sources */,
 				0DBEA97F2AA247430026C441 /* FirebaseManager.swift in Sources */,
 				0DBEA9932AA5AF140026C441 /* PhotoAddButton.swift in Sources */,
+				0D1F7B042AB84A1A0008D9F8 /* CompareView.swift in Sources */,
 				0DB204BD2AA86FF30040551D /* AuthDataResultModel.swift in Sources */,
 				0DBEA9632AA0830A0026C441 /* FontManager.swift in Sources */,
 				0D9B8A042A9D025C00709A00 /* UIControl.swift in Sources */,
