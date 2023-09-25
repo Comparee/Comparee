@@ -39,6 +39,7 @@ extension UIImage {
     // Compare Screen
     static let instagramImage = UIImage(named: "instagram")
     static let vsTextImage = UIImage(named: "title")
+    static let compareBackground = UIImage(named: "photoBackground")
 }
 
 enum IconManager {
@@ -73,6 +74,7 @@ enum IconManager {
     enum CompareScreen {
         static let instagram = UIImage.instagramImage
         static let vsTitle = UIImage.vsTextImage
+        static let background = UIImage.compareBackground
     }
     
     enum TabBar {

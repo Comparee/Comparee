@@ -14,7 +14,7 @@ final class RootCoordinator: BaseCoordinator {
     // MARK: - Private properties
     private var router: Routable
     private var isUserAuthorised: Bool {
-        return userDefaultsManager.isUserAuthorised
+        userDefaultsManager.isUserAuthorised
     }
     
     // MARK: - Initialization

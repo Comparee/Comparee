@@ -30,6 +30,9 @@ extension UIColor {
     // TabBar
     static let tabBarBackgroundColor = UIColor(red: 0.183, green: 0.176, blue: 0.176, alpha: 1)
     static let tabBarUnselectedItemColor = UIColor(red: 0.46, green: 0.46, blue: 0.46, alpha: 1)
+    
+    // Compare Screen
+    static let errorDefinitionTintColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
 }
 
 enum ColorManager {
@@ -57,5 +60,9 @@ enum ColorManager {
     enum TabBar {
         static let backgroundColor = UIColor.tabBarBackgroundColor
         static let unselectedItem = UIColor.tabBarUnselectedItemColor
+    }
+    
+    enum Compare {
+        static let errorDefinition = UIColor.errorDefinitionTintColor
     }
 }

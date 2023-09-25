@@ -5,8 +5,8 @@
 //  Created by Андрей Логвинов on 9/4/23.
 //
 
-import CropViewController
 import Combine
+import CropViewController
 import UIKit
 
 final class ProfilePictureUploadViewController: UIViewController {

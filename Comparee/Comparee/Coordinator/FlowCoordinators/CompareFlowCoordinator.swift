@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import SwiftEntryKit
 
 enum CompareFlowRoute: Route {
     case showMainScreen
+    case base(BaseRoutes)
 }
 
 protocol CompareFlowCoordinatorOutput: AnyObject {
@@ -46,8 +48,15 @@ final class CompareFlowCoordinator: BaseCoordinator, CompareFlowCoordinatorOutpu
     func trigger(_ route: CompareFlowRoute) {
         switch route {
         case .showMainScreen:
-            let vc = CompareViewController()
-            router.push(vc, animated: true)
+            let vm = CompareViewModel(router: self)
+            let vc = CompareViewController(vm)
+            self.router.push(vc, animated: true)
+        case .base(let base):
+            switch base {
+            case .alert(let alert):
+                SwiftEntryKit.display(entry: alert, using: AlertView.setupAttributes())
+            default: break
+            }
         }
     }
 }

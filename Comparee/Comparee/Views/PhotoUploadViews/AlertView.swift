@@ -22,7 +22,7 @@ final class AlertView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Upload Error"
-        label.font = UIFont.customFont(.sfProTextMedium, size: 20)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -38,7 +38,7 @@ final class AlertView: UIView {
         return label
     }()
     
-    private lazy var actionButton: UIButton = {
+    lazy var actionButton: UIButton = {
         let button = UIButton()
         button.setTitle("Continue", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -150,5 +150,11 @@ extension AlertView {
         attributes.positionConstraints.verticalOffset = 10
         attributes.statusBar = .dark
         return attributes
+    }
+    
+    func setUpCustomAlert(title: String, description: String, actionText: String) {
+        titleLabel.text = title
+        descriptionLabel.text = description
+        actionButton.setTitle(actionText, for: .normal)
     }
 }

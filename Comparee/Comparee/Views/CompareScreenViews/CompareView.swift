@@ -9,14 +9,6 @@ import UIKit
 
 final class CompareView: UIView {
     // MARK: - Private properties
-    private lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = IconManager.PhotoUpload.preview
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
-        return imageView
-    }()
-    
     private lazy var instagramImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = IconManager.CompareScreen.instagram
@@ -25,26 +17,40 @@ final class CompareView: UIView {
         return imageView
     }()
     
-    private lazy var userLabel: UILabel = {
+    // MARK: - Public properties
+    lazy var userLabel: UILabel = {
         let label = UILabel()
-        label.text = "instagram, 32"
+        label.text = "---------------"
         label.textColor = .white
         label.font = UIFont.customFont(.satoshiMedium, size: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var horizontalStackView: UIStackView = {
+    lazy var horizontalStackView: UIStackView = {
         NSLayoutConstraint.activate([
             instagramImage.widthAnchor.constraint(equalToConstant: 32),
             instagramImage.heightAnchor.constraint(equalToConstant: 32)
         ])
+        
         let stackView = UIStackView(arrangedSubviews: [instagramImage, userLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.cornerRadius = 16
+        stackView.clipsToBounds = true
         return stackView
+    }()
+    
+    lazy var backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = IconManager.CompareScreen.background
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 16
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleToFill
+        return imageView
     }()
     
     // MARK: - Initialization
@@ -58,6 +64,31 @@ final class CompareView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func createHorizontalStack(hasInstagram: Bool) {
+        let stackView: UIStackView
+        
+        if hasInstagram {
+            stackView = UIStackView(arrangedSubviews: [instagramImage, userLabel])
+            NSLayoutConstraint.activate([
+                instagramImage.widthAnchor.constraint(equalToConstant: 32),
+                instagramImage.heightAnchor.constraint(equalToConstant: 32)
+            ])
+        } else {
+            stackView = UIStackView(arrangedSubviews: [userLabel])
+        }
+        
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.cornerRadius = 16
+        stackView.clipsToBounds = true
+        
+        horizontalStackView = stackView
+    }
+
+      
 }
 
 private extension CompareView {

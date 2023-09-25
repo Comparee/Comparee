@@ -13,6 +13,7 @@ final class RegistrationViewModel: RegistrationFlowViewModelProtocol, Registrati
     
     // MARK: - Injection
     @Injected(\.firebaseManager) private var firebaseManager: FirebaseManagerProtocol
+    @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Public Properties
     @Published var name: String = ""
@@ -57,7 +58,17 @@ extension RegistrationViewModel {
 private extension RegistrationViewModel {
     func logIn() {
         Task {
-            try await firebaseManager.createNewUser(user: DBUser(userId: authDataResultModel.uid, email: authDataResultModel.email, name: self.name, age: self.age, instagram: self.instagram))
+            let newUser = DBUser(
+                userId: authDataResultModel.uid,
+                email: authDataResultModel.email,
+                name: self.name,
+                age: self.age,
+                instagram: self.instagram,
+                comparisons: nil
+            )
+            
+            try await firebaseManager.createNewUser(newUser)
+            userDefaultsManager.userID = newUser.userId
             await MainActor.run {
                 router?.trigger(.showPhotoUploadScreen)
             }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol UserDefaultsManagerProtocol {
     var isUserAuthorised: Bool { get set }
-    var userInfo: DBUser? { get set }
+    var userID: String? { get set }
 }
 
 private struct UserDefaultsManagerKey: InjectionKey {

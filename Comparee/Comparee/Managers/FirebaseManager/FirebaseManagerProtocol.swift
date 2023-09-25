@@ -14,7 +14,7 @@ protocol FirebaseManagerProtocol {
     ///
     /// - Parameter user: The user object to create.
     /// - Throws: An error if the user creation fails.
-    func createNewUser(user: DBUser) async throws
+    func createNewUser(_ user: DBUser) async throws
     
     /// Retrieves a user from Firebase based on their user ID.
     ///
@@ -22,6 +22,17 @@ protocol FirebaseManagerProtocol {
     /// - Returns: The user object if found.
     /// - Throws: An error if the user retrieval fails or the user doesn't exist.
     func getUser(userId: String) async throws -> DBUser
+    
+    /// Retrieves a list of all user IDs asynchronously.
+    ///
+    /// - Throws: May throw an error if there are issues fetching user IDs.
+    ///
+    /// - Returns: An array of strings containing user IDs.
+    func getAllUserIds() async throws -> [String]
+    
+    func appendUserComparisons(userId: String, newComparison: String) async throws
+    
+    func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool
 }
 
 private struct FirebaseManagerKey: InjectionKey {

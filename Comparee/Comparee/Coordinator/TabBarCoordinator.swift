@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import Combine
 
 enum TabBarIndex: Int {
     case main = 0, rating, profile
