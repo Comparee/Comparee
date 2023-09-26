@@ -30,7 +30,7 @@ protocol FirebaseManagerProtocol {
     /// - Returns: An array of strings containing user IDs.
     func getAllUserIds() async throws -> [String]
     
-    func appendUserComparisons(userId: String, newComparison: String) async throws
+    func appendUserComparison(userId: String, newComparison: String) async throws
     
     func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool
 }

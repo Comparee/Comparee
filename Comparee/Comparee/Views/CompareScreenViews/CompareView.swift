@@ -64,7 +64,10 @@ final class CompareView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - Public methods
+extension CompareView {
     func createHorizontalStack(hasInstagram: Bool) {
         let stackView: UIStackView
         
@@ -87,10 +90,9 @@ final class CompareView: UIView {
         
         horizontalStackView = stackView
     }
-
-      
 }
 
+// MARK: - Private methods
 private extension CompareView {
     func setupViews() {
         addSubview(backgroundImage)

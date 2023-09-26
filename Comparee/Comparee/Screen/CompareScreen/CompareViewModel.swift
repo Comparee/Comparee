@@ -46,7 +46,9 @@ extension CompareViewModel {
     func getNewImagePair() async throws -> ImagePair {
         guard let usersID else { throw CompareError.newComparisonsNotFound }
         
-        let pairQuantity = combinationsWithoutRepetition(n: usersID.count - 1)
+        // Calculate the number of pairs by finding combinations without repetition.
+        // We subtract 1 from the 'usersID.count' because we don't want to include the current user in the pairs.
+        let pairQuantity = combinationsWithoutRepetition(count: usersID.count - 1)
         let urlPair = try await getNewURLPair(maxIterations: pairQuantity)
         guard let urlPair else { throw CompareError.newComparisonsNotFound }
         
@@ -76,8 +78,8 @@ extension CompareViewModel {
         }
         
         Task {
-            try await firebaseManager.appendUserComparisons(userId: currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
-            try await firebaseManager.appendUserComparisons(userId: currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
+            try await firebaseManager.appendUserComparison(userId: currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
+            try await firebaseManager.appendUserComparison(userId: currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
         }
     }
 }
@@ -131,18 +133,26 @@ private extension CompareViewModel {
 
 // MARK: - Private methods for calculating quantity of combination 
 private extension CompareViewModel {
-    func combinationsWithoutRepetition(n: Int) -> Int {
-        guard n >= 2 else {
+    func combinationsWithoutRepetition(count: Int) -> Int {
+        // Check if the count is less than 2, in which case no combinations are possible.
+        guard count >= 2 else {
             return 0
         }
         
+        // Define a nested function to calculate the factorial of a number.
         func factorial(_ number: Int) -> Int {
-            (1...number).reduce(1, *)
+            // Calculate the factorial using the reduce function from 1 to the given number.
+            return (1...number).reduce(1, *)
         }
         
-        let numerator = factorial(n)
-        let denominator = factorial(n - 2)
+        // Calculate the numerator, which is the factorial of 'count'.
+        let numerator = factorial(count)
         
+        // Calculate the denominator, which is the factorial of 'count - 2'.
+        let denominator = factorial(count - 2)
+        
+        // Calculate and return the number of combinations without repetition.
         return numerator / denominator
     }
+
 }

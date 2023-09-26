@@ -9,16 +9,15 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
-final class FirebaseManager: FirebaseManagerProtocol {
-    
+final class FirebaseManager {
     // MARK: - Private properties
     private let userCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.users.rawValue)
 }
 
 // MARK: - Public methods
-extension FirebaseManager {
+extension FirebaseManager: FirebaseManagerProtocol {
     
-    func createNewUser(_ user: DBUser) async throws {
+    func createNewUser(_ user: DBUser) throws {
         try userDocument(userId: user.userId).setData(from: user, merge: false)
     }
     
@@ -28,17 +27,12 @@ extension FirebaseManager {
     
     func getAllUserIds() async throws -> [String] {
         let querySnapshot = try await userCollection.getDocuments()
-        
-        var userIds: [String] = []
-        for document in querySnapshot.documents {
-            let userId = document.documentID
-            userIds.append(userId)
-        }
-        
+        let userIds = querySnapshot.documents.map { $0.documentID }
         return userIds
     }
+
     
-    func appendUserComparisons(userId: String, newComparison: String) async throws {
+    func appendUserComparison(userId: String, newComparison: String) async throws {
         let updateData: [String: Any] = [
             "comparisons": FieldValue.arrayUnion([newComparison])
         ]
