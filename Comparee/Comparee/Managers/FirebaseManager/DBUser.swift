@@ -16,8 +16,8 @@ struct DBUser: Codable {
     let comparisons: [String]?
     
     enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
         case email, name, age, instagram, comparisons
+        case userId = "user_id"
     }
     
     func encode(to encoder: Encoder) throws {

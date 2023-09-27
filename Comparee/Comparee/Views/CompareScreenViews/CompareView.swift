@@ -91,11 +91,7 @@ extension CompareView {
     }
     
     func checkInstagramVisibility(_ isVisible: Bool) {
-        if isVisible {
-            instagramImage.isHidden = false
-        } else {
-            instagramImage.isHidden = true
-        }
+        instagramImage.isHidden = !isVisible
     }
 }
 
