@@ -10,4 +10,6 @@ import Foundation
 struct UserInfo {
     let firstUserInfo: String
     let secondUserInfo: String
+    let firstUserInstagram: String?
+    let secondUserInstagram: String?
 }

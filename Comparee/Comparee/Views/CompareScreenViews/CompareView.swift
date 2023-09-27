@@ -20,7 +20,7 @@ final class CompareView: UIView {
     // MARK: - Public properties
     lazy var userLabel: UILabel = {
         let label = UILabel()
-        label.text = "---------------"
+        label.text = ""
         label.textColor = .white
         label.font = UIFont.customFont(.satoshiMedium, size: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +58,6 @@ final class CompareView: UIView {
         super.init(frame: frame)
         setupViews()
         setConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -90,6 +89,14 @@ extension CompareView {
         
         horizontalStackView = stackView
     }
+    
+    func checkInstagramVisibility(_ isVisible: Bool) {
+        if isVisible {
+            instagramImage.isHidden = false
+        } else {
+            instagramImage.isHidden = true
+        }
+    }
 }
 
 // MARK: - Private methods
@@ -97,6 +104,7 @@ private extension CompareView {
     func setupViews() {
         addSubview(backgroundImage)
         addSubview(horizontalStackView)
+        instagramImage.isHidden = true
     }
     
     func setConstraints() {

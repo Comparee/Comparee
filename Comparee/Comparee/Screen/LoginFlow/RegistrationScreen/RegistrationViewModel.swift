@@ -67,7 +67,7 @@ private extension RegistrationViewModel {
                 comparisons: nil
             )
             
-            try await firebaseManager.createNewUser(newUser)
+            try firebaseManager.createNewUser(newUser)
             userDefaultsManager.userID = newUser.userId
             await MainActor.run {
                 router?.trigger(.showPhotoUploadScreen)

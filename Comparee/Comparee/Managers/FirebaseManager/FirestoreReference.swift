@@ -8,5 +8,5 @@
 import Foundation
 
 enum FirestoreReference: String {
-    case users = "users"
+    case users
 }

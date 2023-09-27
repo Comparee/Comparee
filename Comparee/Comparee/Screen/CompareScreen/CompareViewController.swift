@@ -24,7 +24,7 @@ final class CompareViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var vsView: UIView = {
+    private lazy var versusView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 32
         view.backgroundColor = .white
@@ -48,6 +48,8 @@ final class CompareViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.clipsToBounds = true
+        label.layoutIfNeeded()
         return label
     }()
     
@@ -88,19 +90,23 @@ final class CompareViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setConstraints()
-        bindViews()
-        getUserData()
+        loadData()
     }
 }
 
 // MARK: - Private methods
 private extension CompareViewController {
+    func loadData() {
+        setupViews()
+        setConstraints()
+        bindViews()
+        getUserData()
+    }
+    
     func setupViews() {
         view.addSubview(backgroundImageView)
         view.addSubview(horizontalStackView)
-        view.addSubview(vsView)
+        view.addSubview(versusView)
         view.addSubview(adviceLabel)
         
         let customTitleView = createCustomTitleView(contactName: "Who is cooler? ")
@@ -125,15 +131,15 @@ private extension CompareViewController {
             horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            adviceLabel.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
-            adviceLabel.trailingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor),
+            adviceLabel.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor, constant: 34.5),
+            adviceLabel.trailingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor, constant: -34.5),
             adviceLabel.bottomAnchor.constraint(equalTo: horizontalStackView.topAnchor, constant: -20),
             adviceLabel.heightAnchor.constraint(equalToConstant: 33),
             
-            vsView.centerXAnchor.constraint(equalTo: horizontalStackView.centerXAnchor),
-            vsView.centerYAnchor.constraint(equalTo: horizontalStackView.centerYAnchor, constant: -22),
-            vsView.widthAnchor.constraint(equalToConstant: 64),
-            vsView.heightAnchor.constraint(equalToConstant: 64),
+            versusView.centerXAnchor.constraint(equalTo: horizontalStackView.centerXAnchor),
+            versusView.centerYAnchor.constraint(equalTo: horizontalStackView.centerYAnchor, constant: -22),
+            versusView.widthAnchor.constraint(equalToConstant: 64),
+            versusView.heightAnchor.constraint(equalToConstant: 64),
             
             firstCompareView.heightAnchor.constraint(equalTo: firstCompareView.widthAnchor, multiplier: aspectRatio),
             secondCompareView.heightAnchor.constraint(equalTo: secondCompareView.widthAnchor, multiplier: aspectRatio)
@@ -161,42 +167,37 @@ private extension CompareViewController {
         firstCompareView.isUserInteractionEnabled = true
         secondCompareView.isUserInteractionEnabled = true
     }
-    
-    func getNewPhotos() {
+}
+
+// MARK: - Methods for view's updates
+private extension CompareViewController {
+    func getNewPhotos() async {
         showSkeleton()
-        Task {
-            do {
-                let newImagePair = try await viewModel.input.getNewImagePair()
-                await MainActor.run {
-                    dismissSkeleton()
-                    firstCompareView.backgroundImage.image = newImagePair.firstImage
-                    secondCompareView.backgroundImage.image = newImagePair.secondImage
-                }
-                let result = try await viewModel.input.getUsersInfoPair()
-                firstCompareView.userLabel.text = result.firstUserInfo
-                secondCompareView.userLabel.text = result.secondUserInfo
-            }
-            catch {
-                await MainActor.run {
-                    switch error {
-                    case CompareError.newComparisonsNotFound:
-                        newComparisonsNotFound()
-                    case CompareError.connectionProblem:
-                        showAlert()
-                    default:
-                        showAlert()
-                    }
-                }
-            }
+        do {
+            let newImagePair = try await viewModel.input.getNewImagePair()
+            let userPair = try await viewModel.input.getUsersInfoPair()
+            updateCompareViews(newImagePair, userPair)
+        } catch {
+            handleError(error)
         }
+        dismissSkeleton()
+    }
+    
+    @MainActor
+    func updateCompareViews(_ imagePair: ImagePair, _ userInfo: UserInfo) {
+        firstCompareView.backgroundImage.image = imagePair.firstImage
+        secondCompareView.backgroundImage.image = imagePair.secondImage
+        firstCompareView.userLabel.text = userInfo.firstUserInfo
+        secondCompareView.userLabel.text = userInfo.secondUserInfo
+        
+        firstCompareView.checkInstagramVisibility(userInfo.firstUserInstagram != nil)
+        secondCompareView.checkInstagramVisibility(userInfo.secondUserInstagram != nil)
     }
     
     func getUserData() {
         Task {
             try await viewModel.input.getAllUserIds()
-            await MainActor.run {
-                getNewPhotos()
-            }
+            await getNewPhotos()
         }
     }
 }
@@ -204,12 +205,16 @@ private extension CompareViewController {
 // MARK: - User Interaction
 private extension CompareViewController {
     @objc func firstViewTapped() {
-        getNewPhotos()
+        Task {
+            await getNewPhotos()
+        }
         viewModel.input.viewWasSelected(.first)
     }
-
+    
     @objc func secondViewTapped() {
-        getNewPhotos()
+        Task {
+            await getNewPhotos()
+        }
         viewModel.input.viewWasSelected(.second)
     }
     
@@ -220,6 +225,7 @@ private extension CompareViewController {
 
 // MARK: - SkeletonView
 private extension CompareViewController {
+    @MainActor
     func showSkeleton() {
         firstCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         secondCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
@@ -227,6 +233,7 @@ private extension CompareViewController {
         secondCompareView.horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
     
+    @MainActor
     func dismissSkeleton() {
         firstCompareView.backgroundImage.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         firstCompareView.backgroundImage.stopSkeletonAnimation()
@@ -244,6 +251,18 @@ private extension CompareViewController {
 
 // MARK: - Error Handling
 private extension CompareViewController {
+    @MainActor
+    func handleError(_ error: Error) {
+        switch error {
+        case CompareError.newComparisonsNotFound:
+            newComparisonsNotFound()
+        case CompareError.connectionProblem:
+            showAlert()
+        default:
+            showAlert()
+        }
+    }
+    
     func showAlert() {
         let alertView = AlertView()
         alertView.setUpCustomAlert(
@@ -257,7 +276,7 @@ private extension CompareViewController {
     
     func newComparisonsNotFound() {
         horizontalStackView.isHidden = true
-        vsView.isHidden = true
+        versusView.isHidden = true
         adviceLabel.isHidden = true
         view.addSubview(noCardsLabel)
         view.addSubview(waitingLabel)
@@ -270,7 +289,7 @@ private extension CompareViewController {
             noCardsLabel.heightAnchor.constraint(equalToConstant: 64),
             
             waitingLabel.topAnchor.constraint(equalTo: noCardsLabel.bottomAnchor, constant: 8),
-            waitingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
+            waitingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             waitingLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }

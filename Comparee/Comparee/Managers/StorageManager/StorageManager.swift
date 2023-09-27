@@ -14,7 +14,7 @@ final class StorageManager: StorageManagerProtocol {
     private var imagesReference: StorageReference {
         storage.child(DataTypeReference.images.rawValue)
     }
-    private var maxSize: Int64 = 3 * 1024 * 1024
+    private var maxSize: Int64 = 3 * 1_024 * 1_024
     
 }
 

@@ -6,8 +6,8 @@
 //
 
 import FirebaseAuth
-import UIKit
 import Kingfisher
+import UIKit
 
 final class CompareViewModel: CompareViewModelProtocol, CompareViewModelProtocolInput, CompareViewModelProtocolOutput {
     // MARK: - Injection
@@ -28,13 +28,12 @@ final class CompareViewModel: CompareViewModelProtocol, CompareViewModelProtocol
     }
 }
 
-// MARK: - Public functions
+// MARK: - Public methods
 extension CompareViewModel {
     func getAllUserIds() async throws {
         do {
             self.usersID = try await firebaseManager.getAllUserIds()
-        }
-        catch {
+        } catch {
             throw CompareError.connectionProblem
         }
     }
@@ -45,7 +44,6 @@ extension CompareViewModel {
     
     func getNewImagePair() async throws -> ImagePair {
         guard let usersID else { throw CompareError.newComparisonsNotFound }
-        
         // Calculate the number of pairs by finding combinations without repetition.
         // We subtract 1 from the 'usersID.count' because we don't want to include the current user in the pairs.
         let pairQuantity = combinationsWithoutRepetition(count: usersID.count - 1)
@@ -63,8 +61,12 @@ extension CompareViewModel {
         
         async let firstUserInfo = try await firebaseManager.getUser(userId: userPair.firstUserId)
         async let secondUserInfo = try await firebaseManager.getUser(userId: userPair.secondUserId)
-        return try await UserInfo(firstUserInfo: "\(firstUserInfo.name), \(firstUserInfo.age)",
-                                  secondUserInfo: "\(secondUserInfo.name), \(secondUserInfo.age)")
+        return try await UserInfo(
+            firstUserInfo: "\(firstUserInfo.name), \(firstUserInfo.age)",
+            secondUserInfo: "\(secondUserInfo.name), \(secondUserInfo.age)",
+            firstUserInstagram: firstUserInfo.instagram,
+            secondUserInstagram: secondUserInfo.instagram
+        )
     }
     
     func viewWasSelected(_ user: UserType) {
@@ -78,8 +80,8 @@ extension CompareViewModel {
         }
         
         Task {
-            try await firebaseManager.appendUserComparison(userId: currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
-            try await firebaseManager.appendUserComparison(userId: currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
+            try await firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
+            try await firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
         }
     }
 }
@@ -154,5 +156,38 @@ private extension CompareViewModel {
         // Calculate and return the number of combinations without repetition.
         return numerator / denominator
     }
+}
 
+// MARK: - Private method for getting two random values
+private extension CompareViewModel {
+    func getRandomTwoElements<T: Equatable>(_ array: [T], avoiding elementToAvoid: T?) -> (T, T)? {
+        guard array.count >= 2 else {
+            return nil
+        }
+        
+        var candidates = array
+        
+        guard let elementToAvoid,
+              let index = candidates.firstIndex(of: elementToAvoid) else {
+            // If elementToAvoid is nil or not found in the array, we can continue.
+            // No need to remove anything.
+            let shuffledCandidates = candidates.shuffled()
+            guard let element1 = shuffledCandidates.first,
+                  let element2 = shuffledCandidates.dropFirst().first else {
+                return nil
+            }
+            return (element1, element2)
+        }
+        
+        candidates.remove(at: index)
+        
+        let shuffledCandidates = candidates.shuffled()
+        
+        guard let element1 = shuffledCandidates.first,
+              let element2 = shuffledCandidates.dropFirst().first else {
+            return nil
+        }
+        
+        return (element1, element2)
+    }
 }

@@ -5,8 +5,8 @@
 //  Created by Андрей Логвинов on 9/14/23.
 //
 
-import UIKit
 import SwiftEntryKit
+import UIKit
 
 enum CompareFlowRoute: Route {
     case showMainScreen
