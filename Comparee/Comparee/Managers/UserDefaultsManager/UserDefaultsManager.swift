@@ -9,14 +9,14 @@ import Foundation
 
 enum UserDefaultsKey: String {
     case isUserAuthorised
-    case userInfo
+    case userID
 }
 
 final class UserDefaultsManager: UserDefaultsManagerProtocol {
     
     private let userDefaults = UserDefaults.standard
     @UserDefaultsValue(key: .isUserAuthorised, defaultValue: false) var isUserAuthorised: Bool
-    @UserDefaultsOptionalValue(key: .userInfo) var userInfo: DBUser?
+    @UserDefaultsValue(key: .userID, defaultValue: nil) var userID: String?
 }
 
 @propertyWrapper

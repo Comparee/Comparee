@@ -12,6 +12,7 @@ enum FontName: String {
     case sfProTextMedium = "SFProText-Medium"
     case sfProTextRegular = "SFProText-Regular"
     case sfProTextSemibold = "SFProText-Semibold"
+    case satoshiMedium = "Satoshi-Medium"
     
 }
 

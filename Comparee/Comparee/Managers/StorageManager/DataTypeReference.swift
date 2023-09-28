@@ -8,5 +8,5 @@
 import Foundation
 
 enum DataTypeReference: String {
-    case images = "images"
+    case images
 }

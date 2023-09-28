@@ -25,15 +25,19 @@ extension UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.83
         nameLabel.attributedText = NSMutableAttributedString(string: contactName, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+       
         view.addSubview(nameLabel)
 
         NSLayoutConstraint.activate([
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            nameLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
         ])
-
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         return view
     }
 

@@ -21,15 +21,16 @@ protocol StorageManagerProtocol {
     ///
     /// - Parameters:
     ///   - userId: The unique identifier of the user.
-    ///   - path: The path to the image.
     /// - Returns: The retrieved UIImage.
-    func getImage(userId: String, path: String) async throws -> UIImage
+    func getImage(userId: String) async throws -> UIImage
     
     /// Asynchronously deletes an image at the specified path.
     ///
     /// - Parameters:
     ///   - path: The path to the image to be deleted.
     func deleteImage(path: String) async throws
+    
+    func getUrlForImage(path: String) async throws -> URL
 }
 
 /// A private struct that serves as an injection key for the storage manager instance.
