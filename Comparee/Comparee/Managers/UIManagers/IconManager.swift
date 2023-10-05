@@ -40,6 +40,9 @@ extension UIImage {
     static let instagramImage = UIImage(named: "instagram")
     static let vsTextImage = UIImage(named: "title")
     static let compareBackground = UIImage(named: "photoBackground")
+    
+    // Rating Screen
+    static let crownImage = UIImage(named: "Crown")
 }
 
 enum IconManager {
@@ -75,6 +78,10 @@ enum IconManager {
         static let instagram = UIImage.instagramImage
         static let vsTitle = UIImage.vsTextImage
         static let background = UIImage.compareBackground
+    }
+    
+    enum RatingScreen {
+        static let crown = UIImage.crownImage
     }
     
     enum TabBar {

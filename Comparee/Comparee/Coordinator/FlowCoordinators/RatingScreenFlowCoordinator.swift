@@ -46,7 +46,8 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
     func trigger(_ route: RatingScreenFlowRoute) {
         switch route {
         case .showRatingScreen:
-            let vc = RatingViewController()
+            let vm = RatingViewModel(router: self)
+            let vc = RatingViewController(vm)
             router.push(vc, animated: true)
         }
     }

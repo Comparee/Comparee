@@ -33,6 +33,10 @@ protocol FirebaseManagerProtocol {
     func appendUsersToComparison(_ currentUserId: String, newComparison: String) async throws
     
     func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool
+    
+    func increaseRating(for userId: String) async throws
+    
+    func getAllUserRating() async throws -> [RatingData]
 }
 
 private struct FirebaseManagerKey: InjectionKey {

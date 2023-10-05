@@ -9,4 +9,5 @@ import Foundation
 
 enum FirestoreReference: String {
     case users
+    case rating
 }

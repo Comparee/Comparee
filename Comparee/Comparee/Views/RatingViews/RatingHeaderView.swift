@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RatingHeaderView: UIView {
+final class RatingHeaderView: UICollectionReusableView {
     // MARK: - Private properties
     private lazy var firstUser = TopUserView()
     private lazy var secondUser = TopUserView()
@@ -19,11 +19,10 @@ final class RatingHeaderView: UIView {
     
     private lazy var crownImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Crown")
+        imageView.image = IconManager.RatingScreen.crown
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -34,6 +33,12 @@ final class RatingHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with items: [UsersViewItem]) {
+        firstUser.configure(items[0])
+        secondUser.configure(items[1])
+        thirdUser.configure(items[2])
     }
 }
 

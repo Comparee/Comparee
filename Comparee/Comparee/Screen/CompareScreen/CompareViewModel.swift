@@ -74,9 +74,13 @@ extension CompareViewModel {
         
         switch user {
         case .first:
-            print("First was selected")
+            Task {
+                try await firebaseManager.increaseRating(for: userPair.firstUserId)
+            }
         case .second:
-            print("Second was selected ")
+            Task {
+                try await firebaseManager.increaseRating(for: userPair.secondUserId)
+            }
         }
         
         Task {

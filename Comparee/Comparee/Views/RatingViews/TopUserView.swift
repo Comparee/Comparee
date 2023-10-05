@@ -77,11 +77,38 @@ final class TopUserView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
-        
-        print(userPhoto.bounds.width / 2)
-        print(userPhoto.bounds.height / 2)
         userPhoto.layer.borderWidth = 2.0 
         userPhoto.layer.borderColor = UIColor.white.cgColor
+    }
+    
+    func configure(_ userItem: UsersViewItem) {
+        userNameLabel.text = userItem.name
+        instagramImage.isHidden = !userItem.isInstagramEnabled
+        userRatingLabel.text = String(userItem.rating)
+        Task {
+            let url = try await storageManager.getUrlForImage(path: userItem.userId)
+            userPhoto.image = try await downloadImage(from: url)
+        }
+    }
+    
+    var storageManager = StorageManager()
+    
+    func downloadImage(from url: URL) async throws -> UIImage {
+        try await withCheckedThrowingContinuation { continuation in
+            Task {
+                await MainActor.run {
+                    let imageView = UIImageView()
+                    imageView.kf.setImage(with: url) { result in
+                        switch result {
+                        case .success(let value):
+                            continuation.resume(returning: value.image)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -109,6 +136,5 @@ private extension TopUserView {
             horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             horizontalStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
-        
     }
 }

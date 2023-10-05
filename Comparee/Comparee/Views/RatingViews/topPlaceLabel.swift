@@ -8,7 +8,7 @@
 import UIKit
 
 final class TopPlaceLabel: UILabel {
-    
+    // MARK: - Initialization
     init(text: String?) {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
