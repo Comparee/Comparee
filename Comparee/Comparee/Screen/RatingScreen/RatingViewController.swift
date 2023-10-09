@@ -20,7 +20,7 @@ final class RatingViewController: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-    private lazy var currentUser = CurrentUserView()
+    private lazy var currentUserView = CurrentUserView()
     
     // MARK: - Private Properties
     private var dataSource: RatingViewModel.DataSource!
@@ -45,21 +45,19 @@ final class RatingViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
         setupViews()
         bindViewModel()
-        viewModel.input.viewDidLoad()
-        Task {
-            let a = try await viewModel.output.getCurrentUser()
-            self.currentUser.configure(a, place: a.rating)
-            currentUser.dismissSkeleton()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //viewModel.input.viewDidLoad()
-        Task {
-            let a = try await viewModel.output.getCurrentUser()
-            self.currentUser.configure(a, place: a.rating)
-            currentUser.dismissSkeleton()
+        viewModel.input.viewDidAppear()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            let currentUser = try await viewModel.output.getCurrentUser()
+            guard let currentUser else { return }
+            
+            self.currentUserView.configure(currentUser, place: currentUser.rating)
+            currentUserView.dismissSkeleton()
         }
     }
 }
@@ -69,7 +67,7 @@ extension RatingViewController {
     func setupViews() {
         view.addSubview(backgroundImageView)
         view.addSubview(collectionView)
-        view.addSubview(currentUser)
+        view.addSubview(currentUserView)
         
         let customTitleView = createCustomTitleView(contactName: " Rating ")
         navigationItem.titleView = customTitleView
@@ -84,13 +82,13 @@ extension RatingViewController {
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            currentUser.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            currentUser.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            currentUser.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            currentUser.heightAnchor.constraint(equalToConstant: 66),
+            currentUserView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            currentUserView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            currentUserView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            currentUserView.heightAnchor.constraint(equalToConstant: 66),
             
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: currentUser.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: currentUserView.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
@@ -115,7 +113,6 @@ extension RatingViewController {
                     return UICollectionViewCell() }
                 let place = indexPath.row + 4
                 cell.configure(item, place: place)
-                print(!viewModel.output.isLoading)
                 if !viewModel.output.isLoading {
                     cell.dismissSkeleton()
                 }

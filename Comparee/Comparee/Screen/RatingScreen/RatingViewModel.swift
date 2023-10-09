@@ -38,6 +38,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
     
     init( router: RatingScreenFlowCoordinator) {
         self.router = router
+        self.isLoading = true
     }
     
     @MainActor
@@ -47,44 +48,40 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
 }
 
 extension RatingViewModel {
-    func viewDidLoad() {
+    func viewDidAppear() {
+        self.page = 1
         Task { [weak self] in
-            await self?.reloadCollection()
+            guard let self else { return }
+            
+            await self.reloadCollection()
             do {
-                guard let self else { return }
                 self.userViewItem = []
                 try await loadData(page: self.page, itemsPerPage: 10)
                 await finishLoading()
                 await reloadCollection()
             }
             catch {
-                print("ERROR ERROR ERROR")
-                print(error.localizedDescription)
-                print("ERROR ERROR ERROR")
+                await self.showAlert()
             }
         }
     }
     
-    func viewDidAppear() {
-//        self.page = 1
-//        self.isLoading = true
-//        Task { [weak self] in
-//            do {
-//                guard let self else { return }
-//                self.userViewItem = []
-//                try await loadData(page: self.page, itemsPerPage: 10)
-//                await finishLoading()
-//                await reloadCollection()
-//            }
-//            catch {
-//                print("ERROR ERROR ERROR")
-//                print(error.localizedDescription)
-//                print("ERROR ERROR ERROR")
-//            }
-//        }
+    @MainActor
+    func showAlert() {
+        let alertView = AlertView()
+        alertView.setUpCustomAlert(
+            title: "Loading error",
+            description: "Please try refreshing the page or checking your internet connection",
+            actionText: "Try again"
+        )
+        alertView.actionButton.addTarget(self, action: #selector(handleAlerAction), for: .touchUpInside)
+        router?.trigger(.base(.alert(alertView)))
     }
     
-    func showAlert() {}
+    @objc
+    func handleAlerAction() {
+        self.viewDidAppear()
+    }
 }
 
 extension RatingViewModel {
@@ -96,8 +93,7 @@ extension RatingViewModel {
         for i in startIndex..<endIndex {
             if i < result.count {
                 let a = try await firebaseManager.getUser(userId: result[i].userId)
-                print(a)
-                let newUser = UsersViewItem(userId: a.userId, name: a.name, rating: result[i].rating, isInstagramEnabled: a.instagram != nil)
+                let newUser = UsersViewItem(userId: a.userId, name: a.name, rating: result[i].rating, isInstagramEnabled: a.instagram?.count ?? 0 > 0)
                 newArray.append(newUser)
             } else {
                 break
@@ -109,9 +105,15 @@ extension RatingViewModel {
     func pagination() {
         Task {[weak self] in
             guard let self else { return }
+            
             self.page += 1
-            try await self.loadData(page: self.page, itemsPerPage: 10)
-            await self.reloadCollection()
+            do {
+                try await self.loadData(page: self.page, itemsPerPage: 10)
+                await self.reloadCollection()
+            }
+            catch {
+                await self.showAlert()
+            }
         }
     }
     
@@ -135,20 +137,31 @@ extension RatingViewModel {
         self.dataSourceSnapshot.send(snapshot)
     }
     
-    func getCurrentUser() async throws -> UsersViewItem {
-        let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
-        let result = try await firebaseManager.getAllUserRating()
-        var rating: Int
-        let targetName = dbUser.userId
-        
-        if let index = result.firstIndex(where: { $0.userId == targetName }) {
-            rating = index
-        } else {
-            rating = 888
-        }
+    func getCurrentUser() async throws -> UsersViewItem? {
+        do {
+            let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
+            let result = try await firebaseManager.getAllUserRating()
+            var rating: Int
+            var points: Int
+            let targetName = dbUser.userId
+
+            if let index = result.firstIndex(where: { $0.userId == targetName }) {
+                rating = index
+                points = result[index].rating
+                
+            } else {
+                rating = 888
+                points = 0
+            }
             
-            return UsersViewItem(userId: dbUser.userId, name: dbUser.name, rating: rating, isInstagramEnabled: dbUser.instagram != nil)
+            
+            return UsersViewItem(userId: dbUser.userId, name: dbUser.name, rating: points, isInstagramEnabled: dbUser.instagram?.count ?? 0 > 0 )
         }
+        catch {
+            await self.showAlert()
+            return nil
+        }
+    }
 }
 
 extension RatingViewModel {

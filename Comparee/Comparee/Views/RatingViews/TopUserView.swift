@@ -25,7 +25,7 @@ final class TopUserView: UIView {
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "Marinanan_"
+        label.text = "----------"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,7 +42,7 @@ final class TopUserView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
-        label.text = "1820"
+        label.text = "----"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

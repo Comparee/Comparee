@@ -5,10 +5,12 @@
 //  Created by Андрей Логвинов on 9/14/23.
 //
 
+import SwiftEntryKit
 import UIKit
 
 enum RatingScreenFlowRoute: Route {
     case showRatingScreen
+    case base(BaseRoutes)
 }
 
 protocol RatingScreenFlowCoordinatorOutput: AnyObject {
@@ -49,23 +51,29 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
             let vm = RatingViewModel(router: self)
             let vc = RatingViewController(vm)
             router.push(vc, animated: true)
+        case .base(let base):
+            switch base {
+            case .alert(let alert):
+                SwiftEntryKit.display(entry: alert, using: AlertView.setupAttributes())
+            default: break
+            }
         }
     }
 }
-
-// MARK: - Coordinatable
-extension RatingScreenFlowCoordinator: Coordinatable {
-    func start() {
-        trigger(.showRatingScreen)
+    
+    // MARK: - Coordinatable
+    extension RatingScreenFlowCoordinator: Coordinatable {
+        func start() {
+            trigger(.showRatingScreen)
+        }
+        
+        func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
+            self.tabBarRouter = router
+        }
     }
     
-    func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
-        self.tabBarRouter = router
+    extension RatingScreenFlowCoordinator {
+        func getRootController() -> UIViewController? {
+            rootController
+        }
     }
-}
-
-extension RatingScreenFlowCoordinator {
-    func getRootController() -> UIViewController? {
-        rootController
-    }
-}

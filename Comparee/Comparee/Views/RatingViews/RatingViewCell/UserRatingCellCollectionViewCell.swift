@@ -161,7 +161,12 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
     
     func configure(_ userItem: UsersViewItem, place: Int) {
         nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
+        print("!userItem.isInstagramEnabled ---- \(userItem.isInstagramEnabled)")
+        if userItem.isInstagramEnabled {
+            instagramImage.isHidden = !userItem.isInstagramEnabled }
+        else {
+            instagramImage.isHidden = true
+        }
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
         Task { [weak self] in
@@ -175,8 +180,6 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
             backgroundColor = .none
         }
     }
-    
-    
 }
 
 private extension UserRatingCellCollectionViewCell {
@@ -207,7 +210,7 @@ private extension UserRatingCellCollectionViewCell {
             horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             horizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            ratingHorizontalStackView.trailingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor, constant: -12),
+            ratingHorizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -63),
             ratingHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 
             lineView.heightAnchor.constraint(equalToConstant: 1),

@@ -15,7 +15,7 @@ protocol RatingViewModelOutput {
     var sections: [RatingViewModel.Section] { get }
     var usersCount: Int { get }
     var isLoading: Bool { get }
-    func getCurrentUser() async throws -> UsersViewItem
+    func getCurrentUser() async throws -> UsersViewItem?
     func pagination()
 }
 
