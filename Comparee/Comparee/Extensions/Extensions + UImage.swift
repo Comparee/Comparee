@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 extension UIImage {
     func resize(to size: CGSize) -> UIImage? {
@@ -16,3 +17,24 @@ extension UIImage {
         return resizedImage
     }
 }
+
+extension UIImage {
+    static func downloadImage(from url: URL) async throws -> UIImage {
+        return try await withCheckedThrowingContinuation { continuation in
+            Task {
+                await MainActor.run {
+                    let imageView = UIImageView()
+                    imageView.kf.setImage(with: url) { result in
+                        switch result {
+                        case .success(let value):
+                            continuation.resume(returning: value.image)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -92,12 +92,11 @@ extension FirebaseManager: FirebaseManagerProtocol {
     func increaseRating(for userId: String) async throws {
         var rating = try await ratingDocument(userId).getDocument(as: UserRating.self)
         rating.rating += 1
-        try ratingDocument( userId).setData(from: rating, merge: false)
+        try ratingDocument(userId).setData(from: rating, merge: false)
     }
     
     func getAllUserRating() async throws -> [RatingData] {
         let snapshot = try await ratingCollection.getDocuments()
-        //let usersRating = snapshot.documents.map { $0.documentID }
         let documents = snapshot.documents
         var ratingDataArray: [RatingData] = []
         for document in documents {

@@ -50,8 +50,8 @@ extension CompareViewModel {
         let urlPair = try await getNewURLPair(maxIterations: pairQuantity)
         guard let urlPair else { throw CompareError.newComparisonsNotFound }
         
-        async let firstUserImage = await downloadImage(from: urlPair.firstURL)
-        async let secondUserImage = await downloadImage(from: urlPair.secondURL)
+        async let firstUserImage = await UIImage.downloadImage(from: urlPair.firstURL)
+        async let secondUserImage = await UIImage.downloadImage(from: urlPair.secondURL)
         
         return try await ImagePair(firstImage: firstUserImage, secondImage: secondUserImage)
     }
@@ -116,24 +116,6 @@ private extension CompareViewModel {
         }
         
         return UserPair(firstUserId: userId1, secondUserId: userId2)
-    }
-    
-    func downloadImage(from url: URL) async throws -> UIImage {
-        try await withCheckedThrowingContinuation { continuation in
-            Task {
-                await MainActor.run {
-                    let imageView = UIImageView()
-                    imageView.kf.setImage(with: url) { result in
-                        switch result {
-                        case .success(let value):
-                            continuation.resume(returning: value.image)
-                        case .failure(let error):
-                            continuation.resume(throwing: error)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -36,9 +36,14 @@ final class RatingHeaderView: UICollectionReusableView {
     }
     
     func configure(with items: [UsersViewItem]) {
-        firstUser.configure(items[0])
-        secondUser.configure(items[1])
-        thirdUser.configure(items[2])
+        if items != [] {
+            firstUser.configure(items[0])
+            secondUser.configure(items[1])
+            thirdUser.configure(items[2])
+        }
+        else {
+            print("Is empty")
+        }
     }
 }
 

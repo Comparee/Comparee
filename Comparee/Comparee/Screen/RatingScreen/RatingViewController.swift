@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 final class RatingViewController: UIViewController, UICollectionViewDelegate {
+    
     // MARK: - Private properties
     private lazy var backgroundImageView = BackgroundImageView()
     private lazy var collectionView: UICollectionView = {
@@ -45,6 +46,21 @@ final class RatingViewController: UIViewController, UICollectionViewDelegate {
         setupViews()
         bindViewModel()
         viewModel.input.viewDidLoad()
+        Task {
+            let a = try await viewModel.output.getCurrentUser()
+            self.currentUser.configure(a, place: a.rating)
+            currentUser.dismissSkeleton()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //viewModel.input.viewDidLoad()
+        Task {
+            let a = try await viewModel.output.getCurrentUser()
+            self.currentUser.configure(a, place: a.rating)
+            currentUser.dismissSkeleton()
+        }
     }
 }
 
@@ -91,13 +107,21 @@ extension RatingViewController {
     }
     
     func setupDataSourceWithCells() {
-        dataSource = RatingViewModel.DataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, row) in
+        dataSource = RatingViewModel.DataSource(collectionView: collectionView, cellProvider: { [weak self] (collectionView, indexPath, row) in
+            guard let self else { return UICollectionViewCell() }
             switch row {
             case .users(let item):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier, for: indexPath) as? UserRatingCellCollectionViewCell else {
                     return UICollectionViewCell() }
-
-                    cell.configure(item, place: indexPath.row)
+                let place = indexPath.row + 4
+                cell.configure(item, place: place)
+                print(!viewModel.output.isLoading)
+                if !viewModel.output.isLoading {
+                    cell.dismissSkeleton()
+                }
+                else {
+                    cell.showSkeleton()
+                }
                 return cell
             }
         })
@@ -111,7 +135,10 @@ extension RatingViewController {
             switch section {
             case .users(let item):
                 if let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RatingHeaderView.reuseIdentifier, for: indexPath) as? RatingHeaderView {
-                    headerView.configure(with: [item[0], item[1], item[2]])
+                    // Getting first three elements for header view
+                    let firstThreeItems = Array(item.prefix(3))
+
+                    headerView.configure(with: firstThreeItems)
                     
                     return headerView
                 }
@@ -120,18 +147,25 @@ extension RatingViewController {
         }
     }
     
+    
     func makeHeaderViewSupplementaryItemWithHeight(_ height: CGFloat) -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerViewItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(height)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
         )
         headerViewItem.pinToVisibleBounds = false
-
+        
         return headerViewItem
     }
     
     func registerCells() {
         collectionView.register(UserRatingCellCollectionViewCell.self, forCellWithReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier)
-                collectionView.register(RatingHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RatingHeaderView.reuseIdentifier)
+        collectionView.register(RatingHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RatingHeaderView.reuseIdentifier)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == viewModel.output.usersCount - 4 {
+            viewModel.output.pagination()
+        }
     }
 }
 
@@ -139,7 +173,7 @@ extension RatingViewController: UICollectionViewDelegateFlowLayout {
     func makeCollectionCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self]
             (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let self = self else { return nil }
+            guard let self else { return nil }
             
             switch self.viewModel.output.sections[sectionIndex] {
             case .users:
@@ -164,7 +198,7 @@ extension RatingViewController: UICollectionViewDelegateFlowLayout {
         viewModel.output.dataSourceSnapshot
             .receive(on: RunLoop.main)
             .sink { [weak self] in
-                guard let self else { return}
+                guard let self else { return }
                 
                 self.dataSource.apply($0 , animatingDifferences: true , completion: nil)
             }

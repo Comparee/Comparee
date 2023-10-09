@@ -60,7 +60,7 @@
 		0D9B8A182A9DEF5A00709A00 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */; };
 		0D9B8A1A2A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B8A192A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf */; };
 		0D9B8A1D2A9DFA9E00709A00 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D9B8A1C2A9DFA9E00709A00 /* SFProText-Regular.ttf */; };
-		0DAC72F42AC5AF6300912D6D /* topPlaceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC72F32AC5AF6300912D6D /* topPlaceLabel.swift */; };
+		0DAC72F42AC5AF6300912D6D /* TopPlaceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC72F32AC5AF6300912D6D /* TopPlaceLabel.swift */; };
 		0DAC72F62AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC72F52AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift */; };
 		0DAC72F82AC8C08C00912D6D /* TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC72F72AC8C08C00912D6D /* TableViewExtensions.swift */; };
 		0DAC72FA2ACAF24500912D6D /* UserRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAC72F92ACAF24500912D6D /* UserRating.swift */; };
@@ -160,7 +160,7 @@
 		0D9B8A172A9DEF5A00709A00 /* SFProText-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Medium.ttf"; sourceTree = "<group>"; };
 		0D9B8A192A9DEFAB00709A00 /* Cormorant-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cormorant-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		0D9B8A1C2A9DFA9E00709A00 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
-		0DAC72F32AC5AF6300912D6D /* topPlaceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topPlaceLabel.swift; sourceTree = "<group>"; };
+		0DAC72F32AC5AF6300912D6D /* TopPlaceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPlaceLabel.swift; sourceTree = "<group>"; };
 		0DAC72F52AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRatingCellCollectionViewCell.swift; path = RatingViewCell/UserRatingCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		0DAC72F72AC8C08C00912D6D /* TableViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
 		0DAC72F92ACAF24500912D6D /* UserRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRating.swift; sourceTree = "<group>"; };
@@ -316,7 +316,7 @@
 			children = (
 				0D99B44A2AC552BC00BB99BD /* RatingHeaderView.swift */,
 				0D99B44C2AC552DD00BB99BD /* TopUserView.swift */,
-				0DAC72F32AC5AF6300912D6D /* topPlaceLabel.swift */,
+				0DAC72F32AC5AF6300912D6D /* TopPlaceLabel.swift */,
 				0DAC72F52AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift */,
 				0DAC72FD2ACE3D1F00912D6D /* CurrentUserView.swift */,
 			);
@@ -782,7 +782,7 @@
 				0D8AAB462A9FE0CB0088987F /* IconManager.swift in Sources */,
 				0DCA696C2AB3070400E19FA8 /* CompareViewController.swift in Sources */,
 				0D983BA12AC16F25007F992E /* CompareError.swift in Sources */,
-				0DAC72F42AC5AF6300912D6D /* topPlaceLabel.swift in Sources */,
+				0DAC72F42AC5AF6300912D6D /* TopPlaceLabel.swift in Sources */,
 				0DBEA9902AA5AC450026C441 /* ProfilePictureUploadViewController.swift in Sources */,
 				0D1F7B082ABB04CA0008D9F8 /* CompareViewModel.swift in Sources */,
 				0D9B8A0F2A9D2E9000709A00 /* AppRouter.swift in Sources */,
@@ -939,7 +939,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -972,7 +972,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Comparee/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

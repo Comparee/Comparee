@@ -13,6 +13,10 @@ protocol RatingViewModelInput: BaseViewModuleInputProtocol {}
 protocol RatingViewModelOutput {
     var dataSourceSnapshot: CurrentValueSubject<RatingViewModel.Snapshot, Never> { get }
     var sections: [RatingViewModel.Section] { get }
+    var usersCount: Int { get }
+    var isLoading: Bool { get }
+    func getCurrentUser() async throws -> UsersViewItem
+    func pagination()
 }
 
 protocol RatingViewModelProtocol {

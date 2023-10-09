@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class TopUserView: UIView {
+    var storageManager = StorageManager()
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
@@ -56,7 +58,7 @@ final class TopUserView: UIView {
         stackView.alignment = .center
         stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.layer.cornerRadius = 16
+        stackView.layer.cornerRadius = 4
         stackView.clipsToBounds = true
         return stackView
     }()
@@ -64,6 +66,7 @@ final class TopUserView: UIView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        makeViewSkeletonable()
         setupViews()
         setConstraints()
         translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +80,7 @@ final class TopUserView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
-        userPhoto.layer.borderWidth = 2.0 
+        userPhoto.layer.borderWidth = 2.0
         userPhoto.layer.borderColor = UIColor.white.cgColor
     }
     
@@ -85,31 +88,26 @@ final class TopUserView: UIView {
         userNameLabel.text = userItem.name
         instagramImage.isHidden = !userItem.isInstagramEnabled
         userRatingLabel.text = String(userItem.rating)
-        Task {
-            let url = try await storageManager.getUrlForImage(path: userItem.userId)
-            userPhoto.image = try await downloadImage(from: url)
+        Task {[weak self] in
+            guard let self else { return }
+            
+            let url = try await self.storageManager.getUrlForImage(path: userItem.userId)
+            self.userPhoto.image = try await UIImage.downloadImage(from: url)
+            await dismissSkeleton()
         }
     }
     
-    var storageManager = StorageManager()
-    
-    func downloadImage(from url: URL) async throws -> UIImage {
-        try await withCheckedThrowingContinuation { continuation in
-            Task {
-                await MainActor.run {
-                    let imageView = UIImageView()
-                    imageView.kf.setImage(with: url) { result in
-                        switch result {
-                        case .success(let value):
-                            continuation.resume(returning: value.image)
-                        case .failure(let error):
-                            continuation.resume(throwing: error)
-                        }
-                    }
-                }
-            }
-        }
+    @MainActor
+    func dismissSkeleton() {
+        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userPhoto.stopSkeletonAnimation()
+        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userNameLabel.stopSkeletonAnimation()
+        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        horizontalStackView.stopSkeletonAnimation()
+        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
     }
+    
 }
 
 // MARK: - Private methods
@@ -136,5 +134,15 @@ private extension TopUserView {
             horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             horizontalStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
+    }
+    
+    func makeViewSkeletonable() {
+        userPhoto.isSkeletonable = true
+        userNameLabel.isSkeletonable = true
+        horizontalStackView.isSkeletonable = true
+        
+        userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        userNameLabel.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
 }
