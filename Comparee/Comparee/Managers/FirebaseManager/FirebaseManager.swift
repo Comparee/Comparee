@@ -107,7 +107,7 @@ extension FirebaseManager: FirebaseManagerProtocol {
                 }
             }
         }
-        return ratingDataArray.sorted { $0.rating > $1.rating}
+        return ratingDataArray.sorted { $0.rating > $1.rating }
     }
 }
 
@@ -120,10 +120,4 @@ private extension FirebaseManager {
     func ratingDocument(_ userId: String) -> DocumentReference {
         ratingCollection.document(userId)
     }
-}
-
-
-struct RatingData: Codable {
-    let rating: Int
-    let userId: String
 }

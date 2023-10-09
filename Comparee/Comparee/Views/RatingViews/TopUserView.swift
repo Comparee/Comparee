@@ -5,8 +5,8 @@
 //  Created by Андрей Логвинов on 9/28/23.
 //
 
-import UIKit
 import SkeletonView
+import UIKit
 
 final class TopUserView: UIView {
     var storageManager = StorageManager()
@@ -25,7 +25,6 @@ final class TopUserView: UIView {
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = .white
         label.textAlignment = .center
-        label.text = "----------"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,7 +41,6 @@ final class TopUserView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
-        label.text = "----"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -84,16 +82,19 @@ final class TopUserView: UIView {
         userPhoto.layer.borderColor = UIColor.white.cgColor
     }
     
+    // MARK: - Public methods
     func configure(_ userItem: UsersViewItem) {
         userNameLabel.text = userItem.name
         instagramImage.isHidden = !userItem.isInstagramEnabled
         userRatingLabel.text = String(userItem.rating)
+        userNameLabel.textColor = .white
+        userRatingLabel.textColor = .white
         Task {[weak self] in
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userItem.userId)
             self.userPhoto.image = try await UIImage.downloadImage(from: url)
-            await dismissSkeleton()
+            dismissSkeleton()
         }
     }
     
@@ -107,7 +108,6 @@ final class TopUserView: UIView {
         horizontalStackView.stopSkeletonAnimation()
         userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
     }
-    
 }
 
 // MARK: - Private methods

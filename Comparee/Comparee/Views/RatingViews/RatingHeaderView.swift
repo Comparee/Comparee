@@ -35,14 +35,12 @@ final class RatingHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - public methods
     func configure(with items: [UsersViewItem]) {
-        if items != [] {
+        if !items.isEmpty {
             firstUser.configure(items[0])
             secondUser.configure(items[1])
             thirdUser.configure(items[2])
-        }
-        else {
-            print("Is empty")
         }
     }
 }

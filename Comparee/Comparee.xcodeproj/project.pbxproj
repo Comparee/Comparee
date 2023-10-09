@@ -104,6 +104,7 @@
 		0DCA69722AB3079100E19FA8 /* CompareFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */; };
 		0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */; };
 		0DCA69762AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */; };
+		0DE132652AD42DC1006FB796 /* RatingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132642AD42DC1006FB796 /* RatingData.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -202,6 +203,7 @@
 		0DCA69712AB3079100E19FA8 /* CompareFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenFlowCoordinator.swift; sourceTree = "<group>"; };
+		0DE132642AD42DC1006FB796 /* RatingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingData.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +256,7 @@
 		0D1F7B162AC0C57D0008D9F8 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0DE132632AD40D3D006FB796 /* RatingScreen */,
 				0D99B43D2AC4543700BB99BD /* FirebaseManager */,
 				0D1F7B172AC0C6100008D9F8 /* CompareScreen */,
 			);
@@ -584,7 +587,6 @@
 				0DCA696D2AB3072A00E19FA8 /* RatingViewController.swift */,
 				0D99B4452AC551D000BB99BD /* RatingViewModel.swift */,
 				0D99B4472AC551D800BB99BD /* RatingViewModelProtocol.swift */,
-				0DAC72FB2ACC55CF00912D6D /* UsersViewItem.swift */,
 			);
 			path = RatingScreen;
 			sourceTree = "<group>";
@@ -595,6 +597,15 @@
 				0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */,
 			);
 			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		0DE132632AD40D3D006FB796 /* RatingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DAC72FB2ACC55CF00912D6D /* UsersViewItem.swift */,
+				0DE132642AD42DC1006FB796 /* RatingData.swift */,
+			);
+			path = RatingScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -703,7 +714,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [[ \"$(uname -m)\" == arm64 ]]; then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n#fi\n#\n#if which swiftlint > /dev/null; then\n#  swiftlint\n#else\n# echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\n#fi\n#\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -758,6 +769,7 @@
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
 				0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */,
 				0DBEA98C2AA4DDD90026C441 /* Extensions + String.swift in Sources */,
+				0DE132652AD42DC1006FB796 /* RatingData.swift in Sources */,
 				0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */,
 				0D8AAB3D2A9F52880088987F /* RegInputEnum.swift in Sources */,
 				0D1F7B0A2ABB04D70008D9F8 /* CompareViewModelProtocol.swift in Sources */,

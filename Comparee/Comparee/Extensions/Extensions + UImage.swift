@@ -5,8 +5,8 @@
 //  Created by Андрей Логвинов on 8/28/23.
 //
 
+import SkeletonView
 import UIKit
-import Kingfisher
 
 extension UIImage {
     func resize(to size: CGSize) -> UIImage? {
@@ -37,4 +37,3 @@ extension UIImage {
         }
     }
 }
-

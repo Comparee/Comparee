@@ -11,11 +11,11 @@ protocol NibLoadable {
 
 extension NibLoadable {
     static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.main)
+        UINib(nibName: identifier, bundle: Bundle.main)
     }
 
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 }
 
@@ -40,15 +40,15 @@ extension UITableView {
     }
 
     func dequeue<T: UITableViewCell>(_: T.Type) -> T? {
-        return dequeueReusableCell(withIdentifier: T.identifier) as? T
+        dequeueReusableCell(withIdentifier: T.identifier) as? T
     }
 
     func dequeue<T: UITableViewCell>(_: T.Type, for indexPath: IndexPath) -> T? {
-        return dequeueReusableCell(withIdentifier: T.identifier, for: indexPath) as? T
+        dequeueReusableCell(withIdentifier: T.identifier, for: indexPath) as? T
     }
 
     func dequeueHeaderFooterView<T: UITableViewHeaderFooterView>(_: T.Type) -> T? {
-        return dequeueReusableHeaderFooterView(withIdentifier: T.identifier) as? T
+        dequeueReusableHeaderFooterView(withIdentifier: T.identifier) as? T
     }
 }
 
@@ -63,7 +63,7 @@ extension UICollectionView {
     }
 
     func dequeue<T: UICollectionViewCell>(_ type: T.Type, for indexPath: IndexPath) -> T? {
-        return dequeueReusableCell(withReuseIdentifier: type.identifier, for: indexPath) as? T
+        dequeueReusableCell(withReuseIdentifier: type.identifier, for: indexPath) as? T
     }
 
     func register<T: UICollectionReusableView>(_: T.Type, for supplementaryViewOfKind: String) {
@@ -71,12 +71,12 @@ extension UICollectionView {
     }
 
     func dequeueReusableCell<T: UICollectionViewCell>(_: T.Type, for indexPath: IndexPath) -> T? {
-        return dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T
+        dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T
     }
 }
 
 extension UICollectionReusableView {
     static var reuseIdentifier: String {
-        return String(describing: Self.self)
+        String(describing: Self.self)
     }
 }

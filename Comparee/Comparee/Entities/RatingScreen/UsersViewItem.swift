@@ -7,9 +7,10 @@
 
 import UIKit
 
-struct UsersViewItem:  Codable, Equatable, Hashable {
+struct UsersViewItem: Codable, Equatable, Hashable {
     var userId: String
     var name: String
     var rating: Int
     var isInstagramEnabled: Bool
+    var currentPlace: Int?
 }

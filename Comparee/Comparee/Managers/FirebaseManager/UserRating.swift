@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserRating: Codable{
+struct UserRating: Codable {
     var rating: Int
     var userId: String
     

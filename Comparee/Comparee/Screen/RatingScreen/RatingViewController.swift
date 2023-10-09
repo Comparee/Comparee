@@ -8,10 +8,11 @@
 import Combine
 import UIKit
 
-final class RatingViewController: UIViewController, UICollectionViewDelegate {
+final class RatingViewController: UIViewController {
     
     // MARK: - Private properties
     private lazy var backgroundImageView = BackgroundImageView()
+    private lazy var currentUserView = CurrentUserView()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionCompositionalLayout())
         collectionView.showsVerticalScrollIndicator = false
@@ -20,9 +21,7 @@ final class RatingViewController: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-    private lazy var currentUserView = CurrentUserView()
-    
-    // MARK: - Private Properties
+    // MARK: - DataSource
     private var dataSource: RatingViewModel.DataSource!
     private var cancellables: Set<AnyCancellable> = []
     
@@ -56,14 +55,14 @@ final class RatingViewController: UIViewController, UICollectionViewDelegate {
             let currentUser = try await viewModel.output.getCurrentUser()
             guard let currentUser else { return }
             
-            self.currentUserView.configure(currentUser, place: currentUser.rating)
+            self.currentUserView.configure(currentUser, place: currentUser.currentPlace ?? 0)
             currentUserView.dismissSkeleton()
         }
     }
 }
 
-// MARK: - Private methods
-extension RatingViewController {
+// MARK: - Private methods for views setup
+private extension RatingViewController {
     func setupViews() {
         view.addSubview(backgroundImageView)
         view.addSubview(collectionView)
@@ -90,10 +89,13 @@ extension RatingViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: currentUserView.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
-    
+}
+
+// MARK: - Collection View setup
+private extension RatingViewController {
     func setupCollectionView() {
         registerCells()
         setupDataSource()
@@ -105,27 +107,34 @@ extension RatingViewController {
     }
     
     func setupDataSourceWithCells() {
-        dataSource = RatingViewModel.DataSource(collectionView: collectionView, cellProvider: { [weak self] (collectionView, indexPath, row) in
-            guard let self else { return UICollectionViewCell() }
-            switch row {
-            case .users(let item):
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier, for: indexPath) as? UserRatingCellCollectionViewCell else {
-                    return UICollectionViewCell() }
-                let place = indexPath.row + 4
-                cell.configure(item, place: place)
-                if !viewModel.output.isLoading {
-                    cell.dismissSkeleton()
+        dataSource = RatingViewModel.DataSource(
+            collectionView: collectionView,
+            cellProvider: { [weak self] collectionView, indexPath, row in
+                guard let self else { return UICollectionViewCell() }
+                
+                switch row {
+                case .users(let item):
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as? UserRatingCellCollectionViewCell else {
+                        return UICollectionViewCell() }
+                    
+                    let place = indexPath.row + 4
+                    cell.configure(item, place: place)
+                    if !viewModel.output.isLoading {
+                        cell.dismissSkeleton()
+                    } else {
+                        cell.showSkeleton()
+                    }
+                    return cell
                 }
-                else {
-                    cell.showSkeleton()
-                }
-                return cell
             }
-        })
+        )
     }
     
     func setupDataSourceWithSupplementaryView() {
-        dataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self else { return UICollectionReusableView() }
             
             let section = self.viewModel.output.sections[indexPath.section]
@@ -134,16 +143,14 @@ extension RatingViewController {
                 if let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RatingHeaderView.reuseIdentifier, for: indexPath) as? RatingHeaderView {
                     // Getting first three elements for header view
                     let firstThreeItems = Array(item.prefix(3))
-
-                    headerView.configure(with: firstThreeItems)
                     
+                    headerView.configure(with: firstThreeItems)
                     return headerView
                 }
             }
             return UICollectionReusableView()
         }
     }
-    
     
     func makeHeaderViewSupplementaryItemWithHeight(_ height: CGFloat) -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerViewItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -159,14 +166,20 @@ extension RatingViewController {
         collectionView.register(RatingHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RatingHeaderView.reuseIdentifier)
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == viewModel.output.usersCount - 4 {
-            viewModel.output.pagination()
-        }
+    func bindViewModel() {
+        viewModel.output.dataSourceSnapshot
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                
+                self.dataSource.apply($0, animatingDifferences: true, completion: nil)
+            }
+            .store(in: &cancellables)
     }
 }
 
-extension RatingViewController: UICollectionViewDelegateFlowLayout {
+// MARK: - private methods for layout setup
+private extension RatingViewController {
     func makeCollectionCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self]
             (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -190,15 +203,13 @@ extension RatingViewController: UICollectionViewDelegateFlowLayout {
         section.boundarySupplementaryItems = [makeHeaderViewSupplementaryItemWithHeight(337)]
         return section
     }
-    
-    func bindViewModel() {
-        viewModel.output.dataSourceSnapshot
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in
-                guard let self else { return }
-                
-                self.dataSource.apply($0 , animatingDifferences: true , completion: nil)
-            }
-            .store(in: &cancellables)
+}
+
+// MARK: - CollectionView Delegate
+extension RatingViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == viewModel.output.usersCount - 4 {
+            viewModel.output.pagination()
+        }
     }
 }
