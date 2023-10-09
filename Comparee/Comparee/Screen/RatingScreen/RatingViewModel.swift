@@ -148,7 +148,6 @@ extension RatingViewModel {
             if let index = result.firstIndex(where: { $0.userId == targetName }) {
                 rating = index
                 points = result[index].rating
-                
             } else {
                 rating = 888
                 points = 0
