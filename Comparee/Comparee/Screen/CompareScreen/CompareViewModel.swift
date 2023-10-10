@@ -132,9 +132,9 @@ private extension CompareViewModel {
             var result = [Int](repeating: 0, count: num1.count)
             var carry = 0
 
-            for i in stride(from: num1.count - 1, through: 0, by: -1) {
-                let product = num1[i] * num2 + carry
-                result[i] = product % 10
+            for index in stride(from: num1.count - 1, through: 0, by: -1) {
+                let product = num1[index] * num2 + carry
+                result[index] = product % 10
                 carry = product / 10
             }
 
@@ -149,8 +149,8 @@ private extension CompareViewModel {
         // Calculate the factorial as an array of digits.
         var factorial = [1]
 
-        for i in 2...count {
-            factorial = multiply(factorial, i)
+        for index in 2...count {
+            factorial = multiply(factorial, index)
         }
 
         // Sum all digits in the array to get the final result.
