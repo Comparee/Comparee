@@ -54,7 +54,7 @@ extension RatingViewModel {
     
     func pagination() {
         Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.page += 1
             do {

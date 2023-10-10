@@ -145,7 +145,7 @@ private extension TopUserView {
     }
     
     func getImage(with userId: String) {
-        Task {[weak self] in
+        Task { [weak self] in
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)

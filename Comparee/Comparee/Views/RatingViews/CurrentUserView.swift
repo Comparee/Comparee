@@ -213,12 +213,12 @@ private extension CurrentUserView {
     }
     
     func getImage(with userId: String) {
-        Task {[weak self] in
+        Task { [weak self] in
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
+            self.dismissSkeleton()
         }
     }
 }
