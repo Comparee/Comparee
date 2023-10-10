@@ -57,7 +57,7 @@ final class CurrentUserView: UIView {
         return imageView
     }()
     
-    lazy var horizontalStackView: UIStackView = {
+    lazy var instagramStackView: UIStackView = {
         NSLayoutConstraint.activate([
             instagramImage.widthAnchor.constraint(equalToConstant: 32),
             instagramImage.heightAnchor.constraint(equalToConstant: 32)
@@ -135,22 +135,21 @@ extension CurrentUserView {
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = "\(place + 1)"
         getImage(with: userItem.userId)
-        backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
     }
     
     @MainActor
     func dismissSkeleton() {
         userImageView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         userImageView.stopSkeletonAnimation()
-        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        horizontalStackView.stopSkeletonAnimation()
+        instagramStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        instagramStackView.stopSkeletonAnimation()
         ratingHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         ratingHorizontalStackView.stopSkeletonAnimation()
         nameHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         nameHorizontalStackView.stopSkeletonAnimation()
         
         nameHorizontalStackView.backgroundColor = .none
-        horizontalStackView.backgroundColor = .none
+        instagramStackView.backgroundColor = .none
         instagramImage.backgroundColor = .none
     }
 }
@@ -159,7 +158,7 @@ extension CurrentUserView {
 private extension CurrentUserView {
     func showSkeleton() {
         userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         ratingHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         nameHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
@@ -167,7 +166,7 @@ private extension CurrentUserView {
     func makeViewsSkeletonable() {
         userImageView.isSkeletonable = true
         instagramImage.isSkeletonable = true
-        horizontalStackView.isSkeletonable = true
+        instagramStackView.isSkeletonable = true
         ratingHorizontalStackView.isSkeletonable = true
         nameHorizontalStackView.isSkeletonable = true
     }
@@ -180,9 +179,9 @@ private extension CurrentUserView {
         self.addSubview(userImageView)
         self.addSubview(nameHorizontalStackView)
         self.addSubview(lineView)
-        self.addSubview(horizontalStackView)
+        self.addSubview(instagramStackView)
         self.addSubview(ratingHorizontalStackView)
-        
+        backgroundColor = ColorManager.Rating.currentUser
         userImageView.layer.cornerRadius = 24
     }
     
@@ -199,10 +198,10 @@ private extension CurrentUserView {
             nameHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             nameHorizontalStackView.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 8),
             
-            horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            horizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            instagramStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            instagramStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            ratingHorizontalStackView.trailingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor, constant: -12),
+            ratingHorizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -63),
             ratingHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 
             lineView.heightAnchor.constraint(equalToConstant: 1),

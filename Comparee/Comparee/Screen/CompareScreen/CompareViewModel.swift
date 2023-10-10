@@ -126,21 +126,35 @@ private extension CompareViewModel {
         guard count >= 2 else {
             return 0
         }
-        
-        // Define a nested function to calculate the factorial of a number.
-        func factorial(_ number: Int) -> Int {
-            // Calculate the factorial using the reduce function from 1 to the given number.
-            return (1...number).reduce(1, *)
+
+        // Define a nested function to multiply two arrays representing large numbers.
+        func multiply(_ num1: [Int], _ num2: Int) -> [Int] {
+            var result = [Int](repeating: 0, count: num1.count)
+            var carry = 0
+
+            for i in stride(from: num1.count - 1, through: 0, by: -1) {
+                let product = num1[i] * num2 + carry
+                result[i] = product % 10
+                carry = product / 10
+            }
+
+            while carry > 0 {
+                result.insert(carry % 10, at: 0)
+                carry /= 10
+            }
+
+            return result
         }
-        
-        // Calculate the numerator, which is the factorial of 'count'.
-        let numerator = factorial(count)
-        
-        // Calculate the denominator, which is the factorial of 'count - 2'.
-        let denominator = factorial(count - 2)
-        
-        // Calculate and return the number of combinations without repetition.
-        return numerator / denominator
+
+        // Calculate the factorial as an array of digits.
+        var factorial = [1]
+
+        for i in 2...count {
+            factorial = multiply(factorial, i)
+        }
+
+        // Sum all digits in the array to get the final result.
+        return factorial.reduce(0, +)
     }
 }
 
