@@ -22,7 +22,7 @@ final class StorageManager: StorageManagerProtocol {
 extension StorageManager {
     
     func getUrlForImage(path: String) async throws -> URL {
-        try await userReference(userId: path).downloadURL()
+        return try await userReference(userId: path).downloadURL()
     }
     
     func getImage(userId: String) async throws -> UIImage {

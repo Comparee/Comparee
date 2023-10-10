@@ -30,9 +30,31 @@ protocol FirebaseManagerProtocol {
     /// - Returns: An array of strings containing user IDs.
     func getAllUserIds() async throws -> [String]
     
+    /// Appends users to a comparison pair.
+    ///
+    /// - Parameter currentUserId: The user ID of the current user.
+    /// - Parameter newComparison: The user ID of the user to add to the comparison.
+    /// - Throws: An error if the operation fails.
     func appendUsersToComparison(_ currentUserId: String, newComparison: String) async throws
     
+    /// Checks if a comparison pair already exists for the given users.
+    ///
+    /// - Parameter userID: The user ID.
+    /// - Parameter usersPair: The pair of users to check for existence.
+    /// - Returns: `true` if the comparison pair exists, `false` otherwise.
     func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool
+    
+    /// Increases the rating for a user.
+    ///
+    /// - Parameter userId: The user ID to increase the rating for.
+    /// - Throws: An error if the operation fails.
+    func increaseRating(for userId: String) async throws
+    
+    /// Retrieves ratings for all users.
+    ///
+    /// - Returns: An array of `RatingData` objects containing user ratings.
+    /// - Throws: An error if the retrieval fails.
+    func getAllUserRating() async throws -> [RatingData]
 }
 
 private struct FirebaseManagerKey: InjectionKey {

@@ -33,6 +33,10 @@ extension UIColor {
     
     // Compare Screen
     static let errorDefinitionTintColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+    
+    // Rating Screen
+    static let currentUserBackground = UIColor(red: 0.412, green: 0.204, blue: 0.761, alpha: 1)
+    static let cellLine = UIColor(red: 0.18, green: 0.18, blue: 0.18, alpha: 1)
 }
 
 enum ColorManager {
@@ -64,5 +68,10 @@ enum ColorManager {
     
     enum Compare {
         static let errorDefinition = UIColor.errorDefinitionTintColor
+    }
+    
+    enum Rating {
+        static let currentUser = UIColor.currentUserBackground
+        static let line = UIColor.cellLine
     }
 }

@@ -12,17 +12,19 @@ import Foundation
 final class FirebaseManager {
     // MARK: - Private properties
     private let userCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.users.rawValue)
+    private let ratingCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.rating.rawValue)
 }
 
 // MARK: - Public methods
 extension FirebaseManager: FirebaseManagerProtocol {
-    
     func createNewUser(_ user: DBUser) throws {
-        try userDocument(userId: user.userId).setData(from: user, merge: false)
+        let userId = user.userId
+        try userDocument(userId).setData(from: user, merge: false)
+        try ratingDocument(userId).setData(from: UserRating(rating: 0, userId: userId), merge: false)
     }
     
     func getUser(userId: String) async throws -> DBUser {
-        try await userDocument(userId: userId).getDocument(as: DBUser.self)
+        try await userDocument(userId).getDocument(as: DBUser.self)
     }
     
     func getAllUserIds() async throws -> [String] {
@@ -36,7 +38,7 @@ extension FirebaseManager: FirebaseManagerProtocol {
             DataKey.comparisons.rawValue: FieldValue.arrayUnion([newComparison])
         ]
         
-        try await userDocument(userId: currentUserId).updateData(updateData)
+        try await userDocument(currentUserId).updateData(updateData)
     }
     
     func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool {
@@ -68,7 +70,7 @@ extension FirebaseManager: FirebaseManagerProtocol {
     
     func checkIfComparisonExists(userId: String, comparisonToCheck: String) async throws -> Bool {
         // Get the document for the user
-        let userDoc = userDocument(userId: userId)
+        let userDoc = userDocument(userId)
         
         do {
             // Get the document snapshot
@@ -86,11 +88,36 @@ extension FirebaseManager: FirebaseManagerProtocol {
             throw error
         }
     }
+    
+    func increaseRating(for userId: String) async throws {
+        var rating = try await ratingDocument(userId).getDocument(as: UserRating.self)
+        rating.rating += 1
+        try ratingDocument(userId).setData(from: rating, merge: false)
+    }
+    
+    func getAllUserRating() async throws -> [RatingData] {
+        let snapshot = try await ratingCollection.getDocuments()
+        let documents = snapshot.documents
+        var ratingDataArray: [RatingData] = []
+        for document in documents {
+            let data = document.data()
+            if let jsonData = try? JSONSerialization.data(withJSONObject: data, options: []) {
+                if let ratingData = try? JSONDecoder().decode(RatingData.self, from: jsonData) {
+                    ratingDataArray.append(ratingData)
+                }
+            }
+        }
+        return ratingDataArray.sorted { $0.rating > $1.rating }
+    }
 }
 
 // MARK: - Private methods
 private extension FirebaseManager {
-    func userDocument(userId: String) -> DocumentReference {
+    func userDocument(_ userId: String) -> DocumentReference {
         userCollection.document(userId)
+    }
+    
+    func ratingDocument(_ userId: String) -> DocumentReference {
+        ratingCollection.document(userId)
     }
 }
