@@ -28,6 +28,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
     private var userViewItem: [UsersViewItem]
     private var cancellables: Set<AnyCancellable> = []
     private var page: Int
+    private var itemsPerPage: Int
     
     // MARK: - Public properties
     var isLoading: Bool
@@ -37,6 +38,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
         self.router = router
         self.isLoading = true
         self.page = 1
+        self.itemsPerPage = 10
         self.userViewItem = (1...5).map {
             UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, isInstagramEnabled: true)
         }
@@ -47,16 +49,16 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
 extension RatingViewModel {
     // MARK: - Lifecycle
     func viewDidAppear() {
-        self.getNewData()
+        getNewData()
     }
     
     func pagination() {
-        Task {[weak self] in
-            guard let self else { return }
+        Task { [weak self] in
+            guard let self = self else { return }
             
             self.page += 1
             do {
-                try await self.loadData(page: self.page, itemsPerPage: 10)
+                try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
                 await self.reloadCollection()
             } catch {
                 await self.showAlert()
@@ -66,31 +68,34 @@ extension RatingViewModel {
     
     func getCurrentUser() async throws -> UsersViewItem? {
         do {
+            // Get the user information from Firebase
             let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
-            let result = try await firebaseManager.getAllUserRating()
             
-            if let index = result.firstIndex(where: { $0.userId == dbUser.userId }) {
-                let rating = index
-                let points = result[index].rating
-        
+            // Get all user ratings
+            let allUserRatings = try await firebaseManager.getAllUserRating()
+            
+            // Find the user's rating in the list of all ratings
+            if let index = allUserRatings.firstIndex(where: { $0.userId == dbUser.userId }) {
+                let userRating = allUserRatings[index]
                 return UsersViewItem(
                     userId: dbUser.userId,
                     name: dbUser.name,
-                    rating: points,
+                    rating: userRating.rating,
                     isInstagramEnabled: dbUser.instagram != "",
-                    currentPlace: rating
-                )
-            } else {
-                return UsersViewItem(
-                    userId: dbUser.userId,
-                    name: dbUser.name,
-                    rating: 0,
-                    isInstagramEnabled: dbUser.instagram != "",
-                    currentPlace: 0
+                    currentPlace: index
                 )
             }
+            
+            // If user rating not found, create a default item
+            return UsersViewItem(
+                userId: dbUser.userId,
+                name: dbUser.name,
+                rating: 0,
+                isInstagramEnabled: dbUser.instagram != "",
+                currentPlace: 0
+            )
         } catch {
-            await self.showAlert()
+            await showAlert()
             return nil
         }
     }
@@ -115,11 +120,13 @@ extension RatingViewModel {
         switch section {
         case .users(let userViewItems):
             if isLoading {
+                // If data is loading, return all mock items, including the first three.
                 return userViewItems.map {
                     Row.users($0)
                 }
             } else {
                 let startIndex = 3
+                // Exclude the first three items, because they should be displayed only in the headerView.
                 let filteredUserViewItems = Array(userViewItems.dropFirst(startIndex))
                 
                 return filteredUserViewItems.map {
@@ -133,16 +140,16 @@ extension RatingViewModel {
 // MARK: - Private methods
 private extension RatingViewModel {
     func getNewData() {
-        self.page = 1
+        page = 1
         Task { [weak self] in
             guard let self else { return }
             
             await self.reloadCollection()
             do {
                 self.userViewItem = []
-                try await loadData(page: self.page, itemsPerPage: 10)
-                await finishLoading()
-                await reloadCollection()
+                try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
+                await self.finishLoading()
+                await self.reloadCollection()
             } catch {
                 await self.showAlert()
             }
@@ -153,35 +160,32 @@ private extension RatingViewModel {
         let startIndex = (page - 1) * itemsPerPage
         let endIndex = startIndex + itemsPerPage
         let result = try await firebaseManager.getAllUserRating()
+        let itemsToLoad = min(endIndex, result.count) - startIndex
+        guard itemsToLoad > 0 else { return }
+
         var newArray: [UsersViewItem] = []
-        for index in startIndex..<endIndex {
-            if index < result.count {
-                let user = try await firebaseManager.getUser(userId: result[index].userId)
-                let newUser = UsersViewItem(
-                    userId: user.userId, name: user.name,
-                    rating: result[index].rating,
-                    isInstagramEnabled: user.instagram != ""
-                )
-                newArray.append(newUser)
-            } else {
-                break
-            }
+        for index in startIndex..<startIndex + itemsToLoad {
+            let user = try await firebaseManager.getUser(userId: result[index].userId)
+            let newUser = UsersViewItem(
+                userId: user.userId,
+                name: user.name,
+                rating: result[index].rating,
+                isInstagramEnabled: user.instagram != ""
+            )
+            newArray.append(newUser)
         }
+
         await updateUsers(with: newArray)
     }
     
     @MainActor
     func finishLoading() {
-        self.isLoading = false
+        isLoading = false
     }
     
     @MainActor
     func updateUsers(with items: [UsersViewItem]) {
-        if isLoading {
-            self.userViewItem = items
-        } else {
-            self.userViewItem += items
-        }
+        isLoading ? (self.userViewItem = items) : (self.userViewItem += items)
     }
     
     @MainActor
@@ -211,6 +215,6 @@ private extension RatingViewModel {
     
     @objc
     func handleAlerAction() {
-        self.getNewData()
+        getNewData()
     }
 }

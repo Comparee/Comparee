@@ -135,16 +135,8 @@ extension UserRatingCellCollectionViewCell {
         instagramImage.isHidden = !userItem.isInstagramEnabled
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
-        Task { [weak self] in
-            guard let self else { return }
-            let url = try await self.storageManager.getUrlForImage(path: userItem.userId)
-            self.userImageView.image = try await UIImage.downloadImage(from: url)
-        }
-        if userItem.userId == userDefaultsManager.userID {
-            backgroundColor = ColorManager.Rating.currentUser
-        } else {
-            backgroundColor = .none
-        }
+        getImage(with: userItem.userId)
+        backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
     }
     
     @MainActor
@@ -218,5 +210,15 @@ private extension UserRatingCellCollectionViewCell {
             lineView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             lineView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    
+    func getImage(with userId: String) {
+        Task {[weak self] in
+            guard let self else { return }
+            
+            let url = try await self.storageManager.getUrlForImage(path: userId)
+            self.userImageView.image = try await UIImage.downloadImage(from: url)
+            dismissSkeleton()
+        }
     }
 }

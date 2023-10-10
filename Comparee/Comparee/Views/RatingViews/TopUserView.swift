@@ -9,7 +9,9 @@ import SkeletonView
 import UIKit
 
 final class TopUserView: UIView {
-    var storageManager = StorageManager()
+    // MARK: - Injection
+    @Injected(\.storageManager) var storageManager: StorageManagerProtocol
+    
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
@@ -81,21 +83,17 @@ final class TopUserView: UIView {
         userPhoto.layer.borderWidth = 2.0
         userPhoto.layer.borderColor = UIColor.white.cgColor
     }
-    
-    // MARK: - Public methods
+}
+
+// MARK: - Public methods
+extension TopUserView {
     func configure(_ userItem: UsersViewItem) {
         userNameLabel.text = userItem.name
         instagramImage.isHidden = !userItem.isInstagramEnabled
         userRatingLabel.text = String(userItem.rating)
         userNameLabel.textColor = .white
         userRatingLabel.textColor = .white
-        Task {[weak self] in
-            guard let self else { return }
-            
-            let url = try await self.storageManager.getUrlForImage(path: userItem.userId)
-            self.userPhoto.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
-        }
+        getImage(with: userItem.userId)
     }
     
     @MainActor
@@ -144,5 +142,15 @@ private extension TopUserView {
         userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         userNameLabel.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+    }
+    
+    func getImage(with userId: String) {
+        Task {[weak self] in
+            guard let self else { return }
+            
+            let url = try await self.storageManager.getUrlForImage(path: userId)
+            self.userPhoto.image = try await UIImage.downloadImage(from: url)
+            dismissSkeleton()
+        }
     }
 }

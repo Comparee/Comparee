@@ -49,15 +49,7 @@ final class RatingViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.input.viewDidAppear()
-        Task { [weak self] in
-            guard let self else { return }
-            
-            let currentUser = try await viewModel.output.getCurrentUser()
-            guard let currentUser else { return }
-            
-            self.currentUserView.configure(currentUser, place: currentUser.currentPlace ?? 0)
-            currentUserView.dismissSkeleton()
-        }
+        setupCurrentUser()
     }
 }
 
@@ -92,6 +84,18 @@ private extension RatingViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
+    
+    func setupCurrentUser() {
+        Task { [weak self] in
+            guard let self else { return }
+            
+            let currentUser = try await self.viewModel.output.getCurrentUser()
+            guard let currentUser else { return }
+            
+            self.currentUserView.configure(currentUser, place: currentUser.currentPlace ?? 0)
+            self.currentUserView.dismissSkeleton()
+        }
+    }
 }
 
 // MARK: - Collection View setup
@@ -120,6 +124,8 @@ private extension RatingViewController {
                     ) as? UserRatingCellCollectionViewCell else {
                         return UICollectionViewCell() }
                     
+                    // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
+                    // so we start numbering the actual cells from 4 to match their position in the list.
                     let place = indexPath.row + 4
                     cell.configure(item, place: place)
                     if !viewModel.output.isLoading {
@@ -208,6 +214,8 @@ private extension RatingViewController {
 // MARK: - CollectionView Delegate
 extension RatingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // When the current cell is 4 items from the end of the collection,
+        // trigger pagination to load more items.
         if indexPath.item == viewModel.output.usersCount - 4 {
             viewModel.output.pagination()
         }

@@ -125,12 +125,17 @@ final class CurrentUserView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    func showSkeleton() {
-        userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        ratingHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        nameHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+}
+
+// MARK: - Public methods
+extension CurrentUserView {
+    func configure(_ userItem: UsersViewItem, place: Int) {
+        nameLabel.text = userItem.name
+        instagramImage.isHidden = !userItem.isInstagramEnabled
+        ratingLabel.text = String(userItem.rating)
+        placeLabel.text = "\(place + 1)"
+        getImage(with: userItem.userId)
+        backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
     }
     
     @MainActor
@@ -148,6 +153,16 @@ final class CurrentUserView: UIView {
         horizontalStackView.backgroundColor = .none
         instagramImage.backgroundColor = .none
     }
+}
+
+// MARK: - Private methods for skeleton configuration
+private extension CurrentUserView {
+    func showSkeleton() {
+        userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        ratingHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        nameHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+    }
     
     func makeViewsSkeletonable() {
         userImageView.isSkeletonable = true
@@ -155,23 +170,6 @@ final class CurrentUserView: UIView {
         horizontalStackView.isSkeletonable = true
         ratingHorizontalStackView.isSkeletonable = true
         nameHorizontalStackView.isSkeletonable = true
-    }
-    
-    func configure(_ userItem: UsersViewItem, place: Int) {
-        nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
-        ratingLabel.text = String(userItem.rating)
-        placeLabel.text = "\(place + 1)"
-        Task { [weak self] in
-            guard let self else { return }
-            let url = try await self.storageManager.getUrlForImage(path: userItem.userId)
-            self.userImageView.image = try await UIImage.downloadImage(from: url)
-        }
-        if userItem.userId == userDefaultsManager.userID {
-            backgroundColor = ColorManager.Rating.currentUser
-        } else {
-            backgroundColor = .none
-        }
     }
 }
 
@@ -212,5 +210,15 @@ private extension CurrentUserView {
             lineView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             lineView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    
+    func getImage(with userId: String) {
+        Task {[weak self] in
+            guard let self else { return }
+            
+            let url = try await self.storageManager.getUrlForImage(path: userId)
+            self.userImageView.image = try await UIImage.downloadImage(from: url)
+            dismissSkeleton()
+        }
     }
 }
