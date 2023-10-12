@@ -28,6 +28,7 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         button.setTitle("Sign out", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(signOutButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -37,7 +38,7 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - ViewModel
     private var viewModel: ProfileViewModelProtocol!
-
+    
     // MARK: - Initialization
     init(_ viewModel: ProfileViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
@@ -55,6 +56,7 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         configure()
         setContraints()
         bindViewModel()
+        viewModel.input.viewDidLoad()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -105,16 +107,20 @@ private extension ProfileViewController {
     func setupCurrentUser() {
         Task { [weak self] in
             guard let self else { return }
-            
-            let currentUser = try await self.viewModel.output.getCurrentUser()
-            guard let currentUser else { return }
-            
-            self.currentUserView.configure(currentUser)
-            self.currentUserView.dismissSkeleton()
+            do {
+                let currentUser = try await self.viewModel.output.getCurrentUser()
+                guard let currentUser else { return }
+                
+                self.currentUserView.configure(currentUser)
+                self.currentUserView.dismissSkeleton()
+            } catch {
+                self.showAlert(alertType: .userUploading)
+            }
         }
     }
 }
 
+// MARK: - Private methods for collection view setup
 private extension ProfileViewController {
     func setupCollectionView() {
         registerCells()
@@ -141,7 +147,7 @@ private extension ProfileViewController {
                         withReuseIdentifier: SettingsCell.reuseIdentifier,
                         for: indexPath
                     ) as? SettingsCell else { return UICollectionViewCell() }
-                   
+                    
                     cell.configure(with: item.name)
                     return cell
                 }
@@ -183,5 +189,39 @@ private extension ProfileViewController {
             layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimension), subitem: item, count: 1)
         let section = NSCollectionLayoutSection(group: group)
         return section
+    }
+}
+
+// MARK: - Error handling
+private extension ProfileViewController {
+    func showAlert(alertType: AlertCase) {
+        let alertView = AlertView()
+        alertView.setUpCustomAlert(
+            title: "Loading error",
+            description: "Please try refreshing the page or checking your internet connection",
+            actionText: "Try again"
+        )
+        switch alertType {
+        case .signOut:
+            alertView.actionButton.addTarget(self, action: #selector(signOutButtonTapped), for: .touchUpInside)
+        case .userUploading:
+            alertView.actionButton.addTarget(self, action: #selector(tryButtonWasTapped), for: .touchUpInside)
+        }
+        viewModel.input.showAlert(alertView)
+    }
+    
+    @objc func signOutButtonTapped() {
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                try await self.viewModel.output.signOut()
+            } catch {
+                self.showAlert(alertType: .signOut)
+            }
+        }
+    }
+    
+    @objc func tryButtonWasTapped() {
+        setupCurrentUser()
     }
 }

@@ -109,6 +109,9 @@
 		0DE132692AD587AE006FB796 /* ProfileViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */; };
 		0DE1326C2AD70795006FB796 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326B2AD70795006FB796 /* SettingsCell.swift */; };
 		0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */; };
+		0DE132712AD8716A006FB796 /* SettingsViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132702AD8716A006FB796 /* SettingsViewItem.swift */; };
+		0DE132732AD87183006FB796 /* AlertCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132722AD87183006FB796 /* AlertCase.swift */; };
+		0DE132752AD87354006FB796 /* SettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132742AD87354006FB796 /* SettingsOptions.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -212,6 +215,9 @@
 		0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelProtocol.swift; sourceTree = "<group>"; };
 		0DE1326B2AD70795006FB796 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		0DE132702AD8716A006FB796 /* SettingsViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewItem.swift; sourceTree = "<group>"; };
+		0DE132722AD87183006FB796 /* AlertCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCase.swift; sourceTree = "<group>"; };
+		0DE132742AD87354006FB796 /* SettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptions.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,6 +270,7 @@
 		0D1F7B162AC0C57D0008D9F8 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0DE1326F2AD87153006FB796 /* ProfileScreen */,
 				0DE132632AD40D3D006FB796 /* RatingScreen */,
 				0D99B43D2AC4543700BB99BD /* FirebaseManager */,
 				0D1F7B172AC0C6100008D9F8 /* CompareScreen */,
@@ -628,6 +635,16 @@
 			path = ProfileViews;
 			sourceTree = "<group>";
 		};
+		0DE1326F2AD87153006FB796 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DE132702AD8716A006FB796 /* SettingsViewItem.swift */,
+				0DE132722AD87183006FB796 /* AlertCase.swift */,
+				0DE132742AD87354006FB796 /* SettingsOptions.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -787,6 +804,7 @@
 				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
 				0D99B43F2AC4545100BB99BD /* DataKey.swift in Sources */,
 				0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */,
+				0DE132712AD8716A006FB796 /* SettingsViewItem.swift in Sources */,
 				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
 				0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */,
@@ -801,6 +819,7 @@
 				0DB204BF2AA921F30040551D /* Extensions + UITapGestureRecognizer.swift in Sources */,
 				0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */,
 				0DBEA97B2AA247140026C441 /* RegistrationViewModel.swift in Sources */,
+				0DE132732AD87183006FB796 /* AlertCase.swift in Sources */,
 				0DBEA97F2AA247430026C441 /* FirebaseManager.swift in Sources */,
 				0DBEA9932AA5AF140026C441 /* PhotoAddButton.swift in Sources */,
 				0D1F7B042AB84A1A0008D9F8 /* CompareView.swift in Sources */,
@@ -826,6 +845,7 @@
 				0DBEA9952AA5CCE30026C441 /* AdviceImageView.swift in Sources */,
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
 				0D1F7B1F2AC0C6810008D9F8 /* UserPair.swift in Sources */,
+				0DE132752AD87354006FB796 /* SettingsOptions.swift in Sources */,
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
 				0DAC72FA2ACAF24500912D6D /* UserRating.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,

@@ -8,8 +8,12 @@
 import Combine
 import Foundation
 
-protocol ProfileViewModelInput: BaseViewModuleInputProtocol {}
-// MARK: - Output
+protocol ProfileViewModelInput: BaseViewModuleInputProtocol {
+    /// Shows an alert view to the user.
+    ///
+    /// - Parameter alertView: The alert view to be displayed.
+    func showAlert(_ alertView: AlertView)
+}
 
 /// Protocol defining the input requirements for the RatingViewModel.
 protocol ProfileViewModelOutput {
@@ -23,6 +27,9 @@ protocol ProfileViewModelOutput {
     /// - Throws: An error if the retrieval process encounters an issue.
     /// - Returns: A UsersViewItem representing the current user.
     func getCurrentUser() async throws -> UsersViewItem?
+    
+    /// Signs the user out of the application.
+    func signOut() async throws
 }
 
 /// Protocol defining the overall requirements for the RatingViewModel.

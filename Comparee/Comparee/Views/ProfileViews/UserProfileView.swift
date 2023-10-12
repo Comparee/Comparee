@@ -13,7 +13,7 @@ final class UserProfileView: UIView {
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
     
-    lazy var userImageView: UIImageView = {
+    private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = IconManager.CompareScreen.background
         imageView.contentMode = .scaleAspectFill
@@ -26,7 +26,6 @@ final class UserProfileView: UIView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,7 +49,7 @@ final class UserProfileView: UIView {
         return imageView
     }()
     
-    lazy var instagramStackView: UIStackView = {
+    private lazy var instagramStackView: UIStackView = {
         NSLayoutConstraint.activate([
             instagramImage.widthAnchor.constraint(equalToConstant: 32),
             instagramImage.heightAnchor.constraint(equalToConstant: 32)
@@ -66,7 +65,7 @@ final class UserProfileView: UIView {
         return stackView
     }()
     
-    lazy var ratingHorizontalStackView: UIStackView = {
+    private lazy var ratingHorizontalStackView: UIStackView = {
         NSLayoutConstraint.activate([
             ratingLabel.widthAnchor.constraint(equalToConstant: 54),
             ratingLabel.heightAnchor.constraint(equalToConstant: 24)
@@ -81,7 +80,7 @@ final class UserProfileView: UIView {
         return stackView
     }()
     
-    lazy var nameHorizontalStackView: UIStackView = {
+    private lazy var nameHorizontalStackView: UIStackView = {
         NSLayoutConstraint.activate([
             nameLabel.widthAnchor.constraint(equalToConstant: 88),
             nameLabel.heightAnchor.constraint(equalToConstant: 20)
@@ -127,6 +126,7 @@ extension UserProfileView {
         instagramImage.isHidden = !userItem.isInstagramEnabled
         ratingLabel.text = String(userItem.rating)
         getImage(with: userItem.userId)
+        nameLabel.textColor = .white
     }
     
     @MainActor
@@ -158,6 +158,7 @@ private extension UserProfileView {
     func makeViewsSkeletonable() {
         userImageView.isSkeletonable = true
         instagramStackView.isSkeletonable = true
+        nameLabel.isSkeletonable = true
         ratingHorizontalStackView.isSkeletonable = true
         nameHorizontalStackView.isSkeletonable = true
     }

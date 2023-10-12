@@ -8,7 +8,7 @@
 import UIKit
 
 final class SettingsCell: UICollectionViewCell {
-    // MARK: - Private property
+    // MARK: - Private properties
     private lazy var cellLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -19,7 +19,7 @@ final class SettingsCell: UICollectionViewCell {
     
     private lazy var menuImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.image = IconManager.ProfileScreen.cellImage
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView

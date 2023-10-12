@@ -45,6 +45,13 @@ final class TabBarCoordinator: BaseCoordinator, TabBarCoordinatorOutput {
     
     private lazy var profileCoordinator: ProfileScreenFlowCoordinator = {
         let coordinator = ProfileScreenFlowCoordinator()
+        coordinator.finishFlow = { [weak self, weak coordinator] in
+            guard let self else { return }
+            
+            self.removeDependency(coordinator)
+            self.router.clearRootModule()
+            self.finishFlow?()
+        }
         addDependency(coordinator)
         coordinator.setTabBarRouter(self)
         coordinator.start()

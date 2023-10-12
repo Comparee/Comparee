@@ -8,21 +8,14 @@
 import Combine
 import UIKit
 
-enum SettingsOptions: String, CaseIterable {
-    case editProfile = "Edit Profile"
-    case contactUs = "Contact Us"
-    case privacyPolicy = "Privacy Policy"
-    case termsOfService = "Terms of Service"
-    case deleteAccount = "Delete Account"
-}
-
 final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, ProfileViewModelOutput {
     // MARK: - Managers
     @Injected(\.firebaseManager) private var firebaseManager: FirebaseManagerProtocol
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
+    @Injected(\.authManager) private var authManager: AuthManagerProtocol
     
-    // Typealias
+    // MARK: - Typealias
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Row>
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Row>
     
@@ -46,44 +39,51 @@ final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, P
 // MARK: - Public methods
 extension ProfileViewModel {
     // MARK: - Lifecycle
-    func viewDidAppear() {
+    func viewDidLoad() {
         Task {
             await reloadCollection()
         }
     }
     
     func getCurrentUser() async throws -> UsersViewItem? {
-        do {
-            // Get the user information from Firebase
-            let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
-            
-            // Get all user ratings
-            let allUserRatings = try await firebaseManager.getAllUserRating()
-            
-            // Find the user's rating in the list of all ratings
-            if let index = allUserRatings.firstIndex(where: { $0.userId == dbUser.userId }) {
-                let userRating = allUserRatings[index]
-                return UsersViewItem(
-                    userId: dbUser.userId,
-                    name: dbUser.name,
-                    rating: userRating.rating,
-                    isInstagramEnabled: dbUser.instagram != "",
-                    currentPlace: index
-                )
-            }
-            
-            // If user rating not found, create a default item
+        // Get the user information from Firebase
+        let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
+        
+        // Get all user ratings
+        let allUserRatings = try await firebaseManager.getAllUserRating()
+        
+        // Find the user's rating in the list of all ratings
+        if let index = allUserRatings.firstIndex(where: { $0.userId == dbUser.userId }) {
+            let userRating = allUserRatings[index]
             return UsersViewItem(
                 userId: dbUser.userId,
                 name: dbUser.name,
-                rating: 0,
+                rating: userRating.rating,
                 isInstagramEnabled: dbUser.instagram != "",
-                currentPlace: 0
+                currentPlace: index
             )
-        } catch {
-            await showAlert()
-            return nil
         }
+        
+        // If user rating not found, create a default item
+        return UsersViewItem(
+            userId: dbUser.userId,
+            name: dbUser.name,
+            rating: 0,
+            isInstagramEnabled: dbUser.instagram != "",
+            currentPlace: 0
+        )
+    }
+    
+    func signOut() async throws {
+        try await authManager.signOut()
+        await MainActor.run {
+            userDefaultsManager.isUserAuthorised = false
+            router?.finishFlow?()
+        }
+    }
+    
+    func showAlert(_ alertView: AlertView) {
+        router?.trigger(.base(.alert(alertView)))
     }
 }
 
@@ -123,28 +123,4 @@ private extension ProfileViewModel {
         }
         self.dataSourceSnapshot.send(snapshot)
     }
-}
-
-// MARK: - Alert configuration
-private extension ProfileViewModel {
-    @MainActor
-    func showAlert() {
-        let alertView = AlertView()
-        alertView.setUpCustomAlert(
-            title: "Loading error",
-            description: "Please try refreshing the page or checking your internet connection",
-            actionText: "Try again"
-        )
-        // alertView.actionButton.addTarget(self, action: #selector(handleAlerAction), for: .touchUpInside)
-        // router?.trigger(.base(.alert(alertView)))
-    }
-    
-    @objc
-    func handleAlerAction() {
-        // getNewData()
-    }
-}
-
-struct SettingsViewItem: Codable, Equatable, Hashable {
-    var name: String
 }

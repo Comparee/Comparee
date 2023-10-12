@@ -5,10 +5,12 @@
 //  Created by Андрей Логвинов on 9/14/23.
 //
 
+import SwiftEntryKit
 import UIKit
 
 enum ProfileScreenFlowRoute: Route {
     case showProfileScreen
+    case base(BaseRoutes)
 }
 
 protocol ProfileScreenFlowCoordinatorOutput: AnyObject {
@@ -49,6 +51,12 @@ final class ProfileScreenFlowCoordinator: BaseCoordinator, ProfileScreenFlowCoor
             let vm = ProfileViewModel(router: self)
             let vc = ProfileViewController(vm)
             router.push(vc, animated: true)
+        case .base(let base):
+            switch base {
+            case .alert(let alert):
+                SwiftEntryKit.display(entry: alert, using: AlertView.setupAttributes())
+            default: break
+            }
         }
     }
 }
