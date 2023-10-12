@@ -46,7 +46,8 @@ final class ProfileScreenFlowCoordinator: BaseCoordinator, ProfileScreenFlowCoor
     func trigger(_ route: ProfileScreenFlowRoute) {
         switch route {
         case .showProfileScreen:
-            let vc = ProfileViewController()
+            let vm = ProfileViewModel(router: self)
+            let vc = ProfileViewController(vm)
             router.push(vc, animated: true)
         }
     }

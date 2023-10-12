@@ -105,6 +105,10 @@
 		0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */; };
 		0DCA69762AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */; };
 		0DE132652AD42DC1006FB796 /* RatingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132642AD42DC1006FB796 /* RatingData.swift */; };
+		0DE132672AD5879D006FB796 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132662AD5879D006FB796 /* ProfileViewModel.swift */; };
+		0DE132692AD587AE006FB796 /* ProfileViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */; };
+		0DE1326C2AD70795006FB796 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326B2AD70795006FB796 /* SettingsCell.swift */; };
+		0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -204,6 +208,10 @@
 		0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DE132642AD42DC1006FB796 /* RatingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingData.swift; sourceTree = "<group>"; };
+		0DE132662AD5879D006FB796 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelProtocol.swift; sourceTree = "<group>"; };
+		0DE1326B2AD70795006FB796 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -390,6 +398,7 @@
 		0D9B89F02A9CA9E300709A00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0DE1326A2AD7055F006FB796 /* ProfileViews */,
 				0D99B4492AC5524F00BB99BD /* RatingViews */,
 				0D1F7B022AB849FE0008D9F8 /* CompareScreenViews */,
 				0D8AAB172A9E86B30088987F /* Base */,
@@ -595,6 +604,8 @@
 			isa = PBXGroup;
 			children = (
 				0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */,
+				0DE132662AD5879D006FB796 /* ProfileViewModel.swift */,
+				0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -606,6 +617,15 @@
 				0DE132642AD42DC1006FB796 /* RatingData.swift */,
 			);
 			path = RatingScreen;
+			sourceTree = "<group>";
+		};
+		0DE1326A2AD7055F006FB796 /* ProfileViews */ = {
+			isa = PBXGroup;
+			children = (
+				0DE1326B2AD70795006FB796 /* SettingsCell.swift */,
+				0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */,
+			);
+			path = ProfileViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -714,7 +734,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\nfi\n\n\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -751,8 +771,10 @@
 				0D8AAB372A9F27140088987F /* LoginViewModel.swift in Sources */,
 				0D99B44D2AC552DD00BB99BD /* TopUserView.swift in Sources */,
 				0DB204C32AA9E9660040551D /* ProfilePictureUploadViewModel.swift in Sources */,
+				0DE132672AD5879D006FB796 /* ProfileViewModel.swift in Sources */,
 				0DB204C52AA9E98A0040551D /* ProfilePictureUploadViewModelProtocol.swift in Sources */,
 				0DAC72F62AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift in Sources */,
+				0DE132692AD587AE006FB796 /* ProfileViewModelProtocol.swift in Sources */,
 				0DBEA9892AA3CCF50026C441 /* BaseViewController.swift in Sources */,
 				0DB204C82AA9EAB10040551D /* StorageManager.swift in Sources */,
 				0DB204CD2AAA15AD0040551D /* StorageManagerProtocol.swift in Sources */,
@@ -775,6 +797,7 @@
 				0D1F7B0A2ABB04D70008D9F8 /* CompareViewModelProtocol.swift in Sources */,
 				0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */,
 				0DBEA96D2AA1F3030026C441 /* LoginViewModelProtocol.swift in Sources */,
+				0DE1326C2AD70795006FB796 /* SettingsCell.swift in Sources */,
 				0DB204BF2AA921F30040551D /* Extensions + UITapGestureRecognizer.swift in Sources */,
 				0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */,
 				0DBEA97B2AA247140026C441 /* RegistrationViewModel.swift in Sources */,
@@ -806,6 +829,7 @@
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
 				0DAC72FA2ACAF24500912D6D /* UserRating.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,
+				0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */,
 				0D9B89F42A9CB21B00709A00 /* RegistrationTextField.swift in Sources */,
 				0DAC72FC2ACC55CF00912D6D /* UsersViewItem.swift in Sources */,
 			);
