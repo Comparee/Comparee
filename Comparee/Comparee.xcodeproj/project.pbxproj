@@ -451,7 +451,7 @@
 		0D9B89FD2A9CFF7C00709A00 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0DE132792AD96B8C006FB796 /* InternetManager */,
+				0DE132792AD96B8C006FB796 /* ReachabilityManager */,
 				0D1F7AF72AB5B26A0008D9F8 /* UserDefaultsManager */,
 				0D1F7AF62AB5B0910008D9F8 /* UIManagers */,
 				0DB204C62AA9EA810040551D /* StorageManager */,
@@ -652,13 +652,13 @@
 			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
-		0DE132792AD96B8C006FB796 /* InternetManager */ = {
+		0DE132792AD96B8C006FB796 /* ReachabilityManager */ = {
 			isa = PBXGroup;
 			children = (
 				0DE1327A2AD96BAA006FB796 /* ReachabilityManager.swift */,
 				0DE1327C2AD96C20006FB796 /* ReachabilityManagerProtocol.swift */,
 			);
-			path = InternetManager;
+			path = ReachabilityManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
