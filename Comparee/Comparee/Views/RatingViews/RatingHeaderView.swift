@@ -80,8 +80,8 @@ private extension RatingHeaderView {
             
             crownImageView.bottomAnchor.constraint(equalTo: firstUser.topAnchor, constant: -8),
             crownImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            crownImageView.widthAnchor.constraint(equalToConstant: 32),
-            crownImageView.heightAnchor.constraint(equalToConstant: 32),
+            crownImageView.widthAnchor.constraint(equalToConstant: 51),
+            crownImageView.heightAnchor.constraint(equalToConstant: 42),
             
             secondLabel.bottomAnchor.constraint(equalTo: secondUser.topAnchor, constant: -15),
             secondLabel.centerXAnchor.constraint(equalTo: secondUser.centerXAnchor),
