@@ -9,6 +9,9 @@ import FirebaseStorage
 import UIKit
 
 final class StorageManager: StorageManagerProtocol {
+    // MARK: - Injection
+    @Injected(\.reachabilityManager) private var reachabilityManager: ReachabilityManagerProtocol
+    
     // MARK: - Private properties
     private let storage = Storage.storage().reference()
     private var imagesReference: StorageReference {
@@ -22,12 +25,15 @@ final class StorageManager: StorageManagerProtocol {
 extension StorageManager {
     
     func getUrlForImage(path: String) async throws -> URL {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         return try await userReference(userId: path).downloadURL()
     }
     
     func getImage(userId: String) async throws -> UIImage {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let data = try await getData(userId: userId)
-    
         guard let image = UIImage(data: data) else {
             throw URLError(.badServerResponse)
         }
@@ -36,6 +42,8 @@ extension StorageManager {
     }
     
     func saveImage(_ image: UIImage, userId: String) async throws -> (path: String, name: String) {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         guard let data = image.jpegData(compressionQuality: 0.2) else {
             throw URLError(.backgroundSessionWasDisconnected)
         }
@@ -44,7 +52,9 @@ extension StorageManager {
     }
     
     func deleteImage(path: String) async throws {
-        try await getPathForImage(path: path).delete()
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
+        return try await getPathForImage(path: path).delete()
     }
 }
 
@@ -59,10 +69,14 @@ private extension StorageManager {
     }
     
     func getData(userId: String) async throws -> Data {
-        try await userReference(userId: userId).data(maxSize: maxSize)
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
+        return try await userReference(userId: userId).data(maxSize: maxSize)
     }
     
     func saveImage(data: Data, userId: String) async throws -> (path: String, name: String) {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let meta = StorageMetadata()
         meta.contentType = "image/jpeg"
         

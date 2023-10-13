@@ -10,6 +10,9 @@ import FirebaseFirestoreSwift
 import Foundation
 
 final class FirebaseManager {
+    // MARK: - Injection
+    @Injected(\.reachabilityManager) private var reachabilityManager: ReachabilityManagerProtocol
+    
     // MARK: - Private properties
     private let userCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.users.rawValue)
     private let ratingCollection: CollectionReference = Firestore.firestore().collection(FirestoreReference.rating.rawValue)
@@ -18,22 +21,30 @@ final class FirebaseManager {
 // MARK: - Public methods
 extension FirebaseManager: FirebaseManagerProtocol {
     func createNewUser(_ user: DBUser) throws {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let userId = user.userId
         try userDocument(userId).setData(from: user, merge: false)
         try ratingDocument(userId).setData(from: UserRating(rating: 0, userId: userId), merge: false)
     }
     
     func getUser(userId: String) async throws -> DBUser {
-        try await userDocument(userId).getDocument(as: DBUser.self)
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
+        return try await userDocument(userId).getDocument(as: DBUser.self)
     }
     
     func getAllUserIds() async throws -> [String] {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let querySnapshot = try await userCollection.getDocuments()
         let userIds = querySnapshot.documents.map { $0.documentID }
         return userIds
     }
     
     func appendUsersToComparison(_ currentUserId: String, newComparison: String) async throws {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let updateData: [String: Any] = [
             DataKey.comparisons.rawValue: FieldValue.arrayUnion([newComparison])
         ]
@@ -42,6 +53,8 @@ extension FirebaseManager: FirebaseManagerProtocol {
     }
     
     func isComparisonAlreadyExists(userID: String, usersPair: UserPair) async throws -> Bool {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         // Create two different variations of the comparison key
         let firstVarietyComp = "\(usersPair.firstUserId) + \(usersPair.secondUserId)"
         let secondVarietyComp = "\(usersPair.secondUserId) + \(usersPair.firstUserId)"
@@ -69,6 +82,8 @@ extension FirebaseManager: FirebaseManagerProtocol {
     }
     
     func checkIfComparisonExists(userId: String, comparisonToCheck: String) async throws -> Bool {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         // Get the document for the user
         let userDoc = userDocument(userId)
         
@@ -90,12 +105,16 @@ extension FirebaseManager: FirebaseManagerProtocol {
     }
     
     func increaseRating(for userId: String) async throws {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         var rating = try await ratingDocument(userId).getDocument(as: UserRating.self)
         rating.rating += 1
         try ratingDocument(userId).setData(from: rating, merge: false)
     }
     
     func getAllUserRating() async throws -> [RatingData] {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
         let snapshot = try await ratingCollection.getDocuments()
         let documents = snapshot.documents
         var ratingDataArray: [RatingData] = []
