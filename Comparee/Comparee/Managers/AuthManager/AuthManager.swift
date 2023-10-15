@@ -11,6 +11,8 @@ import FirebaseAuth
 import Foundation
 
 final class AuthManager: NSObject {
+    // MARK: - Injection
+    @Injected(\.reachabilityManager) private var reachabilityManager: ReachabilityManagerProtocol
     
     // MARK: - Private properties
     private var currentNonce: String?

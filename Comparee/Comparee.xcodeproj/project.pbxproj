@@ -105,6 +105,16 @@
 		0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */; };
 		0DCA69762AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */; };
 		0DE132652AD42DC1006FB796 /* RatingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132642AD42DC1006FB796 /* RatingData.swift */; };
+		0DE132672AD5879D006FB796 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132662AD5879D006FB796 /* ProfileViewModel.swift */; };
+		0DE132692AD587AE006FB796 /* ProfileViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */; };
+		0DE1326C2AD70795006FB796 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326B2AD70795006FB796 /* SettingsCell.swift */; };
+		0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */; };
+		0DE132712AD8716A006FB796 /* SettingsViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132702AD8716A006FB796 /* SettingsViewItem.swift */; };
+		0DE132732AD87183006FB796 /* AlertCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132722AD87183006FB796 /* AlertCase.swift */; };
+		0DE132752AD87354006FB796 /* SettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE132742AD87354006FB796 /* SettingsOptions.swift */; };
+		0DE132782AD94A6F006FB796 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE132772AD94A6F006FB796 /* Reachability */; };
+		0DE1327B2AD96BAA006FB796 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1327A2AD96BAA006FB796 /* ReachabilityManager.swift */; };
+		0DE1327D2AD96C20006FB796 /* ReachabilityManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE1327C2AD96C20006FB796 /* ReachabilityManagerProtocol.swift */; };
 		0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */; };
 		0DF7B69F2AAB4221008D7979 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF7B69E2AAB4221008D7979 /* AlertView.swift */; };
 /* End PBXBuildFile section */
@@ -204,6 +214,15 @@
 		0DCA69732AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DCA69752AB307CB00E19FA8 /* ProfileScreenFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenFlowCoordinator.swift; sourceTree = "<group>"; };
 		0DE132642AD42DC1006FB796 /* RatingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingData.swift; sourceTree = "<group>"; };
+		0DE132662AD5879D006FB796 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelProtocol.swift; sourceTree = "<group>"; };
+		0DE1326B2AD70795006FB796 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		0DE132702AD8716A006FB796 /* SettingsViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewItem.swift; sourceTree = "<group>"; };
+		0DE132722AD87183006FB796 /* AlertCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCase.swift; sourceTree = "<group>"; };
+		0DE132742AD87354006FB796 /* SettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptions.swift; sourceTree = "<group>"; };
+		0DE1327A2AD96BAA006FB796 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
+		0DE1327C2AD96C20006FB796 /* ReachabilityManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManagerProtocol.swift; sourceTree = "<group>"; };
 		0DF7B69E2AAB4221008D7979 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		0DF7B6A02AAC45F5008D7979 /* SFProText-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +237,7 @@
 				0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */,
 				0DF7B69D2AAB2981008D7979 /* SwiftEntryKit in Frameworks */,
 				0D8AAB352A9F1D330088987F /* FirebaseStorage in Frameworks */,
+				0DE132782AD94A6F006FB796 /* Reachability in Frameworks */,
 				0DB204CB2AA9F7360040551D /* CropViewController in Frameworks */,
 				0DB204BB2AA7B9FA0040551D /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -256,6 +276,7 @@
 		0D1F7B162AC0C57D0008D9F8 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0DE1326F2AD87153006FB796 /* ProfileScreen */,
 				0DE132632AD40D3D006FB796 /* RatingScreen */,
 				0D99B43D2AC4543700BB99BD /* FirebaseManager */,
 				0D1F7B172AC0C6100008D9F8 /* CompareScreen */,
@@ -390,6 +411,7 @@
 		0D9B89F02A9CA9E300709A00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0DE1326A2AD7055F006FB796 /* ProfileViews */,
 				0D99B4492AC5524F00BB99BD /* RatingViews */,
 				0D1F7B022AB849FE0008D9F8 /* CompareScreenViews */,
 				0D8AAB172A9E86B30088987F /* Base */,
@@ -429,6 +451,7 @@
 		0D9B89FD2A9CFF7C00709A00 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				0DE132792AD96B8C006FB796 /* ReachabilityManager */,
 				0D1F7AF72AB5B26A0008D9F8 /* UserDefaultsManager */,
 				0D1F7AF62AB5B0910008D9F8 /* UIManagers */,
 				0DB204C62AA9EA810040551D /* StorageManager */,
@@ -595,6 +618,8 @@
 			isa = PBXGroup;
 			children = (
 				0DCA696F2AB3073900E19FA8 /* ProfileViewController.swift */,
+				0DE132662AD5879D006FB796 /* ProfileViewModel.swift */,
+				0DE132682AD587AE006FB796 /* ProfileViewModelProtocol.swift */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -606,6 +631,34 @@
 				0DE132642AD42DC1006FB796 /* RatingData.swift */,
 			);
 			path = RatingScreen;
+			sourceTree = "<group>";
+		};
+		0DE1326A2AD7055F006FB796 /* ProfileViews */ = {
+			isa = PBXGroup;
+			children = (
+				0DE1326B2AD70795006FB796 /* SettingsCell.swift */,
+				0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */,
+			);
+			path = ProfileViews;
+			sourceTree = "<group>";
+		};
+		0DE1326F2AD87153006FB796 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0DE132702AD8716A006FB796 /* SettingsViewItem.swift */,
+				0DE132722AD87183006FB796 /* AlertCase.swift */,
+				0DE132742AD87354006FB796 /* SettingsOptions.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		0DE132792AD96B8C006FB796 /* ReachabilityManager */ = {
+			isa = PBXGroup;
+			children = (
+				0DE1327A2AD96BAA006FB796 /* ReachabilityManager.swift */,
+				0DE1327C2AD96C20006FB796 /* ReachabilityManagerProtocol.swift */,
+			);
+			path = ReachabilityManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -633,6 +686,7 @@
 				0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */,
 				0D1F7B0E2ABC55E40008D9F8 /* SkeletonView */,
 				0D1F7B142ABDCCBB0008D9F8 /* Kingfisher */,
+				0DE132772AD94A6F006FB796 /* Reachability */,
 			);
 			productName = Comparee;
 			productReference = 0D9B89D52A9B6A2900709A00 /* Comparee.app */;
@@ -669,6 +723,7 @@
 				0DF7B69B2AAB2980008D7979 /* XCRemoteSwiftPackageReference "SwiftEntryKit" */,
 				0D1F7B0D2ABC55E40008D9F8 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				0D1F7B132ABDCCBB0008D9F8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				0DE132762AD94A6F006FB796 /* XCRemoteSwiftPackageReference "Reachability.swift" */,
 			);
 			productRefGroup = 0D9B89D62A9B6A2900709A00 /* Products */;
 			projectDirPath = "";
@@ -714,7 +769,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\nfi\n\n\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n     export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n echo \"warning: SwiftLint not installed, download from #https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -751,8 +806,10 @@
 				0D8AAB372A9F27140088987F /* LoginViewModel.swift in Sources */,
 				0D99B44D2AC552DD00BB99BD /* TopUserView.swift in Sources */,
 				0DB204C32AA9E9660040551D /* ProfilePictureUploadViewModel.swift in Sources */,
+				0DE132672AD5879D006FB796 /* ProfileViewModel.swift in Sources */,
 				0DB204C52AA9E98A0040551D /* ProfilePictureUploadViewModelProtocol.swift in Sources */,
 				0DAC72F62AC6F3A100912D6D /* UserRatingCellCollectionViewCell.swift in Sources */,
+				0DE132692AD587AE006FB796 /* ProfileViewModelProtocol.swift in Sources */,
 				0DBEA9892AA3CCF50026C441 /* BaseViewController.swift in Sources */,
 				0DB204C82AA9EAB10040551D /* StorageManager.swift in Sources */,
 				0DB204CD2AAA15AD0040551D /* StorageManagerProtocol.swift in Sources */,
@@ -765,6 +822,7 @@
 				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
 				0D99B43F2AC4545100BB99BD /* DataKey.swift in Sources */,
 				0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */,
+				0DE132712AD8716A006FB796 /* SettingsViewItem.swift in Sources */,
 				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
 				0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */,
@@ -775,9 +833,11 @@
 				0D1F7B0A2ABB04D70008D9F8 /* CompareViewModelProtocol.swift in Sources */,
 				0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */,
 				0DBEA96D2AA1F3030026C441 /* LoginViewModelProtocol.swift in Sources */,
+				0DE1326C2AD70795006FB796 /* SettingsCell.swift in Sources */,
 				0DB204BF2AA921F30040551D /* Extensions + UITapGestureRecognizer.swift in Sources */,
 				0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */,
 				0DBEA97B2AA247140026C441 /* RegistrationViewModel.swift in Sources */,
+				0DE132732AD87183006FB796 /* AlertCase.swift in Sources */,
 				0DBEA97F2AA247430026C441 /* FirebaseManager.swift in Sources */,
 				0DBEA9932AA5AF140026C441 /* PhotoAddButton.swift in Sources */,
 				0D1F7B042AB84A1A0008D9F8 /* CompareView.swift in Sources */,
@@ -802,10 +862,14 @@
 				0DBEA9852AA320040026C441 /* Extension + UIViewController.swift in Sources */,
 				0DBEA9952AA5CCE30026C441 /* AdviceImageView.swift in Sources */,
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
+				0DE1327D2AD96C20006FB796 /* ReachabilityManagerProtocol.swift in Sources */,
+				0DE1327B2AD96BAA006FB796 /* ReachabilityManager.swift in Sources */,
 				0D1F7B1F2AC0C6810008D9F8 /* UserPair.swift in Sources */,
+				0DE132752AD87354006FB796 /* SettingsOptions.swift in Sources */,
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
 				0DAC72FA2ACAF24500912D6D /* UserRating.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,
+				0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */,
 				0D9B89F42A9CB21B00709A00 /* RegistrationTextField.swift in Sources */,
 				0DAC72FC2ACC55CF00912D6D /* UsersViewItem.swift in Sources */,
 			);
@@ -1069,6 +1133,14 @@
 				minimumVersion = 0.52.4;
 			};
 		};
+		0DE132762AD94A6F006FB796 /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		0DF7B69B2AAB2980008D7979 /* XCRemoteSwiftPackageReference "SwiftEntryKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/huri000/SwiftEntryKit.git";
@@ -1109,6 +1181,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DB204C92AA9F7360040551D /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
+		};
+		0DE132772AD94A6F006FB796 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DE132762AD94A6F006FB796 /* XCRemoteSwiftPackageReference "Reachability.swift" */;
+			productName = Reachability;
 		};
 		0DF7B69C2AAB2981008D7979 /* SwiftEntryKit */ = {
 			isa = XCSwiftPackageProductDependency;

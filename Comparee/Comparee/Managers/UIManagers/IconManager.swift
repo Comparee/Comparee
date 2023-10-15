@@ -43,6 +43,9 @@ extension UIImage {
     
     // Rating Screen
     static let crownImage = UIImage(named: "Crown")
+    
+    // Profile screen
+    static let chevronImage = UIImage(systemName: "chevron.right")
 }
 
 enum IconManager {
@@ -88,5 +91,9 @@ enum IconManager {
         static let homeTabBarIcon = UIImage.homeTabBarIcon
         static let ratingTabBarIcon = UIImage.ratingTabBarIcon
         static let profileTabBarIcon = UIImage.profileTabBarIcon
+    }
+    
+    enum ProfileScreen {
+        static let cellImage = UIImage.chevronImage
     }
 }
