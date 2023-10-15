@@ -161,11 +161,11 @@ private extension CompareViewController {
     func bindViews() {
         let firstTapGesture = UITapGestureRecognizer(target: self, action: #selector(firstViewTapped))
         let secondTapGesture = UITapGestureRecognizer(target: self, action: #selector(secondViewTapped))
-        firstCompareView.addGestureRecognizer(firstTapGesture)
-        secondCompareView.addGestureRecognizer(secondTapGesture)
+        firstCompareView.backgroundImage.addGestureRecognizer(firstTapGesture)
+        secondCompareView.backgroundImage.addGestureRecognizer(secondTapGesture)
         
-        firstCompareView.isUserInteractionEnabled = true
-        secondCompareView.isUserInteractionEnabled = true
+        firstCompareView.backgroundImage.isUserInteractionEnabled = true
+        secondCompareView.backgroundImage.isUserInteractionEnabled = true
     }
 }
 

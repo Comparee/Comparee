@@ -148,7 +148,7 @@ extension AlertView {
         )
         
         attributes.positionConstraints.verticalOffset = 10
-        attributes.statusBar = .dark
+        attributes.statusBar = .light
         return attributes
     }
     

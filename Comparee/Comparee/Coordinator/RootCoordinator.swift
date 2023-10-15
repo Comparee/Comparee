@@ -55,8 +55,10 @@ extension RootCoordinator {
         let coordinator = TabBarCoordinator(router: router)
         coordinator.finishFlow = { [weak self, weak coordinator] in
             guard let self = self else { return }
-            self.removeDependency(coordinator)
             self.makeLoginFlowCoordinator().start()
+            self.removeDependency(coordinator)
+            self.router.clearRootModule()
+
         }
         addDependency(coordinator)
         return coordinator

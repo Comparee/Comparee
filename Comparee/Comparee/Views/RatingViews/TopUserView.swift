@@ -15,7 +15,7 @@ final class TopUserView: UIView {
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = IconManager.PhotoUpload.preview
+        imageView.image = IconManager.CompareScreen.background
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
@@ -94,17 +94,10 @@ extension TopUserView {
         userNameLabel.textColor = .white
         userRatingLabel.textColor = .white
         getImage(with: userItem.userId)
-    }
-    
-    @MainActor
-    func dismissSkeleton() {
-        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userPhoto.stopSkeletonAnimation()
-        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userNameLabel.stopSkeletonAnimation()
-        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        horizontalStackView.stopSkeletonAnimation()
-        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
+        Task { [weak self] in
+            guard let self else { return }
+            self.dismissSkeleton()
+        }
     }
 }
 
@@ -144,13 +137,23 @@ private extension TopUserView {
         horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
     
+    @MainActor
+    func dismissSkeleton() {
+        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
+        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userPhoto.stopSkeletonAnimation()
+        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userNameLabel.stopSkeletonAnimation()
+        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        horizontalStackView.stopSkeletonAnimation()
+    }
+    
     func getImage(with userId: String) {
         Task { [weak self] in
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userPhoto.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
         }
     }
 }
