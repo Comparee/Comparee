@@ -16,7 +16,7 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
     // MARK: - Private properties
     private lazy var placeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -34,7 +34,7 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.customFont(.satoshiMedium, size: 16)
         label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,9 +43,13 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
     
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.preferredMaxLayoutWidth = 6
         return label
     }()
     
@@ -142,6 +146,9 @@ extension UserRatingCollectionViewCell {
         getImage(with: userItem.userId)
         backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
         bindViews()
+        
+        ratingLabel.layoutIfNeeded()
+        ratingHorizontalStackView.layoutIfNeeded()
     }
     
     @MainActor
@@ -196,7 +203,6 @@ private extension UserRatingCollectionViewCell {
         instagramStackView.addGestureRecognizer(tapGesture)
         instagramStackView.isUserInteractionEnabled = true
     }
-    
     
     func setConstraints() {
         NSLayoutConstraint.activate([

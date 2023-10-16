@@ -15,7 +15,7 @@ final class CurrentUserView: UIView {
     
     private lazy var placeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -33,7 +33,7 @@ final class CurrentUserView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.customFont(.sfProTextMedium, size: 16)
         label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ final class CurrentUserView: UIView {
     
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

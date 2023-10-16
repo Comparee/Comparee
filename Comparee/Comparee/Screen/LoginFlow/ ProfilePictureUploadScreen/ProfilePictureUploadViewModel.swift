@@ -59,15 +59,17 @@ private extension ProfilePictureUploadViewModel {
             return
         }
         
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
+            
             do {
-                _ = try await storageManager.saveImage(image, userId: uid)
+                _ = try await self.storageManager.saveImage(image, userId: uid)
                 await MainActor.run {
-                    router?.finishFlow?()
+                    self.router?.finishFlow?()
                 }
-                userDefaultsManager.isUserAuthorised = true
+                self.userDefaultsManager.isUserAuthorised = true
             } catch {
-                await MainActor.run { showAlert() }
+                await MainActor.run { self.showAlert() }
             }
         }
     }

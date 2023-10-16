@@ -24,7 +24,7 @@ final class TopUserView: UIView {
     
     private lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ final class TopUserView: UIView {
     
     private lazy var userRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 24)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

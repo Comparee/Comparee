@@ -25,7 +25,7 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         let button = UIButton()
         button.backgroundColor = UIColor.white
         button.layer.cornerRadius = 24
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        button.titleLabel?.font = UIFont.customFont(.sfProTextSemibold, size: 16)
         button.setTitle("Sign out", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.black, for: .normal)

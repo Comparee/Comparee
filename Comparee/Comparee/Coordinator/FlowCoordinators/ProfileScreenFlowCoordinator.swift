@@ -35,11 +35,21 @@ final class ProfileScreenFlowCoordinator: BaseCoordinator, ProfileScreenFlowCoor
     override init() {
         let navVC = NavigationController()
         rootController = navVC
-        rootController!.tabBarItem = UITabBarItem(
+        let tabBarItem = UITabBarItem(
             title: "Profile",
             image: IconManager.TabBar.profileTabBarIcon,
             selectedImage: IconManager.TabBar.profileTabBarIcon
         )
+        
+        let customFont = UIFont.customFont(.sfProTextRegular, size: 12)
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: customFont
+        ]
+
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .selected)
+
+        rootController!.tabBarItem = tabBarItem
         
         router = AppRouter(rootController: navVC)
         super.init()

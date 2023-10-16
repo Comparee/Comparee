@@ -40,8 +40,10 @@ final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, P
 extension ProfileViewModel {
     // MARK: - Lifecycle
     func viewDidLoad() {
-        Task {
-            await reloadCollection()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            await self.reloadCollection()
         }
     }
     
