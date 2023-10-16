@@ -63,12 +63,15 @@ final class TopUserView: UIView {
         return stackView
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeViewSkeletonable()
         setupViews()
         setConstraints()
+        bindViews()
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -88,12 +91,15 @@ final class TopUserView: UIView {
 // MARK: - Public methods
 extension TopUserView {
     func configure(_ userItem: UsersViewItem) {
+        self.instagramLink = userItem.instagram
         userNameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
         userRatingLabel.text = String(userItem.rating)
         userNameLabel.textColor = .white
         userRatingLabel.textColor = .white
         getImage(with: userItem.userId)
+        guard let instagram = userItem.instagram else { return }
+        
+        instagramImage.isHidden = instagram.isEmpty
         Task { [weak self] in
             guard let self else { return }
             self.dismissSkeleton()
@@ -127,6 +133,12 @@ private extension TopUserView {
         ])
     }
     
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramImage.addGestureRecognizer(tapGesture)
+        instagramImage.isUserInteractionEnabled = true
+    }
+    
     func makeViewSkeletonable() {
         userPhoto.isSkeletonable = true
         userNameLabel.isSkeletonable = true
@@ -154,6 +166,14 @@ private extension TopUserView {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userPhoto.image = try await UIImage.downloadImage(from: url)
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }

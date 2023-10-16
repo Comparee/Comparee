@@ -1,17 +1,26 @@
 //
-//  UserProfileView.swift
+//  UserRatingCellCollectionViewCell.swift
 //  Comparee
 //
-//  Created by Андрей Логвинов on 10/12/23.
+//  Created by Андрей Логвинов on 9/29/23.
 //
 
 import SkeletonView
 import UIKit
 
-final class UserProfileView: UIView {
-    // MARK: - Injection
+final class UserRatingCollectionViewCell: UICollectionViewCell {
+    // Injection
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
+    
+    // MARK: - Private properties
+    private lazy var placeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
@@ -26,6 +35,7 @@ final class UserProfileView: UIView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,7 +45,6 @@ final class UserProfileView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
-        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,6 +58,7 @@ final class UserProfileView: UIView {
         return imageView
     }()
     
+    // MARK: - Stacks for normal showing a skeletonView
     private lazy var instagramStackView: UIStackView = {
         NSLayoutConstraint.activate([
             instagramImage.widthAnchor.constraint(equalToConstant: 32),
@@ -107,7 +117,6 @@ final class UserProfileView: UIView {
     // MARK: - Initialise
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.translatesAutoresizingMaskIntoConstraints = false
         setupViews()
         setConstraints()
         makeViewsSkeletonable()
@@ -120,15 +129,14 @@ final class UserProfileView: UIView {
 }
 
 // MARK: - Public methods
-extension UserProfileView {
-    func configure(_ userItem: UsersViewItem) {
+extension UserRatingCollectionViewCell {
+    func configure(_ userItem: UsersViewItem, place: Int) {
         nameLabel.text = userItem.name
+        instagramImage.isHidden = !userItem.isInstagramEnabled
         ratingLabel.text = String(userItem.rating)
+        placeLabel.text = String(place)
         getImage(with: userItem.userId)
-        nameLabel.textColor = .white
-        guard let instagram = userItem.instagram else { return }
-        
-        instagramImage.isHidden = instagram.isEmpty
+        backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
     }
     
     @MainActor
@@ -142,14 +150,16 @@ extension UserProfileView {
         nameHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         nameHorizontalStackView.stopSkeletonAnimation()
         
-        nameHorizontalStackView.backgroundColor = .none
-        instagramStackView.backgroundColor = .none
+        userImageView.backgroundColor = .none
         instagramImage.backgroundColor = .none
+        instagramStackView.backgroundColor = .none
+        ratingHorizontalStackView.backgroundColor = .none
+        nameHorizontalStackView.backgroundColor = .none
     }
 }
 
-// MARK: - Private methods for skeleton configuration
-private extension UserProfileView {
+// MARK: - Private methods
+private extension UserRatingCollectionViewCell {
     func showSkeleton() {
         userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
@@ -159,30 +169,32 @@ private extension UserProfileView {
     
     func makeViewsSkeletonable() {
         userImageView.isSkeletonable = true
+        instagramImage.isSkeletonable = true
         instagramStackView.isSkeletonable = true
-        nameLabel.isSkeletonable = true
         ratingHorizontalStackView.isSkeletonable = true
         nameHorizontalStackView.isSkeletonable = true
     }
-}
-
-// MARK: - Private methods
-private extension UserProfileView {
+    
     func setupViews() {
-        self.addSubview(userImageView)
-        self.addSubview(nameHorizontalStackView)
-        self.addSubview(instagramStackView)
-        self.addSubview(ratingHorizontalStackView)
-        backgroundColor = ColorManager.Rating.currentUser
+        self.contentView.addSubview(placeLabel)
+        self.contentView.addSubview(userImageView)
+        self.contentView.addSubview(nameHorizontalStackView)
+        self.contentView.addSubview(lineView)
+        self.contentView.addSubview(instagramStackView)
+        self.contentView.addSubview(ratingHorizontalStackView)
+        
         userImageView.layer.cornerRadius = 24
     }
     
     func setConstraints() {
         NSLayoutConstraint.activate([
+            placeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            placeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            
             userImageView.widthAnchor.constraint(equalToConstant: 48),
             userImageView.heightAnchor.constraint(equalToConstant: 48),
             userImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 63),
             
             nameHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             nameHorizontalStackView.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 8),
@@ -191,7 +203,12 @@ private extension UserProfileView {
             instagramStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
             ratingHorizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -63),
-            ratingHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            ratingHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            
+            lineView.heightAnchor.constraint(equalToConstant: 1),
+            lineView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            lineView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
@@ -201,7 +218,7 @@ private extension UserProfileView {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
-            self.dismissSkeleton()
+            dismissSkeleton()
         }
     }
 }

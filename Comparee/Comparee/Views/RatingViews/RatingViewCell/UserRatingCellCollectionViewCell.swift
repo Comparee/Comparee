@@ -8,7 +8,7 @@
 import SkeletonView
 import UIKit
 
-final class UserRatingCellCollectionViewCell: UICollectionViewCell {
+final class UserRatingCollectionViewCell: UICollectionViewCell {
     // Injection
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
@@ -114,6 +114,8 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialise
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,6 +123,7 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
         setConstraints()
         makeViewsSkeletonable()
         showSkeleton()
+        bindViews()
     }
     
     required init?(coder: NSCoder) {
@@ -129,14 +132,16 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
 }
 
 // MARK: - Public methods
-extension UserRatingCellCollectionViewCell {
+extension UserRatingCollectionViewCell {
     func configure(_ userItem: UsersViewItem, place: Int) {
+        self.instagramLink = userItem.instagram
         nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
+        instagramImage.isHidden = userItem.instagram == ""
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
         getImage(with: userItem.userId)
         backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
+        bindViews()
     }
     
     @MainActor
@@ -159,7 +164,7 @@ extension UserRatingCellCollectionViewCell {
 }
 
 // MARK: - Private methods
-private extension UserRatingCellCollectionViewCell {
+private extension UserRatingCollectionViewCell {
     func showSkeleton() {
         userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
@@ -185,6 +190,13 @@ private extension UserRatingCellCollectionViewCell {
         
         userImageView.layer.cornerRadius = 24
     }
+    
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramStackView.addGestureRecognizer(tapGesture)
+        instagramStackView.isUserInteractionEnabled = true
+    }
+    
     
     func setConstraints() {
         NSLayoutConstraint.activate([
@@ -219,6 +231,14 @@ private extension UserRatingCellCollectionViewCell {
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
             dismissSkeleton()
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }

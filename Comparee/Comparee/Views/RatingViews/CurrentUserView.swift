@@ -112,6 +112,8 @@ final class CurrentUserView: UIView {
         return view
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialise
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -120,6 +122,7 @@ final class CurrentUserView: UIView {
         setConstraints()
         makeViewsSkeletonable()
         showSkeleton()
+        bindViews()
     }
     
     required init?(coder: NSCoder) {
@@ -130,11 +133,14 @@ final class CurrentUserView: UIView {
 // MARK: - Public methods
 extension CurrentUserView {
     func configure(_ userItem: UsersViewItem, place: Int) {
+        self.instagramLink = userItem.instagram
         nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = "\(place + 1)"
         getImage(with: userItem.userId)
+        guard let instagram = userItem.instagram else { return }
+        
+        instagramImage.isHidden = instagram.isEmpty
     }
     
     @MainActor
@@ -185,6 +191,12 @@ private extension CurrentUserView {
         userImageView.layer.cornerRadius = 24
     }
     
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramStackView.addGestureRecognizer(tapGesture)
+        instagramStackView.isUserInteractionEnabled = true
+    }
+    
     func setConstraints() {
         NSLayoutConstraint.activate([
             placeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
@@ -218,6 +230,14 @@ private extension CurrentUserView {
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
             self.dismissSkeleton()
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }

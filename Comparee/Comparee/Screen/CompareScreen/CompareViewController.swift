@@ -190,8 +190,8 @@ private extension CompareViewController {
         firstCompareView.userLabel.text = userInfo.firstUserInfo
         secondCompareView.userLabel.text = userInfo.secondUserInfo
         
-        firstCompareView.checkInstagramVisibility(userInfo.firstUserInstagram != nil)
-        secondCompareView.checkInstagramVisibility(userInfo.secondUserInstagram != nil)
+        firstCompareView.checkInstagram(userInfo.firstUserInstagram)
+        secondCompareView.checkInstagram(userInfo.secondUserInstagram)
     }
     
     func getUserData() {

@@ -11,7 +11,6 @@ final class BackgroundImageView: UIImageView {
 
     init() {
         super.init(frame: .zero)
-        
         configure()
     }
     
