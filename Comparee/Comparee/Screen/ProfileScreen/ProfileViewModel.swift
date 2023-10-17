@@ -40,8 +40,10 @@ final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, P
 extension ProfileViewModel {
     // MARK: - Lifecycle
     func viewDidLoad() {
-        Task {
-            await reloadCollection()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            await self.reloadCollection()
         }
     }
     
@@ -59,7 +61,7 @@ extension ProfileViewModel {
                 userId: dbUser.userId,
                 name: dbUser.name,
                 rating: userRating.rating,
-                isInstagramEnabled: dbUser.instagram != "",
+                instagram: dbUser.instagram,
                 currentPlace: index
             )
         }
@@ -69,7 +71,7 @@ extension ProfileViewModel {
             userId: dbUser.userId,
             name: dbUser.name,
             rating: 0,
-            isInstagramEnabled: dbUser.instagram != "",
+            instagram: dbUser.instagram,
             currentPlace: 0
         )
     }

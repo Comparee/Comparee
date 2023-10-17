@@ -74,18 +74,24 @@ extension CompareViewModel {
         
         switch user {
         case .first:
-            Task {
-                try await firebaseManager.increaseRating(for: userPair.firstUserId)
+            Task { [weak self] in
+                guard let self else { return }
+                
+                try await self.firebaseManager.increaseRating(for: userPair.firstUserId)
             }
         case .second:
-            Task {
-                try await firebaseManager.increaseRating(for: userPair.secondUserId)
+            Task { [weak self] in
+                guard let self else { return }
+                
+                try await self.firebaseManager.increaseRating(for: userPair.secondUserId)
             }
         }
         
-        Task {
-            try await firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
-            try await firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
+        Task { [weak self] in
+            guard let self else { return }
+            
+            try await self.firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.firstUserId) + \(userPair.secondUserId)")
+            try await self.firebaseManager.appendUsersToComparison(currentUserId, newComparison: "\(userPair.secondUserId) + \(userPair.firstUserId)")
         }
     }
 }

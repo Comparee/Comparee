@@ -119,9 +119,9 @@ private extension RatingViewController {
                 switch row {
                 case .users(let item):
                     guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier,
+                        withReuseIdentifier: UserRatingCollectionViewCell.reuseIdentifier,
                         for: indexPath
-                    ) as? UserRatingCellCollectionViewCell else {
+                    ) as? UserRatingCollectionViewCell else {
                         return UICollectionViewCell() }
                     
                     // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
@@ -168,7 +168,7 @@ private extension RatingViewController {
     }
     
     func registerCells() {
-        collectionView.register(UserRatingCellCollectionViewCell.self, forCellWithReuseIdentifier: UserRatingCellCollectionViewCell.reuseIdentifier)
+        collectionView.register(UserRatingCollectionViewCell.self, forCellWithReuseIdentifier: UserRatingCollectionViewCell.reuseIdentifier)
         collectionView.register(RatingHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RatingHeaderView.reuseIdentifier)
     }
     

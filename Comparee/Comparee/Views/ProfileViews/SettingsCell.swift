@@ -11,7 +11,7 @@ final class SettingsCell: UICollectionViewCell {
     // MARK: - Private properties
     private lazy var cellLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

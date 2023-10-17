@@ -35,12 +35,21 @@ final class CompareFlowCoordinator: BaseCoordinator, CompareFlowCoordinatorOutpu
     override init() {
         let navVC = NavigationController()
         rootController = navVC
-        rootController!.tabBarItem = UITabBarItem(
+        let tabBarItem = UITabBarItem(
             title: "Compare",
             image: IconManager.TabBar.homeTabBarIcon,
             selectedImage: IconManager.TabBar.homeTabBarIcon
         )
         
+        let customFont = UIFont.customFont(.sfProTextRegular, size: 12)
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: customFont
+        ]
+
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .selected)
+
+        rootController!.tabBarItem = tabBarItem
         router = AppRouter(rootController: navVC)
         super.init()
     }
