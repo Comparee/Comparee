@@ -70,7 +70,7 @@ private extension RatingHeaderView {
             secondUser.topAnchor.constraint(equalTo: self.topAnchor, constant: 148),
             secondUser.widthAnchor.constraint(equalToConstant: 97),
             
-            firstUser.topAnchor.constraint(equalTo: self.topAnchor, constant: 102),
+            firstUser.topAnchor.constraint(equalTo: self.topAnchor, constant: 80),
             firstUser.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             firstUser.widthAnchor.constraint(equalToConstant: 120),
             
@@ -78,7 +78,7 @@ private extension RatingHeaderView {
             thirdUser.topAnchor.constraint(equalTo: self.topAnchor, constant: 148),
             thirdUser.widthAnchor.constraint(equalToConstant: 97),
             
-            crownImageView.bottomAnchor.constraint(equalTo: firstUser.topAnchor, constant: -8),
+            crownImageView.bottomAnchor.constraint(equalTo: firstUser.topAnchor, constant: -18),
             crownImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             crownImageView.widthAnchor.constraint(equalToConstant: 51),
             crownImageView.heightAnchor.constraint(equalToConstant: 42),
