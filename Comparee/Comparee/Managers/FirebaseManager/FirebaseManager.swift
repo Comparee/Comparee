@@ -140,6 +140,10 @@ extension FirebaseManager: FirebaseManagerProtocol {
         try userDocument(userId).setData(from: currentUser, merge: false)
     }
     
+    func resetUserRating(userId: String) throws {
+        try ratingDocument(userId).setData(from: UserRating(rating: 0, userId: userId), merge: false)
+    }
+    
     func deleteUser(with userId: String) async throws {
         guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
         

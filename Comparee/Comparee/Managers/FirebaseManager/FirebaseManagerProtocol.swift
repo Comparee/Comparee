@@ -65,7 +65,24 @@ protocol FirebaseManagerProtocol {
     /// - Note: Ensure the user executing this function has the appropriate permissions and that the `userId` is valid.
     func deleteUser(with userId: String) async throws
     
+    /// Update user information asynchronously.
+    ///
+    /// - Parameters:
+    ///   - userId: The unique identifier of the user.
+    ///   - name: The new name for the user.
+    ///   - age: The new age for the user.
+    ///   - instagram: The new Instagram username for the user.
+    ///
+    /// - Throws: An error if the update operation fails.
     func updateUserInfo(with userId: String, name: String, age: String, instagram: String) async throws
+    
+    /// Reset user rating for a given user.
+    ///
+    /// - Parameters:
+    ///   - userId: The unique identifier of the user.
+    ///
+    /// - Throws: An error if the reset operation fails.
+    func resetUserRating(userId: String) throws
 }
 
 private struct FirebaseManagerKey: InjectionKey {

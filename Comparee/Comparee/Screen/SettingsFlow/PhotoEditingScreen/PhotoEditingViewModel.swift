@@ -13,6 +13,7 @@ final class PhotoEditingViewModel: PhotoEditingViewModelProtocol, PhotoEditingVi
     // MARK: - Injection
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
+    @Injected(\.firebaseManager) private var firebaseManager: FirebaseManagerProtocol
     
     // MARK: - Private properties
     private weak var router: ProfileScreenFlowCoordinatorOutput?
@@ -80,6 +81,7 @@ extension PhotoEditingViewModel {
             let id = userDefaultsManager.userID
             else { return }
             
+            try self.firebaseManager.resetUserRating(userId: id)
             _ = try await self.storageManager.saveImage(image, userId: id)
         }
     }
