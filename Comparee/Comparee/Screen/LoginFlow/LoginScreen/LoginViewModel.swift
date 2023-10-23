@@ -5,15 +5,14 @@
 //  Created by Андрей Логвинов on 8/30/23.
 //
 
-import CryptoKit
 import FirebaseAuth
 import Foundation
 
 final class LoginViewModel {
-    
     // MARK: - Managers
-    @Injected(\.authManager)
-    private var authManager: AuthManagerProtocol
+    @Injected(\.authManager) private var authManager: AuthManagerProtocol
+    @Injected(\.firebaseManager) private var firebaseManager: FirebaseManagerProtocol
+    @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Private propersties
     private weak var router: LoginFlowCoordinatorOutput?
@@ -27,14 +26,32 @@ final class LoginViewModel {
 // MARK: - implementing LoginViewModelProtocol
 extension LoginViewModel: LoginViewModelProtocol {
     func isButtonTapped() {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
+            
             do {
-                let result = try await authManager.startSignInWithAppleFlow()
-                await MainActor.run {
-                    self.router?.trigger(.showRegistrationScreen(authModel: result))
-                }
+                let result = try await self.authManager.startSignInWithAppleFlow()
+                await self.handleAuthenticationResult(result)
             } catch {
                 print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Private methods
+private extension LoginViewModel {
+    func handleAuthenticationResult(_ result: AuthDataResultModel) async {
+        do {
+            _ = try await firebaseManager.getUser(userId: result.uid)
+            await MainActor.run {
+                userDefaultsManager.userID = result.uid
+                userDefaultsManager.isUserAuthorised = true
+                router?.finishFlow?()
+            }
+        } catch {
+            await MainActor.run {
+                router?.trigger(.showRegistrationScreen(authModel: result))
             }
         }
     }
