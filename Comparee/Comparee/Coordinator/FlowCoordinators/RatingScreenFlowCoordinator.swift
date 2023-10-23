@@ -45,10 +45,10 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
         let textAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: customFont
         ]
-
+        
         tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
         tabBarItem.setTitleTextAttributes(textAttributes, for: .selected)
-
+        
         rootController!.tabBarItem = tabBarItem
         
         router = AppRouter(rootController: navVC)
@@ -70,20 +70,20 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
         }
     }
 }
-    
-    // MARK: - Coordinatable
-    extension RatingScreenFlowCoordinator: Coordinatable {
-        func start() {
-            trigger(.showRatingScreen)
-        }
-        
-        func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
-            self.tabBarRouter = router
-        }
+
+// MARK: - Coordinatable
+extension RatingScreenFlowCoordinator: Coordinatable {
+    func start() {
+        trigger(.showRatingScreen)
     }
     
-    extension RatingScreenFlowCoordinator {
-        func getRootController() -> UIViewController? {
-            rootController
-        }
+    func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
+        self.tabBarRouter = router
     }
+}
+
+extension RatingScreenFlowCoordinator {
+    func getRootController() -> UIViewController? {
+        rootController
+    }
+}

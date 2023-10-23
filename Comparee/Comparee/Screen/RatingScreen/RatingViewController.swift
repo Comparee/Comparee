@@ -16,6 +16,7 @@ final class RatingViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionCompositionalLayout())
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset.top = 20
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .none
         return collectionView

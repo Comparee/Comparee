@@ -10,9 +10,9 @@ import Foundation
 struct DBUser: Codable {
     let userId: String
     let email: String?
-    let name: String
-    let age: String
-    let instagram: String?
+    var name: String
+    var age: String
+    var instagram: String?
     let comparisons: [String]?
     
     enum CodingKeys: String, CodingKey {

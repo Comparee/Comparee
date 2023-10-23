@@ -21,6 +21,18 @@
 		0D1F7B1D2AC0C66A0008D9F8 /* ImagePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7B1C2AC0C66A0008D9F8 /* ImagePair.swift */; };
 		0D1F7B1F2AC0C6810008D9F8 /* UserPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7B1E2AC0C6810008D9F8 /* UserPair.swift */; };
 		0D1F7B212AC0C6AC0008D9F8 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1F7B202AC0C6AC0008D9F8 /* UserInfo.swift */; };
+		0D3843352AE26D9400E34EDC /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3843342AE26D9400E34EDC /* DeleteAccountView.swift */; };
+		0D4D1EBC2AE1191B00ED7929 /* ProfileEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1EBB2AE1191B00ED7929 /* ProfileEditingViewModel.swift */; };
+		0D4D1EBE2AE11A2800ED7929 /* ProfileEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1EBD2AE11A2800ED7929 /* ProfileEditingViewController.swift */; };
+		0D4D1EC02AE11A6400ED7929 /* ProfileEditingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1EBF2AE11A6400ED7929 /* ProfileEditingViewModelProtocol.swift */; };
+		0D4D1EC22AE1223E00ED7929 /* ProfileEditingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1EC12AE1223E00ED7929 /* ProfileEditingOptions.swift */; };
+		0D4D1EC52AE159B900ED7929 /* ProfileSettingsViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1EC42AE159B900ED7929 /* ProfileSettingsViewItem.swift */; };
+		0D4D1ECB2AE1993500ED7929 /* PhotoEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ECA2AE1993500ED7929 /* PhotoEditingViewController.swift */; };
+		0D4D1ECD2AE19AB900ED7929 /* PhotoEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ECC2AE19AB900ED7929 /* PhotoEditingViewModel.swift */; };
+		0D4D1ECF2AE19AC800ED7929 /* PhotoEditingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ECE2AE19AC800ED7929 /* PhotoEditingViewModelProtocol.swift */; };
+		0D4D1ED12AE1A9F200ED7929 /* InformationEditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ED02AE1A9F200ED7929 /* InformationEditingViewModel.swift */; };
+		0D4D1ED32AE1AA0900ED7929 /* InformationEditingViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ED22AE1AA0900ED7929 /* InformationEditingViewModelProtocol.swift */; };
+		0D4D1ED52AE1AAF700ED7929 /* InformationEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D1ED42AE1AAF700ED7929 /* InformationEditingViewController.swift */; };
 		0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */; };
 		0D8AAB282A9E8DB00088987F /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */; };
 		0D8AAB312A9F1D330088987F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0D8AAB302A9F1D330088987F /* FirebaseAuth */; };
@@ -130,6 +142,18 @@
 		0D1F7B1C2AC0C66A0008D9F8 /* ImagePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePair.swift; sourceTree = "<group>"; };
 		0D1F7B1E2AC0C6810008D9F8 /* UserPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPair.swift; sourceTree = "<group>"; };
 		0D1F7B202AC0C6AC0008D9F8 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		0D3843342AE26D9400E34EDC /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
+		0D4D1EBB2AE1191B00ED7929 /* ProfileEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewModel.swift; sourceTree = "<group>"; };
+		0D4D1EBD2AE11A2800ED7929 /* ProfileEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewController.swift; sourceTree = "<group>"; };
+		0D4D1EBF2AE11A6400ED7929 /* ProfileEditingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingViewModelProtocol.swift; sourceTree = "<group>"; };
+		0D4D1EC12AE1223E00ED7929 /* ProfileEditingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditingOptions.swift; sourceTree = "<group>"; };
+		0D4D1EC42AE159B900ED7929 /* ProfileSettingsViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewItem.swift; sourceTree = "<group>"; };
+		0D4D1ECA2AE1993500ED7929 /* PhotoEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewController.swift; sourceTree = "<group>"; };
+		0D4D1ECC2AE19AB900ED7929 /* PhotoEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewModel.swift; sourceTree = "<group>"; };
+		0D4D1ECE2AE19AC800ED7929 /* PhotoEditingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewModelProtocol.swift; sourceTree = "<group>"; };
+		0D4D1ED02AE1A9F200ED7929 /* InformationEditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationEditingViewModel.swift; sourceTree = "<group>"; };
+		0D4D1ED22AE1AA0900ED7929 /* InformationEditingViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationEditingViewModelProtocol.swift; sourceTree = "<group>"; };
+		0D4D1ED42AE1AAF700ED7929 /* InformationEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationEditingViewController.swift; sourceTree = "<group>"; };
 		0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyLabel.swift; sourceTree = "<group>"; };
 		0D8AAB272A9E8DB00088987F /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		0D8AAB362A9F27140088987F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -274,6 +298,7 @@
 		0D1F7B162AC0C57D0008D9F8 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0D4D1EC32AE1227E00ED7929 /* ProfileEditingScreen */,
 				0DE1326F2AD87153006FB796 /* ProfileScreen */,
 				0DE132632AD40D3D006FB796 /* RatingScreen */,
 				0D99B43D2AC4543700BB99BD /* FirebaseManager */,
@@ -295,6 +320,56 @@
 			path = CompareScreen;
 			sourceTree = "<group>";
 		};
+		0D4D1EBA2AE118E100ED7929 /* ProfileEditingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D1EBD2AE11A2800ED7929 /* ProfileEditingViewController.swift */,
+				0D4D1EBB2AE1191B00ED7929 /* ProfileEditingViewModel.swift */,
+				0D4D1EBF2AE11A6400ED7929 /* ProfileEditingViewModelProtocol.swift */,
+			);
+			path = ProfileEditingScreen;
+			sourceTree = "<group>";
+		};
+		0D4D1EC32AE1227E00ED7929 /* ProfileEditingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D1EC12AE1223E00ED7929 /* ProfileEditingOptions.swift */,
+				0D4D1EC42AE159B900ED7929 /* ProfileSettingsViewItem.swift */,
+			);
+			path = ProfileEditingScreen;
+			sourceTree = "<group>";
+		};
+		0D4D1EC62AE1831C00ED7929 /* PhotoEditingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D1ECA2AE1993500ED7929 /* PhotoEditingViewController.swift */,
+				0D4D1ECC2AE19AB900ED7929 /* PhotoEditingViewModel.swift */,
+				0D4D1ECE2AE19AC800ED7929 /* PhotoEditingViewModelProtocol.swift */,
+			);
+			path = PhotoEditingScreen;
+			sourceTree = "<group>";
+		};
+		0D4D1EC72AE1833F00ED7929 /* InformationEditingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D1ED42AE1AAF700ED7929 /* InformationEditingViewController.swift */,
+				0D4D1ED02AE1A9F200ED7929 /* InformationEditingViewModel.swift */,
+				0D4D1ED22AE1AA0900ED7929 /* InformationEditingViewModelProtocol.swift */,
+			);
+			path = InformationEditingScreen;
+			sourceTree = "<group>";
+		};
+		0D4D1EC92AE1980200ED7929 /* SettingsFlow */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D1EC72AE1833F00ED7929 /* InformationEditingScreen */,
+				0D4D1EC62AE1831C00ED7929 /* PhotoEditingScreen */,
+				0D4D1EBA2AE118E100ED7929 /* ProfileEditingScreen */,
+				0DCA696A2AB306CF00E19FA8 /* ProfileScreen */,
+			);
+			path = SettingsFlow;
+			sourceTree = "<group>";
+		};
 		0D8AAB152A9E868F0088987F /* RegistrationViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +387,7 @@
 		0D8AAB162A9E86A00088987F /* AuthViews */ = {
 			isa = PBXGroup;
 			children = (
+				0DF7B69E2AAB4221008D7979 /* AlertView.swift */,
 				0D8AAB1C2A9E8B050088987F /* PolicyLabel.swift */,
 			);
 			path = AuthViews;
@@ -462,7 +538,7 @@
 		0D9B89FE2A9CFFA400709A00 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
-				0DCA696A2AB306CF00E19FA8 /* ProfileScreen */,
+				0D4D1EC92AE1980200ED7929 /* SettingsFlow */,
 				0DCA69692AB306A100E19FA8 /* RatingScreen */,
 				0DCA69682AB3066C00E19FA8 /* CompareScreen */,
 				0DCA69672AB3065100E19FA8 /* LoginFlow */,
@@ -533,8 +609,8 @@
 			isa = PBXGroup;
 			children = (
 				0DBEA97E2AA247430026C441 /* FirebaseManager.swift */,
-				0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */,
 				0DBEA9802AA247510026C441 /* FirebaseManagerProtocol.swift */,
+				0DCA69632AB2DEEB00E19FA8 /* FirestoreReference.swift */,
 				0DCA69562AAF64E700E19FA8 /* DBUser.swift */,
 				0DAC72F92ACAF24500912D6D /* UserRating.swift */,
 			);
@@ -575,7 +651,6 @@
 			isa = PBXGroup;
 			children = (
 				0DBEA9922AA5AF140026C441 /* PhotoAddButton.swift */,
-				0DF7B69E2AAB4221008D7979 /* AlertView.swift */,
 				0DBEA9942AA5CCE30026C441 /* AdviceImageView.swift */,
 				0DCA69582AAF901300E19FA8 /* PreviewView.swift */,
 			);
@@ -636,6 +711,7 @@
 			children = (
 				0DE1326B2AD70795006FB796 /* SettingsCell.swift */,
 				0DE1326D2AD7F0C3006FB796 /* UserProfileView.swift */,
+				0D3843342AE26D9400E34EDC /* DeleteAccountView.swift */,
 			);
 			path = ProfileViews;
 			sourceTree = "<group>";
@@ -794,8 +870,11 @@
 				0DBEA9692AA0E4360026C441 /* LoginFlowCoordinator.swift in Sources */,
 				0DCA69662AB3012100E19FA8 /* TabBarCoordinator.swift in Sources */,
 				0D1F7B192AC0C62A0008D9F8 /* UserType.swift in Sources */,
+				0D4D1ED32AE1AA0900ED7929 /* InformationEditingViewModelProtocol.swift in Sources */,
 				0DBEA9652AA085BE0026C441 /* AuthManager.swift in Sources */,
 				0DCA69592AAF901300E19FA8 /* PreviewView.swift in Sources */,
+				0D4D1ED52AE1AAF700ED7929 /* InformationEditingViewController.swift in Sources */,
+				0D4D1EBC2AE1191B00ED7929 /* ProfileEditingViewModel.swift in Sources */,
 				0DCA69702AB3073900E19FA8 /* ProfileViewController.swift in Sources */,
 				0DCA69552AAF4B5F00E19FA8 /* FieldsTypeModel.swift in Sources */,
 				0D8AAB1D2A9E8B050088987F /* PolicyLabel.swift in Sources */,
@@ -818,14 +897,18 @@
 				0D9B8A002A9D01BE00709A00 /* Gesture.swift in Sources */,
 				0D99B43F2AC4545100BB99BD /* DataKey.swift in Sources */,
 				0D1F7AFB2AB5B3420008D9F8 /* UserDefaultsManagerProtocol.swift in Sources */,
+				0D4D1ED12AE1A9F200ED7929 /* InformationEditingViewModel.swift in Sources */,
 				0DE132712AD8716A006FB796 /* SettingsViewItem.swift in Sources */,
+				0D4D1ECD2AE19AB900ED7929 /* PhotoEditingViewModel.swift in Sources */,
 				0DCA696E2AB3072A00E19FA8 /* RatingViewController.swift in Sources */,
 				0D8AAB422A9FE0500088987F /* Injected.swift in Sources */,
 				0DCA69742AB307A700E19FA8 /* RatingScreenFlowCoordinator.swift in Sources */,
 				0DBEA98C2AA4DDD90026C441 /* Extensions + String.swift in Sources */,
 				0DE132652AD42DC1006FB796 /* RatingData.swift in Sources */,
 				0D9B8A0D2A9D2E7B00709A00 /* NavigationController.swift in Sources */,
+				0D4D1ECB2AE1993500ED7929 /* PhotoEditingViewController.swift in Sources */,
 				0D8AAB3D2A9F52880088987F /* RegInputEnum.swift in Sources */,
+				0D4D1EBE2AE11A2800ED7929 /* ProfileEditingViewController.swift in Sources */,
 				0D1F7B0A2ABB04D70008D9F8 /* CompareViewModelProtocol.swift in Sources */,
 				0DCA69572AAF64E700E19FA8 /* DBUser.swift in Sources */,
 				0DBEA96D2AA1F3030026C441 /* LoginViewModelProtocol.swift in Sources */,
@@ -846,8 +929,10 @@
 				0DBEA9972AA6292F0026C441 /* RoundedWhiteView.swift in Sources */,
 				0D9B8A072A9D2DAE00709A00 /* BaseCoordinator.swift in Sources */,
 				0D9B89D92A9B6A2900709A00 /* AppDelegate.swift in Sources */,
+				0D4D1EC02AE11A6400ED7929 /* ProfileEditingViewModelProtocol.swift in Sources */,
 				0DCA69642AB2DEEB00E19FA8 /* FirestoreReference.swift in Sources */,
 				0D8AAB462A9FE0CB0088987F /* IconManager.swift in Sources */,
+				0D4D1EC52AE159B900ED7929 /* ProfileSettingsViewItem.swift in Sources */,
 				0DCA696C2AB3070400E19FA8 /* CompareViewController.swift in Sources */,
 				0D983BA12AC16F25007F992E /* CompareError.swift in Sources */,
 				0DAC72F42AC5AF6300912D6D /* TopPlaceLabel.swift in Sources */,
@@ -860,9 +945,12 @@
 				0D9B89DB2A9B6A2900709A00 /* SceneDelegate.swift in Sources */,
 				0DE1327D2AD96C20006FB796 /* ReachabilityManagerProtocol.swift in Sources */,
 				0DE1327B2AD96BAA006FB796 /* ReachabilityManager.swift in Sources */,
+				0D3843352AE26D9400E34EDC /* DeleteAccountView.swift in Sources */,
+				0D4D1EC22AE1223E00ED7929 /* ProfileEditingOptions.swift in Sources */,
 				0D1F7B1F2AC0C6810008D9F8 /* UserPair.swift in Sources */,
 				0DE132752AD87354006FB796 /* SettingsOptions.swift in Sources */,
 				0D9B8A162A9D380000709A00 /* LoginViewController.swift in Sources */,
+				0D4D1ECF2AE19AC800ED7929 /* PhotoEditingViewModelProtocol.swift in Sources */,
 				0DAC72FA2ACAF24500912D6D /* UserRating.swift in Sources */,
 				0D9B89F62A9CC0F100709A00 /* ErrorLabel.swift in Sources */,
 				0DE1326E2AD7F0C3006FB796 /* UserProfileView.swift in Sources */,

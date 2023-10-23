@@ -55,6 +55,17 @@ protocol FirebaseManagerProtocol {
     /// - Returns: An array of `RatingData` objects containing user ratings.
     /// - Throws: An error if the retrieval fails.
     func getAllUserRating() async throws -> [RatingData]
+    
+    /// Deletes a user with the specified user ID asynchronously.
+    ///
+    /// - Parameters:
+    ///   - userId: The unique identifier of the user to be deleted.
+    ///
+    /// - Throws: An error if the deletion process fails.
+    /// - Note: Ensure the user executing this function has the appropriate permissions and that the `userId` is valid.
+    func deleteUser(with userId: String) async throws
+    
+    func updateUserInfo(with userId: String, name: String, age: String, instagram: String) async throws
 }
 
 private struct FirebaseManagerKey: InjectionKey {

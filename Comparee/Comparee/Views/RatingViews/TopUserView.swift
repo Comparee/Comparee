@@ -151,6 +151,7 @@ private extension TopUserView {
     
     @MainActor
     func dismissSkeleton() {
+        userPhoto.skeletonCornerRadius = Float(userPhoto.bounds.width / 2)
         userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
         userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         userPhoto.stopSkeletonAnimation()

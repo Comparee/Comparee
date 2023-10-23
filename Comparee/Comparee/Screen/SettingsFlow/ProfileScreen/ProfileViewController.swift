@@ -65,6 +65,16 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         viewModel.input.viewDidAppear()
         setupCurrentUser()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Здесь будет обработка нажатия на ячейку
+        if let item = dataSource.itemIdentifier(for: indexPath) {
+            switch item {
+            case .users(let user):
+                viewModel.output.cellWasTapped(type: user)
+            }
+        }
+    }
 }
 
 // MARK: - Private methods
@@ -149,7 +159,7 @@ private extension ProfileViewController {
                         for: indexPath
                     ) as? SettingsCell else { return UICollectionViewCell() }
                     
-                    cell.configure(with: item.name)
+                    cell.configure(with: item.name.rawValue)
                     return cell
                 }
             }

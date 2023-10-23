@@ -46,6 +46,7 @@ extension UIImage {
     
     // Profile screen
     static let chevronImage = UIImage(systemName: "chevron.right")
+    static let userIcon = UIImage(named: "userIcon")
 }
 
 enum IconManager {
@@ -95,5 +96,6 @@ enum IconManager {
     
     enum ProfileScreen {
         static let cellImage = UIImage.chevronImage
+        static let icon = UIImage.userIcon
     }
 }
