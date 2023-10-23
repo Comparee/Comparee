@@ -91,7 +91,7 @@ extension ProfileViewModel {
         }
     }
     
-    func showAlert(_ alertView: AlertView = AlertView()) {
+    func showAlert(_ alertView: AlertView) {
         router?.trigger(.base(.alert(alertView)))
     }
     
@@ -164,7 +164,13 @@ private extension ProfileViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    self.showAlert()
+                    let alert = AlertView()
+                    alert.setUpCustomAlert(
+                        title: "Error",
+                        description: "Try to Sign in your account and try yet",
+                        actionText: "Continue"
+                    )
+                    self.showAlert(alert)
                 }
             }
         }
