@@ -128,10 +128,9 @@ private extension RatingViewController {
                     // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
                     // so we start numbering the actual cells from 4 to match their position in the list.
                     let place = indexPath.row + 4
+                    cell.showSkeleton()
                     cell.configure(item, place: place)
-                    if !viewModel.output.isLoading {
-                        cell.dismissSkeleton()
-                    } else {
+                    if viewModel.output.isLoading {
                         cell.showSkeleton()
                     }
                     return cell
