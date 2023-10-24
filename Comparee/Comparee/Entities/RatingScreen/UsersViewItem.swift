@@ -8,9 +8,10 @@
 import UIKit
 
 struct UsersViewItem: Codable, Equatable, Hashable {
+    var id = UUID()
     var userId: String
     var name: String
     var rating: Int
-    var isInstagramEnabled: Bool
+    var instagram: String?
     var currentPlace: Int?
 }

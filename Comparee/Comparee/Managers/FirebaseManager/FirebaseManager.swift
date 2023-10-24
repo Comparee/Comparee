@@ -128,6 +128,28 @@ extension FirebaseManager: FirebaseManagerProtocol {
         }
         return ratingDataArray.sorted { $0.rating > $1.rating }
     }
+    
+    func updateUserInfo(with userId: String, name: String, age: String, instagram: String) async throws {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
+        var currentUser = try await userDocument(userId).getDocument(as: DBUser.self)
+        currentUser.name = name
+        currentUser.age = age
+        currentUser.instagram = instagram
+        
+        try userDocument(userId).setData(from: currentUser, merge: false)
+    }
+    
+    func resetUserRating(userId: String) throws {
+        try ratingDocument(userId).setData(from: UserRating(rating: 0, userId: userId), merge: false)
+    }
+    
+    func deleteUser(with userId: String) async throws {
+        guard reachabilityManager.isReachable else { throw URLError(.notConnectedToInternet)}
+        
+        try await userDocument(userId).delete()
+        try await ratingDocument(userId).delete()
+    }
 }
 
 // MARK: - Private methods

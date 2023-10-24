@@ -32,7 +32,7 @@ final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, P
     // MARK: - Initialization
     init(router: ProfileScreenFlowCoordinator) {
         self.router = router
-        self.settingsItem = SettingsOptions.allCases.map { SettingsViewItem(name: $0.rawValue) }
+        self.settingsItem = SettingsOptions.allCases.map { SettingsViewItem(name: $0) }
     }
 }
 
@@ -40,8 +40,10 @@ final class ProfileViewModel: ProfileViewModelProtocol, ProfileViewModelInput, P
 extension ProfileViewModel {
     // MARK: - Lifecycle
     func viewDidLoad() {
-        Task {
-            await reloadCollection()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            await self.reloadCollection()
         }
     }
     
@@ -59,7 +61,7 @@ extension ProfileViewModel {
                 userId: dbUser.userId,
                 name: dbUser.name,
                 rating: userRating.rating,
-                isInstagramEnabled: dbUser.instagram != "",
+                instagram: dbUser.instagram,
                 currentPlace: index
             )
         }
@@ -69,9 +71,28 @@ extension ProfileViewModel {
             userId: dbUser.userId,
             name: dbUser.name,
             rating: 0,
-            isInstagramEnabled: dbUser.instagram != "",
+            instagram: dbUser.instagram,
             currentPlace: 0
         )
+    }
+    
+    func cellWasTapped(type: SettingsViewItem) {
+        switch type.name {
+        case .editProfile:
+            router?.trigger(.showProfileEditingScreen)
+        case .contactUs:
+            self.contactUs()
+        case .privacyPolicy:
+            self.openPrivacyPolicy()
+        case .termsOfService:
+            self.openTermsOfService()
+        case .deleteAccount:
+            deleteAccount()
+        }
+    }
+    
+    func showAlert(_ alertView: AlertView) {
+        router?.trigger(.base(.alert(alertView)))
     }
     
     func signOut() async throws {
@@ -80,10 +101,6 @@ extension ProfileViewModel {
             userDefaultsManager.isUserAuthorised = false
             router?.finishFlow?()
         }
-    }
-    
-    func showAlert(_ alertView: AlertView) {
-        router?.trigger(.base(.alert(alertView)))
     }
 }
 
@@ -122,5 +139,61 @@ private extension ProfileViewModel {
             snapshot.appendItems(rowsFor(section: section))
         }
         self.dataSourceSnapshot.send(snapshot)
+    }
+}
+
+// MARK: - Private cells actions
+private extension ProfileViewModel {
+    func deleteAccount() {
+        let deleteAlert = DeleteAccountView()
+        deleteAlert.deleteButton.addTarget(self, action: #selector(self.deleteButtonPressed), for: .touchUpInside)
+        self.router?.trigger(.deleteAccount(deleteAlert))
+    }
+    
+    @objc func deleteButtonPressed() {
+        let currentUser = userDefaultsManager.userID
+        Task { [weak self] in
+            guard let self, (currentUser != nil) else { return }
+            
+            do {
+                try await self.authManager.delete()
+                try await self.firebaseManager.deleteUser(with: currentUser!)
+                await MainActor.run {
+                    self.router?.finishFlow?()
+                    self.userDefaultsManager.isUserAuthorised = false
+                }
+            } catch {
+                await MainActor.run {
+                    let alert = AlertView()
+                    alert.setUpCustomAlert(
+                        title: "Error",
+                        description: "Try to Sign in your account and try yet",
+                        actionText: "Continue"
+                    )
+                    self.showAlert(alert)
+                }
+            }
+        }
+    }
+    
+    func openPrivacyPolicy() {
+        let link = "https://www.instagram.com/darthvasya"
+        if let url = URL(string: link) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    func openTermsOfService() {
+        let link = "https://www.instagram.com/papaya_coffee"
+        if let url = URL(string: link) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    func contactUs() {
+        let email = "foo@bar.com"
+        if let url = URL(string: "mailto:\(email)") {
+            UIApplication.shared.open(url)
+        }
     }
 }

@@ -25,13 +25,13 @@ private extension RegistrationTextField {
         switch type {
         case .nickName:
             placeholder = "Your nickname"
-            keyboardType = .namePhonePad
+            keyboardType = .asciiCapable
         case .age:
             placeholder = "Your age"
             keyboardType = .numberPad
         case .instagram:
             placeholder = "Your instagram"
-            keyboardType = .namePhonePad
+            keyboardType = .asciiCapable
         }
         
         autocorrectionType = .no

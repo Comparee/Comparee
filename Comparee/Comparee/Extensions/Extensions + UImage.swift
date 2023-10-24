@@ -20,7 +20,7 @@ extension UIImage {
 
 extension UIImage {
     static func downloadImage(from url: URL) async throws -> UIImage {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             Task {
                 await MainActor.run {
                     let imageView = UIImageView()

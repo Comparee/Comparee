@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct SettingsViewItem: Codable, Equatable, Hashable {
-    var name: String
+struct SettingsViewItem: Equatable, Hashable {
+    var name: SettingsOptions
 }

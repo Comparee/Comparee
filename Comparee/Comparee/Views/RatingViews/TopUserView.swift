@@ -15,7 +15,7 @@ final class TopUserView: UIView {
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = IconManager.PhotoUpload.preview
+        imageView.image = IconManager.CompareScreen.background
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
@@ -24,7 +24,7 @@ final class TopUserView: UIView {
     
     private lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ final class TopUserView: UIView {
     
     private lazy var userRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 24)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -63,12 +63,15 @@ final class TopUserView: UIView {
         return stackView
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeViewSkeletonable()
         setupViews()
         setConstraints()
+        bindViews()
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -88,23 +91,19 @@ final class TopUserView: UIView {
 // MARK: - Public methods
 extension TopUserView {
     func configure(_ userItem: UsersViewItem) {
+        self.instagramLink = userItem.instagram
         userNameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
         userRatingLabel.text = String(userItem.rating)
         userNameLabel.textColor = .white
         userRatingLabel.textColor = .white
         getImage(with: userItem.userId)
-    }
-    
-    @MainActor
-    func dismissSkeleton() {
-        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userPhoto.stopSkeletonAnimation()
-        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userNameLabel.stopSkeletonAnimation()
-        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        horizontalStackView.stopSkeletonAnimation()
-        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
+        guard let instagram = userItem.instagram else { return }
+        
+        instagramImage.isHidden = instagram.isEmpty
+        Task { [weak self] in
+            guard let self else { return }
+            self.dismissSkeleton()
+        }
     }
 }
 
@@ -134,6 +133,12 @@ private extension TopUserView {
         ])
     }
     
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramImage.addGestureRecognizer(tapGesture)
+        instagramImage.isUserInteractionEnabled = true
+    }
+    
     func makeViewSkeletonable() {
         userPhoto.isSkeletonable = true
         userNameLabel.isSkeletonable = true
@@ -144,13 +149,32 @@ private extension TopUserView {
         horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
     
+    @MainActor
+    func dismissSkeleton() {
+        userPhoto.skeletonCornerRadius = Float(userPhoto.bounds.width / 2)
+        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
+        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userPhoto.stopSkeletonAnimation()
+        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userNameLabel.stopSkeletonAnimation()
+        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        horizontalStackView.stopSkeletonAnimation()
+    }
+    
     func getImage(with userId: String) {
         Task { [weak self] in
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userPhoto.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }

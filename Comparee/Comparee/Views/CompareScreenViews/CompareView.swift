@@ -53,11 +53,14 @@ final class CompareView: UIView {
         return imageView
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setConstraints()
+        bindViews()
     }
     
     required init?(coder: NSCoder) {
@@ -90,8 +93,14 @@ extension CompareView {
         horizontalStackView = stackView
     }
     
-    func checkInstagramVisibility(_ isVisible: Bool) {
-        instagramImage.isHidden = !isVisible
+    func checkInstagram(_ instagramLink: String?) {
+        guard instagramLink != "" else {
+            instagramImage.isHidden = true
+            return
+        }
+        
+        instagramImage.isHidden = false
+        self.instagramLink = instagramLink
     }
 }
 
@@ -101,6 +110,12 @@ private extension CompareView {
         addSubview(backgroundImage)
         addSubview(horizontalStackView)
         instagramImage.isHidden = true
+    }
+    
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramImage.addGestureRecognizer(tapGesture)
+        instagramImage.isUserInteractionEnabled = true
     }
     
     func setConstraints() {
@@ -115,5 +130,13 @@ private extension CompareView {
             horizontalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
+        }
     }
 }

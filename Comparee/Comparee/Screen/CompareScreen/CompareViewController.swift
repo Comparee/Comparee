@@ -56,7 +56,7 @@ final class CompareViewController: UIViewController {
     private lazy var noCardsLabel: UILabel = {
         let label = UILabel()
         label.text = "You don't have any cards to compare"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 24)
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .white
@@ -67,7 +67,7 @@ final class CompareViewController: UIViewController {
     private lazy var waitingLabel: UILabel = {
         let label = UILabel()
         label.text = "Wait a little, new cards will be coming soon"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = ColorManager.Compare.errorDefinition
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -161,11 +161,11 @@ private extension CompareViewController {
     func bindViews() {
         let firstTapGesture = UITapGestureRecognizer(target: self, action: #selector(firstViewTapped))
         let secondTapGesture = UITapGestureRecognizer(target: self, action: #selector(secondViewTapped))
-        firstCompareView.addGestureRecognizer(firstTapGesture)
-        secondCompareView.addGestureRecognizer(secondTapGesture)
+        firstCompareView.backgroundImage.addGestureRecognizer(firstTapGesture)
+        secondCompareView.backgroundImage.addGestureRecognizer(secondTapGesture)
         
-        firstCompareView.isUserInteractionEnabled = true
-        secondCompareView.isUserInteractionEnabled = true
+        firstCompareView.backgroundImage.isUserInteractionEnabled = true
+        secondCompareView.backgroundImage.isUserInteractionEnabled = true
     }
 }
 
@@ -190,14 +190,16 @@ private extension CompareViewController {
         firstCompareView.userLabel.text = userInfo.firstUserInfo
         secondCompareView.userLabel.text = userInfo.secondUserInfo
         
-        firstCompareView.checkInstagramVisibility(userInfo.firstUserInstagram != nil)
-        secondCompareView.checkInstagramVisibility(userInfo.secondUserInstagram != nil)
+        firstCompareView.checkInstagram(userInfo.firstUserInstagram)
+        secondCompareView.checkInstagram(userInfo.secondUserInstagram)
     }
     
     func getUserData() {
-        Task {
-            try await viewModel.input.getAllUserIds()
-            await getNewPhotos()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            try await self.viewModel.input.getAllUserIds()
+            await self.getNewPhotos()
         }
     }
 }
@@ -205,15 +207,19 @@ private extension CompareViewController {
 // MARK: - User Interaction
 private extension CompareViewController {
     @objc func firstViewTapped() {
-        Task {
-            await getNewPhotos()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            await self.getNewPhotos()
         }
         viewModel.input.viewWasSelected(.first)
     }
     
     @objc func secondViewTapped() {
-        Task {
-            await getNewPhotos()
+        Task {[weak self] in
+            guard let self else { return }
+            
+            await self.getNewPhotos()
         }
         viewModel.input.viewWasSelected(.second)
     }

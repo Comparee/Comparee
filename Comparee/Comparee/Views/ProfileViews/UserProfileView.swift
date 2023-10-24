@@ -25,7 +25,7 @@ final class UserProfileView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.customFont(.sfProTextMedium, size: 16)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -33,7 +33,7 @@ final class UserProfileView: UIView {
     
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -104,6 +104,8 @@ final class UserProfileView: UIView {
         return view
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialise
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -112,6 +114,7 @@ final class UserProfileView: UIView {
         setConstraints()
         makeViewsSkeletonable()
         showSkeleton()
+        bindViews()
     }
     
     required init?(coder: NSCoder) {
@@ -123,10 +126,13 @@ final class UserProfileView: UIView {
 extension UserProfileView {
     func configure(_ userItem: UsersViewItem) {
         nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
         ratingLabel.text = String(userItem.rating)
         getImage(with: userItem.userId)
         nameLabel.textColor = .white
+        guard let instagram = userItem.instagram else { return }
+        
+        instagramImage.isHidden = instagram.isEmpty
+        self.instagramLink = instagram
     }
     
     @MainActor
@@ -158,7 +164,6 @@ private extension UserProfileView {
     func makeViewsSkeletonable() {
         userImageView.isSkeletonable = true
         instagramStackView.isSkeletonable = true
-        nameLabel.isSkeletonable = true
         ratingHorizontalStackView.isSkeletonable = true
         nameHorizontalStackView.isSkeletonable = true
     }
@@ -193,6 +198,12 @@ private extension UserProfileView {
         ])
     }
     
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramStackView.addGestureRecognizer(tapGesture)
+        instagramStackView.isUserInteractionEnabled = true
+    }
+    
     func getImage(with userId: String) {
         Task { [weak self] in
             guard let self else { return }
@@ -200,6 +211,14 @@ private extension UserProfileView {
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
             self.dismissSkeleton()
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }

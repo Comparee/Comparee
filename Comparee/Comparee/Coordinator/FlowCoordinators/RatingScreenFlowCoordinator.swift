@@ -35,11 +35,21 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
     override init() {
         let navVC = NavigationController()
         rootController = navVC
-        rootController!.tabBarItem = UITabBarItem(
+        let tabBarItem = UITabBarItem(
             title: "Rating",
             image: IconManager.TabBar.ratingTabBarIcon,
             selectedImage: IconManager.TabBar.ratingTabBarIcon
         )
+        
+        let customFont = UIFont.customFont(.sfProTextRegular, size: 12)
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: customFont
+        ]
+        
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
+        tabBarItem.setTitleTextAttributes(textAttributes, for: .selected)
+        
+        rootController!.tabBarItem = tabBarItem
         
         router = AppRouter(rootController: navVC)
         super.init()
@@ -60,20 +70,20 @@ final class RatingScreenFlowCoordinator: BaseCoordinator, RatingScreenFlowCoordi
         }
     }
 }
-    
-    // MARK: - Coordinatable
-    extension RatingScreenFlowCoordinator: Coordinatable {
-        func start() {
-            trigger(.showRatingScreen)
-        }
-        
-        func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
-            self.tabBarRouter = router
-        }
+
+// MARK: - Coordinatable
+extension RatingScreenFlowCoordinator: Coordinatable {
+    func start() {
+        trigger(.showRatingScreen)
     }
     
-    extension RatingScreenFlowCoordinator {
-        func getRootController() -> UIViewController? {
-            rootController
-        }
+    func setTabBarRouter(_ router: TabBarCoordinatorOutput) {
+        self.tabBarRouter = router
     }
+}
+
+extension RatingScreenFlowCoordinator {
+    func getRootController() -> UIViewController? {
+        rootController
+    }
+}

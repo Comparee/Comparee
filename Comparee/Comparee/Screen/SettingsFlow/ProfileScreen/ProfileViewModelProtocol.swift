@@ -22,7 +22,7 @@ protocol ProfileViewModelOutput {
     
     /// An array of sections within the rating view model.
     var sections: [ProfileViewModel.Section] { get }
-
+    
     /// Retrieves the current user asynchronously and returns a UsersViewItem if available.
     /// - Throws: An error if the retrieval process encounters an issue.
     /// - Returns: A UsersViewItem representing the current user.
@@ -30,6 +30,12 @@ protocol ProfileViewModelOutput {
     
     /// Signs the user out of the application.
     func signOut() async throws
+    
+    /// Handles a tap event on a cell in the user interface.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the SettingsViewItem that was tapped.
+    func cellWasTapped(type: SettingsViewItem)
 }
 
 /// Protocol defining the overall requirements for the RatingViewModel.

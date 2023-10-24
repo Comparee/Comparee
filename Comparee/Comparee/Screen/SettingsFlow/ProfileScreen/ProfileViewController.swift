@@ -25,7 +25,7 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         let button = UIButton()
         button.backgroundColor = UIColor.white
         button.layer.cornerRadius = 24
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        button.titleLabel?.font = UIFont.customFont(.sfProTextSemibold, size: 16)
         button.setTitle("Sign out", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.black, for: .normal)
@@ -64,6 +64,15 @@ final class ProfileViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidAppear(animated)
         viewModel.input.viewDidAppear()
         setupCurrentUser()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let item = dataSource.itemIdentifier(for: indexPath) {
+            switch item {
+            case .users(let user):
+                viewModel.output.cellWasTapped(type: user)
+            }
+        }
     }
 }
 
@@ -149,7 +158,7 @@ private extension ProfileViewController {
                         for: indexPath
                     ) as? SettingsCell else { return UICollectionViewCell() }
                     
-                    cell.configure(with: item.name)
+                    cell.configure(with: item.name.rawValue)
                     return cell
                 }
             }

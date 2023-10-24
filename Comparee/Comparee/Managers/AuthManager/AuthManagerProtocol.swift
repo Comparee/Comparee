@@ -20,6 +20,12 @@ protocol AuthManagerProtocol {
     ///
     /// - Returns: An asynchronous result indicating successful sign-out or an error if sign-out fails.
     func signOut() async throws
+    
+    /// This function is responsible for deleting the account of the currently authenticated user. It will perform the necessary steps to remove the user's data and credentials.
+    ///
+    /// - Throws: An error if the deletion process fails. Check the error description for details.
+    /// - Note: Make sure the user is signed in before calling this function. Use appropriate authentication methods before initiating the delete process.
+    func delete() async throws
 }
 
 private struct AuthManagerKey: InjectionKey {

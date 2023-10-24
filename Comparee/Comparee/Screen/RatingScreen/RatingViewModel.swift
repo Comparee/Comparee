@@ -40,7 +40,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
         self.page = 1
         self.itemsPerPage = 10
         self.userViewItem = (1...5).map {
-            UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, isInstagramEnabled: true)
+            UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0,instagram: "\($0)")
         }
     }
 }
@@ -81,7 +81,7 @@ extension RatingViewModel {
                     userId: dbUser.userId,
                     name: dbUser.name,
                     rating: userRating.rating,
-                    isInstagramEnabled: dbUser.instagram != "",
+                    instagram: dbUser.instagram,
                     currentPlace: index
                 )
             }
@@ -91,7 +91,7 @@ extension RatingViewModel {
                 userId: dbUser.userId,
                 name: dbUser.name,
                 rating: 0,
-                isInstagramEnabled: dbUser.instagram != "",
+                instagram: dbUser.instagram,
                 currentPlace: 0
             )
         } catch {
@@ -151,6 +151,11 @@ private extension RatingViewModel {
                 await self.finishLoading()
                 await self.reloadCollection()
             } catch {
+                isLoading = true
+                self.userViewItem = (1...5).map {
+                    UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, instagram: "\($0)")
+                }
+                await self.reloadCollection()
                 await self.showAlert()
             }
         }
@@ -170,7 +175,7 @@ private extension RatingViewModel {
                 userId: user.userId,
                 name: user.name,
                 rating: result[index].rating,
-                isInstagramEnabled: user.instagram != ""
+                instagram: user.instagram
             )
             newArray.append(newUser)
         }

@@ -14,7 +14,7 @@ final class TopPlaceLabel: UILabel {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.text = text
         self.textColor = .white
-        self.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        self.font = UIFont.customFont(.sfProTextRegular, size: 20)
     }
     
     required init?(coder: NSCoder) {

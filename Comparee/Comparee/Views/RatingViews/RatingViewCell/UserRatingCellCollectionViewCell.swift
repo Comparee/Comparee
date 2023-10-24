@@ -8,7 +8,7 @@
 import SkeletonView
 import UIKit
 
-final class UserRatingCellCollectionViewCell: UICollectionViewCell {
+final class UserRatingCollectionViewCell: UICollectionViewCell {
     // Injection
     @Injected(\.userDefaultsManager) private var userDefaultsManager: UserDefaultsManagerProtocol
     @Injected(\.storageManager) private var storageManager: StorageManagerProtocol
@@ -16,7 +16,7 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
     // MARK: - Private properties
     private lazy var placeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.customFont(.sfProTextRegular, size: 16)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -34,7 +34,7 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = UIFont.customFont(.satoshiMedium, size: 16)
         label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,9 +43,13 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
     
     private lazy var ratingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.preferredMaxLayoutWidth = 6
         return label
     }()
     
@@ -114,6 +118,8 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private var instagramLink: String?
+    
     // MARK: - Initialise
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -121,6 +127,7 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
         setConstraints()
         makeViewsSkeletonable()
         showSkeleton()
+        bindViews()
     }
     
     required init?(coder: NSCoder) {
@@ -129,14 +136,19 @@ final class UserRatingCellCollectionViewCell: UICollectionViewCell {
 }
 
 // MARK: - Public methods
-extension UserRatingCellCollectionViewCell {
+extension UserRatingCollectionViewCell {
     func configure(_ userItem: UsersViewItem, place: Int) {
+        self.instagramLink = userItem.instagram
         nameLabel.text = userItem.name
-        instagramImage.isHidden = !userItem.isInstagramEnabled
+        instagramImage.isHidden = userItem.instagram == ""
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
         getImage(with: userItem.userId)
         backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
+        bindViews()
+        
+        ratingLabel.layoutIfNeeded()
+        ratingHorizontalStackView.layoutIfNeeded()
     }
     
     @MainActor
@@ -159,7 +171,7 @@ extension UserRatingCellCollectionViewCell {
 }
 
 // MARK: - Private methods
-private extension UserRatingCellCollectionViewCell {
+private extension UserRatingCollectionViewCell {
     func showSkeleton() {
         userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
@@ -184,6 +196,12 @@ private extension UserRatingCellCollectionViewCell {
         self.contentView.addSubview(ratingHorizontalStackView)
         
         userImageView.layer.cornerRadius = 24
+    }
+    
+    func bindViews() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(instagramWasTapped))
+        instagramStackView.addGestureRecognizer(tapGesture)
+        instagramStackView.isUserInteractionEnabled = true
     }
     
     func setConstraints() {
@@ -219,6 +237,14 @@ private extension UserRatingCellCollectionViewCell {
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
             dismissSkeleton()
+        }
+    }
+    
+    @objc func instagramWasTapped() {
+        let originalLink = "https://www.instagram.com/"
+        if let instagramLink,
+           let url = URL(string: originalLink + instagramLink) {
+            UIApplication.shared.open(url)
         }
     }
 }
