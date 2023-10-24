@@ -216,7 +216,7 @@ private extension CompareViewController {
     }
     
     @objc func secondViewTapped() {
-        Task {[weak self] in
+        Task { [weak self] in
             guard let self else { return }
             
             await self.getNewPhotos()

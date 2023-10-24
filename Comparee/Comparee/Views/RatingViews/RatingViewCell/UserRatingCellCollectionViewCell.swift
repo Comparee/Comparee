@@ -153,6 +153,7 @@ extension UserRatingCollectionViewCell {
     
     @MainActor
     func dismissSkeleton() {
+        print(#function)
         userImageView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         userImageView.stopSkeletonAnimation()
         instagramStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
@@ -162,7 +163,7 @@ extension UserRatingCollectionViewCell {
         nameHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         nameHorizontalStackView.stopSkeletonAnimation()
         
-        userImageView.backgroundColor = .none
+        //userImageView.backgroundColor = .none
         instagramImage.backgroundColor = .none
         instagramStackView.backgroundColor = .none
         ratingHorizontalStackView.backgroundColor = .none
@@ -236,7 +237,9 @@ private extension UserRatingCollectionViewCell {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
+            await print("start dismissSkeleton")
+            self.dismissSkeleton()
+            await print("finish dismissSkeleton")
         }
     }
     
