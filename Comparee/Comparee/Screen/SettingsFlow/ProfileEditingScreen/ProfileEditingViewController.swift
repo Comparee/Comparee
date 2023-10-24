@@ -49,7 +49,6 @@ class ProfileEditingViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Здесь будет обработка нажатия на ячейку
         if let item = dataSource.itemIdentifier(for: indexPath) {
             switch item {
             case .settings(let setting): 

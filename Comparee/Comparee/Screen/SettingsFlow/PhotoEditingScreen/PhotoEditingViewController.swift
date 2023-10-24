@@ -188,6 +188,7 @@ private extension PhotoEditingViewController {
     func setCurrentPhoto() {
         Task { [weak self] in
             guard let self else { return }
+            
             do {
                 let image = try await self.viewModel.input.getCurrentPhoto()
                 await MainActor.run {

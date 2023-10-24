@@ -23,6 +23,10 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
     init(router: LoginFlowCoordinatorOutput) {
         self.router = router
     }
+    
+    deinit {
+        print("ProfilePictureUploadViewModel was deleted")
+    }
 }
 
 // MARK: - Public methods
