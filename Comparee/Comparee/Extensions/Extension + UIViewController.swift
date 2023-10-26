@@ -33,7 +33,7 @@ extension UIViewController {
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             nameLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
+            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor)
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false

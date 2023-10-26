@@ -98,9 +98,13 @@ extension ProfileViewModel {
     func signOut() async throws {
         try await authManager.signOut()
         await MainActor.run {
-            userDefaultsManager.isUserAuthorised = false
             router?.finishFlow?()
+            
         }
+        
+        // Waiting for 0.3 seconds for making a animation for appearing of new screen
+        try await Task.sleep(for: .seconds(0.3))
+        userDefaultsManager.isUserAuthorised = false
     }
 }
 

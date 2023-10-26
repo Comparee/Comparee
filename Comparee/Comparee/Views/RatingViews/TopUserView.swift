@@ -15,11 +15,11 @@ final class TopUserView: UIView {
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = IconManager.CompareScreen.background
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        return imageView
+           imageView.image = IconManager.CompareScreen.background
+           imageView.contentMode = .scaleToFill
+           imageView.translatesAutoresizingMaskIntoConstraints = false
+           imageView.clipsToBounds = true
+           return imageView
     }()
     
     private lazy var userNameLabel: UILabel = {
@@ -79,6 +79,11 @@ final class TopUserView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        showSkeleton()
+    }
+    
     // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -91,7 +96,7 @@ final class TopUserView: UIView {
 // MARK: - Public methods
 extension TopUserView {
     func configure(_ userItem: UsersViewItem) {
-        self.instagramLink = userItem.instagram
+        instagramLink = userItem.instagram
         userNameLabel.text = userItem.name
         userRatingLabel.text = String(userItem.rating)
         userNameLabel.textColor = .white
@@ -100,10 +105,12 @@ extension TopUserView {
         guard let instagram = userItem.instagram else { return }
         
         instagramImage.isHidden = instagram.isEmpty
-        Task { [weak self] in
-            guard let self else { return }
-            self.dismissSkeleton()
-        }
+    }
+    
+    func showSkeleton() {
+        userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        userNameLabel.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
 }
 
@@ -143,17 +150,11 @@ private extension TopUserView {
         userPhoto.isSkeletonable = true
         userNameLabel.isSkeletonable = true
         horizontalStackView.isSkeletonable = true
-        
-        userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        userNameLabel.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
     
     @MainActor
     func dismissSkeleton() {
-        userPhoto.skeletonCornerRadius = Float(userPhoto.bounds.width / 2)
-        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
-        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.1))
         userPhoto.stopSkeletonAnimation()
         userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         userNameLabel.stopSkeletonAnimation()
@@ -167,7 +168,14 @@ private extension TopUserView {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userPhoto.image = try await UIImage.downloadImage(from: url)
+            self.setCornerRadius()
+            self.dismissSkeleton()
         }
+    }
+    
+    @MainActor
+    func setCornerRadius() {
+        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
     }
     
     @objc func instagramWasTapped() {

@@ -26,15 +26,22 @@ final class PhotoEditingViewController: UIViewController {
         return button
     }()
     
+    private lazy var dimmingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - Private properties
     private var viewModel: PhotoEditingViewModelProtocol!
     private var cancellables: Set<AnyCancellable> = []
+    private var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Initialization
     init(viewModel: PhotoEditingViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        setCurrentPhoto()
     }
     
     required init?(coder: NSCoder) {
@@ -45,6 +52,7 @@ final class PhotoEditingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        setCurrentPhoto()
     }
 }
 
@@ -67,6 +75,40 @@ private extension PhotoEditingViewController {
             selectedImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             selectedImage.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -109)
         ])
+    }
+    
+    @MainActor
+    func showLoader() {
+        // Create and configure an activity indicator
+        dimmingView.isHidden = false
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .white
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        
+        // Center the activity indicator in the view
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        // Start animating the activity indicator
+        activityIndicator.startAnimating()
+        
+        // Disable user interaction during loading
+        view.isUserInteractionEnabled = false
+    }
+    
+    @MainActor
+    func stopLoader() {
+        // Stop and remove the activity indicator
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+        activityIndicator = nil
+        
+        // Re-enable user interaction
+        view.isUserInteractionEnabled = true
+        dimmingView.isHidden = true
     }
 }
 
@@ -152,6 +194,7 @@ private extension PhotoEditingViewController {
         view.addSubview(adviceImageView)
         view.addSubview(button)
         view.addSubview(selectedImage)
+        view.addSubview(dimmingView)
         
         let customTitleView = createCustomTitleView(contactName: " Edit Photo ")
         navigationItem.titleView = customTitleView
@@ -178,7 +221,12 @@ private extension PhotoEditingViewController {
             button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -46),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            button.heightAnchor.constraint(equalToConstant: 48)
+            button.heightAnchor.constraint(equalToConstant: 48),
+            
+            dimmingView.topAnchor.constraint(equalTo: view.topAnchor),
+            dimmingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            dimmingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dimmingView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
@@ -189,6 +237,7 @@ private extension PhotoEditingViewController {
         Task { [weak self] in
             guard let self else { return }
             
+            self.showLoader()
             do {
                 let image = try await self.viewModel.input.getCurrentPhoto()
                 await MainActor.run {
@@ -197,6 +246,7 @@ private extension PhotoEditingViewController {
             } catch {
                 await self.viewModel.input.showAlert()
             }
+            self.stopLoader()
         }
     }
 }

@@ -27,8 +27,10 @@ final class RatingHeaderView: UICollectionReusableView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
         setupUserViewsLayout()
+        firstUser.showSkeleton()
+        secondUser.showSkeleton()
+        thirdUser.showSkeleton()
     }
     
     required init?(coder: NSCoder) {
@@ -61,7 +63,6 @@ private extension RatingHeaderView {
         addSubview(firstLabel)
         addSubview(secondLabel)
         addSubview(thirdLabel)
-        
     }
     
     func setConstraints() {
@@ -92,6 +93,13 @@ private extension RatingHeaderView {
             thirdLabel.bottomAnchor.constraint(equalTo: thirdUser.topAnchor, constant: -15),
             thirdLabel.centerXAnchor.constraint(equalTo: thirdUser.centerXAnchor)
         ])
+        
+        firstUser.userPhoto.layer.cornerRadius = firstUser.frame.width / 2
+        firstUser.skeletonCornerRadius = Float(firstUser.frame.width / 2)
+        secondUser.userPhoto.layer.cornerRadius = secondUser.frame.width / 2
+        secondUser.skeletonCornerRadius = Float(secondUser.frame.width / 2)
+        thirdUser.userPhoto.layer.cornerRadius = thirdUser.frame.width / 2
+        thirdUser.skeletonCornerRadius = Float(thirdUser.frame.width / 2)
     }
     
     func setAspectRatiosForUserViews() {

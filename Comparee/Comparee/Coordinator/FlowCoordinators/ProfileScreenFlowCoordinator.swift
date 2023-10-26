@@ -91,7 +91,7 @@ final class ProfileScreenFlowCoordinator: BaseCoordinator, ProfileScreenFlowCoor
                 SwiftEntryKit.display(entry: alert, using: AlertView.setupAttributes())
             case .dismiss:
                 router.dismissModule()
-                router.popModule(animated: false)
+                router.popModule(animated: true)
             default: break
             }
         }

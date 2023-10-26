@@ -45,6 +45,7 @@ final class CurrentUserView: UIView {
         label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
         return label
     }()
     

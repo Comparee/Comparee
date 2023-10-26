@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import SkeletonView
 
 final class RatingViewController: UIViewController {
     
@@ -51,6 +52,11 @@ final class RatingViewController: UIViewController {
         super.viewDidAppear(animated)
         viewModel.input.viewDidAppear()
         setupCurrentUser()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.input.viewWillDisappear()
     }
 }
 
@@ -128,12 +134,9 @@ private extension RatingViewController {
                     // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
                     // so we start numbering the actual cells from 4 to match their position in the list.
                     let place = indexPath.row + 4
+                    cell.isSkeletonable = true
+                    cell.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
                     cell.configure(item, place: place)
-                    if !viewModel.output.isLoading {
-                        cell.dismissSkeleton()
-                    } else {
-                        cell.showSkeleton()
-                    }
                     return cell
                 }
             }
@@ -164,7 +167,6 @@ private extension RatingViewController {
             layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(height)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
         )
         headerViewItem.pinToVisibleBounds = false
-        
         return headerViewItem
     }
     
@@ -217,7 +219,7 @@ extension RatingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // When the current cell is 4 items from the end of the collection,
         // trigger pagination to load more items.
-        if indexPath.item == viewModel.output.usersCount - 4 {
+        if viewModel.output.usersCount > 8 && indexPath.item == viewModel.output.usersCount - 4 {
             viewModel.output.pagination()
         }
     }

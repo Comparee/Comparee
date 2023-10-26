@@ -46,7 +46,7 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.customFont(.sfProTextSemibold, size: 20)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.textAlignment = .right
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.preferredMaxLayoutWidth = 6
@@ -81,7 +81,6 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
     
     private lazy var ratingHorizontalStackView: UIStackView = {
         NSLayoutConstraint.activate([
-            ratingLabel.widthAnchor.constraint(equalToConstant: 54),
             ratingLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
         
@@ -143,6 +142,11 @@ extension UserRatingCollectionViewCell {
         instagramImage.isHidden = userItem.instagram == ""
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
+        
+        ratingLabel.numberOfLines = 0
+        ratingLabel.lineBreakMode = .byWordWrapping
+        ratingLabel.preferredMaxLayoutWidth = 120
+        
         getImage(with: userItem.userId)
         backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
         bindViews()
@@ -162,7 +166,6 @@ extension UserRatingCollectionViewCell {
         nameHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         nameHorizontalStackView.stopSkeletonAnimation()
         
-        userImageView.backgroundColor = .none
         instagramImage.backgroundColor = .none
         instagramStackView.backgroundColor = .none
         ratingHorizontalStackView.backgroundColor = .none
@@ -236,7 +239,7 @@ private extension UserRatingCollectionViewCell {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
-            dismissSkeleton()
+            self.dismissSkeleton()
         }
     }
     

@@ -23,10 +23,6 @@ final class ProfilePictureUploadViewModel: ProfilePictureUploadViewModelProtocol
     init(router: LoginFlowCoordinatorOutput) {
         self.router = router
     }
-    
-    deinit {
-        print("ProfilePictureUploadViewModel was deleted")
-    }
 }
 
 // MARK: - Public methods
@@ -47,7 +43,6 @@ extension ProfilePictureUploadViewModel {
         router?.trigger(.showPhotoPicker(viewController: viewController))
     }
     
-    // TODO: - Fix calling of trigger in coordinator
     func startCrop(_ image: UIImage, viewController: UIViewController) {}
     
     func showAlert() {
