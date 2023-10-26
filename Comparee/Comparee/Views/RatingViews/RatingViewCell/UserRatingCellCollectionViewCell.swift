@@ -157,6 +157,7 @@ extension UserRatingCollectionViewCell {
     
     @MainActor
     func dismissSkeleton() {
+        print(#function)
         userImageView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         userImageView.stopSkeletonAnimation()
         instagramStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
