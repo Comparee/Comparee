@@ -27,12 +27,10 @@ final class RatingHeaderView: UICollectionReusableView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
         setupUserViewsLayout()
         firstUser.showSkeleton()
         secondUser.showSkeleton()
         thirdUser.showSkeleton()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -65,7 +63,6 @@ private extension RatingHeaderView {
         addSubview(firstLabel)
         addSubview(secondLabel)
         addSubview(thirdLabel)
-        
     }
     
     func setConstraints() {

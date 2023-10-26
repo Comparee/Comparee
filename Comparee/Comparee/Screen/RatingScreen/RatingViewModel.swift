@@ -29,6 +29,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
     private var cancellables: Set<AnyCancellable> = []
     private var page: Int
     private var itemsPerPage: Int
+    private var task: Task<Void, Error>?
     
     // MARK: - Public properties
     var isLoading: Bool
@@ -40,7 +41,7 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
         self.page = 1
         self.itemsPerPage = 10
         self.userViewItem = (1...5).map {
-            UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0,instagram: "\($0)")
+            UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
         }
     }
 }
@@ -49,12 +50,26 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
 extension RatingViewModel {
     // MARK: - Lifecycle
     func viewDidAppear() {
+        if cancellables.isEmpty {
+            self.isLoading = true
+            self.page = 1
+            self.itemsPerPage = 10
+            self.userViewItem = (1...5).map {
+                UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
+            }
+        }
         getNewData()
     }
     
+    func viewWillDisappear() {
+        task?.cancel()
+    }
+    
     func pagination() {
-        Task { [weak self] in
+        self.task = Task { [weak self] in
             guard let self else { return }
+            
+            guard !Task.isCancelled else { return }
             
             self.page += 1
             do {
@@ -141,19 +156,26 @@ extension RatingViewModel {
 private extension RatingViewModel {
     func getNewData() {
         page = 1
-        Task { [weak self] in
+        self.task = Task { [weak self] in
             guard let self else { return }
+            
+            guard !Task.isCancelled else { return }
             
             await self.reloadCollection()
             do {
                 self.userViewItem = []
+                
+                guard !Task.isCancelled else { return }
+                
                 try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
+                guard !Task.isCancelled else  { return }
+                
                 await self.finishLoading()
                 await self.reloadCollection()
             } catch {
                 isLoading = true
                 self.userViewItem = (1...5).map {
-                    UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, instagram: "\($0)")
+                    UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
                 }
                 await self.reloadCollection()
                 await self.showAlert()
@@ -164,11 +186,16 @@ private extension RatingViewModel {
     func loadData(page: Int, itemsPerPage: Int) async throws {
         let startIndex = (page - 1) * itemsPerPage
         let endIndex = startIndex + itemsPerPage
+        guard !Task.isCancelled else { return }
+        
         let result = try await firebaseManager.getAllUserRating()
         let itemsToLoad = min(endIndex, result.count) - startIndex
         guard itemsToLoad > 0 else { return }
-
+        
         var newArray: [UsersViewItem] = []
+        
+        guard !Task.isCancelled else { return }
+        
         for index in startIndex..<startIndex + itemsToLoad {
             let user = try await firebaseManager.getUser(userId: result[index].userId)
             let newUser = UsersViewItem(
@@ -179,7 +206,7 @@ private extension RatingViewModel {
             )
             newArray.append(newUser)
         }
-
+        
         await updateUsers(with: newArray)
     }
     
@@ -190,6 +217,7 @@ private extension RatingViewModel {
     
     @MainActor
     func updateUsers(with items: [UsersViewItem]) {
+        guard !Task.isCancelled else { return }
         isLoading ? (self.userViewItem = items) : (self.userViewItem += items)
     }
     
@@ -215,6 +243,12 @@ private extension RatingViewModel {
             actionText: "Try again"
         )
         alertView.actionButton.addTarget(self, action: #selector(handleAlerAction), for: .touchUpInside)
+        self.userViewItem = (1...5).map {
+            UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, instagram: "\($0)")
+        }
+        isLoading = true
+        reloadCollection()
+        
         router?.trigger(.base(.alert(alertView)))
     }
     

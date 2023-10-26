@@ -11,6 +11,7 @@ import UIKit
 final class LoginViewController: UIViewController {
     // MARK: - ViewModel
     private let viewModel: LoginViewModelProtocol
+    @Injected(\.userDefaultsManager) var userDefaultsManager: UserDefaultsManagerProtocol
     
     // MARK: - Private UI properties
     private lazy var backgroundImageView = BackgroundImageView()
@@ -105,10 +106,27 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupAndimation()
+    }
 }
 
 // MARK: - Private methods
 private extension LoginViewController {
+    func setupAndimation() {
+        guard userDefaultsManager.isUserAuthorised else { return }
+        
+        var initialFrame = self.view.frame
+        initialFrame.origin.x = self.view.frame.size.width
+        self.view.frame = initialFrame
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        }
+    }
+    
     func configureUI() {
         setupViews()
         setConstraints()

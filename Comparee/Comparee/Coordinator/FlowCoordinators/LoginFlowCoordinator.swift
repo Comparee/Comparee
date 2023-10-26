@@ -45,7 +45,7 @@ final class LoginFlowCoordinator: BaseCoordinator, LoginFlowCoordinatorOutput {
         switch route {
         case .showLoginScreen:
             let loginVM = LoginViewModel(router: self)
-            let authVC = LoginViewController(viewModel: loginVM )
+            let authVC = LoginViewController(viewModel: loginVM)
             router.setRootModule(authVC)
         case .showRegistrationScreen(let authModel):
             let regVC = RegistrationViewController(viewModel: RegistrationViewModel(router: self, authDataResultModel: authModel))

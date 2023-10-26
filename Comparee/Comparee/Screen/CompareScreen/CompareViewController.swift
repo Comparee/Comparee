@@ -109,13 +109,19 @@ private extension CompareViewController {
         view.addSubview(versusView)
         view.addSubview(adviceLabel)
         
-        let customTitleView = createCustomTitleView(contactName: "Who is cooler? ")
+        let customTitleView = createCustomTitleView(contactName: " Who is cooler? ")
         navigationItem.titleView = customTitleView
         
         firstCompareView.backgroundImage.isSkeletonable = true
         firstCompareView.horizontalStackView.isSkeletonable = true
         secondCompareView.backgroundImage.isSkeletonable = true
         secondCompareView.horizontalStackView.isSkeletonable = true
+        
+        firstCompareView.backgroundImage.skeletonCornerRadius = 16
+        secondCompareView.backgroundImage.skeletonCornerRadius = 16
+        
+        firstCompareView.horizontalStackView.backgroundColor = .clouds
+        secondCompareView.horizontalStackView.backgroundColor = .clouds
     }
     
     func setConstraints() {
@@ -180,6 +186,7 @@ private extension CompareViewController {
         } catch {
             handleError(error)
         }
+        
         dismissSkeleton()
     }
     
@@ -233,14 +240,19 @@ private extension CompareViewController {
 private extension CompareViewController {
     @MainActor
     func showSkeleton() {
-        firstCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        secondCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        firstCompareView.horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        secondCompareView.horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        let gradient = SkeletonGradient(baseColor: UIColor.clouds)
+        
+        firstCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: gradient)
+        secondCompareView.backgroundImage.showAnimatedGradientSkeleton(usingGradient: gradient)
+        firstCompareView.horizontalStackView.showAnimatedGradientSkeleton(usingGradient: gradient)
+        secondCompareView.horizontalStackView.showAnimatedGradientSkeleton(usingGradient: gradient)
     }
     
     @MainActor
     func dismissSkeleton() {
+        firstCompareView.horizontalStackView.backgroundColor = .none
+        secondCompareView.horizontalStackView.backgroundColor = .none
+        
         firstCompareView.backgroundImage.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         firstCompareView.backgroundImage.stopSkeletonAnimation()
         
