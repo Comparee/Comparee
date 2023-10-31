@@ -79,11 +79,6 @@ final class TopUserView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        showSkeleton()
-    }
-    
     // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()

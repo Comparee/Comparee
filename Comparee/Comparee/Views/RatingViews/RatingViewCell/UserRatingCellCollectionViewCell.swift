@@ -56,7 +56,6 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
     private lazy var instagramImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = IconManager.CompareScreen.instagram
-        imageView.layer.backgroundColor = UIColor.white.cgColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -100,7 +99,7 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         ])
         
         let stackView = UIStackView(arrangedSubviews: [nameLabel])
-        stackView.backgroundColor = .white
+        //stackView.backgroundColor = .white
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
@@ -125,7 +124,7 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         setupViews()
         setConstraints()
         makeViewsSkeletonable()
-        showSkeleton()
+        showCellSkeleton()
         bindViews()
     }
     
@@ -174,8 +173,8 @@ extension UserRatingCollectionViewCell {
 }
 
 // MARK: - Private methods
-private extension UserRatingCollectionViewCell {
-    func showSkeleton() {
+extension UserRatingCollectionViewCell {
+    func showCellSkeleton() {
         userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         ratingHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
@@ -183,6 +182,7 @@ private extension UserRatingCollectionViewCell {
     }
     
     func makeViewsSkeletonable() {
+        placeLabel.isSkeletonable = true
         userImageView.isSkeletonable = true
         instagramImage.isSkeletonable = true
         instagramStackView.isSkeletonable = true
@@ -239,7 +239,6 @@ private extension UserRatingCollectionViewCell {
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userImageView.image = try await UIImage.downloadImage(from: url)
-            self.dismissSkeleton()
         }
     }
     

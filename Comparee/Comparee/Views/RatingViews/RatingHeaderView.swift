@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class RatingHeaderView: UICollectionReusableView {
     // MARK: - Private properties
@@ -28,13 +29,19 @@ final class RatingHeaderView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUserViewsLayout()
-        firstUser.showSkeleton()
-        secondUser.showSkeleton()
-        thirdUser.showSkeleton()
+        firstUser.isSkeletonable = true
+        secondUser.isSkeletonable = true
+        thirdUser.isSkeletonable = true
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func showSkeleton() {
+        firstUser.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        secondUser.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        thirdUser.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
     
     // MARK: - public methods
