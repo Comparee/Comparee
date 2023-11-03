@@ -65,15 +65,12 @@ final class RatingViewController: UIViewController {
         print(#function)
         collectionView.refreshControl?.beginRefreshing()
         
-        
         viewModel.input.viewDidLoad()
-        
         
         DispatchQueue.main.async {
             self.collectionView.refreshControl?.endRefreshing()
         }
     }
-    
 }
 
 // MARK: - Private methods for views setup
@@ -139,7 +136,7 @@ private extension RatingViewController {
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, row in
                 guard let self else { return UICollectionViewCell() }
-                print(#function)
+                
                 switch row {
                 case .users(let item):
                     guard let cell = collectionView.dequeueReusableCell(
@@ -150,16 +147,15 @@ private extension RatingViewController {
                     
                     // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
                     // so we start numbering the actual cells from 4 to match their position in the list.
-                    print(viewModel.output.usersCount)
-                    let place = indexPath.row + 4
-                    cell.configure(item, place: place)
+                    let place = indexPath.item + 4
+                    
                     if viewModel.output.isLoading {
                         cell.isSkeletonable = true
                         cell.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-                    }
-                    else {
+                    } else {
                         cell.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
                         cell.stopSkeletonAnimation()
+                        cell.configure(item, place: place)
                     }
                     return cell
                 }
@@ -170,7 +166,7 @@ private extension RatingViewController {
     func setupDataSourceWithSupplementaryView() {
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self else { return UICollectionReusableView() }
-            print(#function)
+            //  print(#function)
             let section = self.viewModel.output.sections[indexPath.section]
             switch section {
             case .users(let item):
@@ -212,6 +208,7 @@ private extension RatingViewController {
                 guard let self else { return }
                 
                 self.dataSource.apply($0, animatingDifferences: true, completion: nil)
+                self.collectionView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -249,15 +246,16 @@ extension RatingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // When the current cell is 4 items from the end of the collection,
         // trigger pagination to load more items.
-        if viewModel.output.usersCount > 8 && indexPath.item == viewModel.output.usersCount - 4 {
-            if !viewModel.output.isLoading {
-                Task {
-                    await MainActor.run {
-                        collectionView.reloadData()
-                    }
+        if indexPath.row == viewModel.output.usersCount - 4 && !viewModel.output.isLoading {
+            Task { [weak self] in
+                guard let self else { return }
+                
+                let value = try await self.viewModel.output.getMaxCount()
+                if !value {
+                    self.viewModel.output.pagination()
                 }
             }
-            viewModel.output.pagination()
         }
     }
+    
 }

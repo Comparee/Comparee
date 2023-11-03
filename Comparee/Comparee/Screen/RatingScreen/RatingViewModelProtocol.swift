@@ -32,6 +32,10 @@ protocol RatingViewModelOutput {
     
     /// Handles pagination for the rating view model.
     func pagination()
+    
+    func hardReload() 
+    
+    func getMaxCount() async throws -> Bool
 }
 
 /// Protocol defining the overall requirements for the RatingViewModel.
