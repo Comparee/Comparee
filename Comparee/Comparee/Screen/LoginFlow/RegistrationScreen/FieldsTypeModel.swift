@@ -9,6 +9,7 @@ import Foundation
 
 struct FieldsTypesModel {
     var isTextEmpty = true
+    var isTextUnique = true
     var fieldsTypes: RegInput
     
     mutating func changeTextState(needChange: Bool) {

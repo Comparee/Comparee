@@ -48,9 +48,18 @@ extension RegistrationViewModel {
     }
     
     func logInButtonPressed() {
-        if isAllFieldsCorrect {
-            logIn()
+        Task { [weak self] in
+            guard let self else { return }
+            
+            let isNameUnique = await self.isNameUnique( self.name)
+            if isAllFieldsCorrect && isNameUnique{
+                self.logIn()
+            }
         }
+    }
+    
+    func isNameUnique(_ name: String) async -> Bool {
+        await self.firebaseManager.checkForNameExisting(name: name)
     }
 }
 

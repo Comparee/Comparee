@@ -27,12 +27,17 @@ protocol InformationEditingViewModelInput: BaseViewModuleInputProtocol {
     func changeRegInput(type: RegInput, text: String?)
     
     /// Function to handle the button press event for the log-in button.
-    func logInButtonPressed()
+    func saveButtonPressed()
     
     /// Get the current user information asynchronously.
     ///
     /// - Returns: An asynchronous result containing the current user information or an error.
     func getCurrentUser() async throws -> DBUser
+
+    ///  Function for checking name
+    /// - Parameter name: new user name
+    /// - Returns: is it unique
+    func isNameUnique(_ name: String) async -> Bool
 }
 
 /// Protocol for the output interface of the InformationEditingViewModel.

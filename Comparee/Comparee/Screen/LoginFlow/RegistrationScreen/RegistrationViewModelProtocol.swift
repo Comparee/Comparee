@@ -23,6 +23,11 @@ protocol RegistrationFlowViewModelInput: BaseViewModuleInputProtocol {
     
     /// Function to handle the button press event for the log-in button.
     func logInButtonPressed()
+    
+    ///  Function for checking name
+    /// - Parameter name: new user name
+    /// - Returns: is it unique
+    func isNameUnique(_ name: String) async -> Bool
 }
 
 /// Protocol for the output interface of the Registration Flow View Model.

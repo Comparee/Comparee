@@ -83,6 +83,8 @@ protocol FirebaseManagerProtocol {
     ///
     /// - Throws: An error if the reset operation fails.
     func resetUserRating(userId: String) throws
+    
+    func checkForNameExisting(name: String) async -> Bool
 }
 
 private struct FirebaseManagerKey: InjectionKey {

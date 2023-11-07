@@ -72,9 +72,11 @@ private extension RegisterInputView {
 
 // MARK: - Error handling
 extension RegisterInputView {
-    func textFieldIsEmty(isEmpty: Bool) {
+    func textFieldIsEmty(isEmpty: Bool, unique: Bool = true) {
         if isEmpty {
             errorLabel.text = "! This field cannot be empty"
+        } else if !unique {
+            errorLabel.text = "! This nickname is already taken"
         } else {
             errorLabel.text = ""
         }

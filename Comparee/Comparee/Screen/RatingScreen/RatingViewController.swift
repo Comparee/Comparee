@@ -179,6 +179,7 @@ private extension RatingViewController {
                         headerView.isSkeletonable = true
                         headerView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
                     } else {
+                        headerView.hideSkeleton()
                         headerView.configure(with: firstThreeItems)
                     }
                     

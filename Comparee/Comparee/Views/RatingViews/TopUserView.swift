@@ -21,6 +21,7 @@ final class TopUserView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.isSkeletonable = true
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -121,12 +122,6 @@ extension TopUserView {
         
         instagramImage.isHidden = instagram.isEmpty
     }
-    
-    func showSkeleton() {
-        userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        nameStack.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-    }
 }
 
 // MARK: - Private methods
@@ -161,16 +156,6 @@ private extension TopUserView {
         instagramImage.isUserInteractionEnabled = true
     }
     
-    @MainActor
-    func dismissSkeleton() {
-        userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.1))
-        userPhoto.stopSkeletonAnimation()
-        nameStack.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        nameStack.stopSkeletonAnimation()
-        horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        horizontalStackView.stopSkeletonAnimation()
-    }
-    
     func getImage(with userId: String) {
         Task { [weak self] in
             guard let self else { return }
@@ -178,7 +163,6 @@ private extension TopUserView {
             let url = try await self.storageManager.getUrlForImage(path: userId)
             self.userPhoto.sd_setImage(with: url)
             self.setCornerRadius()
-            self.dismissSkeleton()
         }
     }
     
