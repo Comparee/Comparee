@@ -25,22 +25,20 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
     var usersCount: Int { userViewItem.count }
     
     // MARK: - Private Properties
-    private var userViewItem: [UsersViewItem]
+    private var userViewItem: [UsersViewItem] = []
     private var cancellables: Set<AnyCancellable> = []
-    private var page: Int
-    private var itemsPerPage: Int
+    private var page: Int = 1
+    private var itemsPerPage: Int = 10
     private var task: Task<Void, Error>?
+    private var isFirstLoading: Bool = true
     
     // MARK: - Public properties
-    var isLoading: Bool
+    var isLoading: Bool = true
     
     // MARK: - Initialization
     init( router: RatingScreenFlowCoordinator) {
         self.router = router
-        self.isLoading = true
-        self.page = 1
-        self.itemsPerPage = 10
-        self.userViewItem = (1...5).map {
+        self.userViewItem = (1...10).map {
             UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
         }
     }
@@ -49,20 +47,29 @@ final class RatingViewModel: RatingViewModelProtocol, RatingViewModelInput, Rati
 // MARK: - Public methods
 extension RatingViewModel {
     // MARK: - Lifecycle
-    func viewDidAppear() {
-        if cancellables.isEmpty {
-            self.isLoading = true
-            self.page = 1
-            self.itemsPerPage = 10
-            self.userViewItem = (1...5).map {
-                UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
-            }
-        }
+    func viewDidLoad() {
+        task?.cancel()
+        isLoading = true
         getNewData()
+    }
+    
+    func getMaxCount() async throws -> Bool {
+        let userIds = try await firebaseManager.getAllUserIds()
+        return page * itemsPerPage >= userIds.count
     }
     
     func viewWillDisappear() {
         task?.cancel()
+    }
+    
+    func hardReload() {
+        var snapshot = Snapshot()
+        for section in allSections() {
+            snapshot.appendSections([section])
+            snapshot.appendItems(rowsFor(section: section))
+            snapshot.reconfigureItems(rowsFor(section: section))
+        }
+        self.dataSourceSnapshot.send(snapshot)
     }
     
     func pagination() {
@@ -71,17 +78,27 @@ extension RatingViewModel {
             
             guard !Task.isCancelled else { return }
             
+            self.isLoading = true
+            self.hardReload()
+            
+            guard !Task.isCancelled else { return }
+            
             self.page += 1
             do {
                 try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
-                await self.reloadCollection()
+                self.isLoading = false
+                
+                guard !Task.isCancelled else { return }
+                
+                self.reloadCollection()
+                
             } catch {
                 await self.showAlert()
             }
         }
     }
     
-    func getCurrentUser() async throws -> UsersViewItem? {
+    func getCurrentUser() async -> UsersViewItem? {
         do {
             // Get the user information from Firebase
             let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
@@ -134,19 +151,12 @@ extension RatingViewModel {
     func rowsFor(section: Section) -> [Row] {
         switch section {
         case .users(let userViewItems):
-            if isLoading {
-                // If data is loading, return all mock items, including the first three.
-                return userViewItems.map {
-                    Row.users($0)
-                }
-            } else {
-                let startIndex = 3
-                // Exclude the first three items, because they should be displayed only in the headerView.
-                let filteredUserViewItems = Array(userViewItems.dropFirst(startIndex))
-                
-                return filteredUserViewItems.map {
-                    Row.users($0)
-                }
+            let startIndex = 3
+            // Exclude the first three items, because they should be displayed only in the headerView.
+            let filteredUserViewItems = Array(userViewItems.dropFirst(startIndex))
+            
+            return filteredUserViewItems.map {
+                Row.users($0)
             }
         }
     }
@@ -161,23 +171,19 @@ private extension RatingViewModel {
             
             guard !Task.isCancelled else { return }
             
-            await self.reloadCollection()
+            self.reloadCollection()
             do {
-                self.userViewItem = []
-                
                 guard !Task.isCancelled else { return }
+                
+                self.userViewItem = []
                 
                 try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
                 guard !Task.isCancelled else  { return }
                 
-                await self.finishLoading()
-                await self.reloadCollection()
+                self.reloadCollection()
+                
             } catch {
-                isLoading = true
-                self.userViewItem = (1...5).map {
-                    UsersViewItem(userId: "\($0)", name: "\($0)", rating: 1_000, instagram: "\($0)")
-                }
-                await self.reloadCollection()
+                self.isLoading = true
                 await self.showAlert()
             }
         }
@@ -207,21 +213,19 @@ private extension RatingViewModel {
             newArray.append(newUser)
         }
         
-        await updateUsers(with: newArray)
-    }
-    
-    @MainActor
-    func finishLoading() {
+        try await Task.sleep(nanoseconds: 250_000_000)
+        updateUsers(with: newArray)
+        
+        isFirstLoading = false
         isLoading = false
     }
     
-    @MainActor
     func updateUsers(with items: [UsersViewItem]) {
         guard !Task.isCancelled else { return }
-        isLoading ? (self.userViewItem = items) : (self.userViewItem += items)
+        
+        isFirstLoading ? (self.userViewItem = items) : (self.userViewItem += items)
     }
     
-    @MainActor
     func reloadCollection() {
         var snapshot = Snapshot()
         for section in allSections() {
@@ -236,6 +240,7 @@ private extension RatingViewModel {
 private extension RatingViewModel {
     @MainActor
     func showAlert() {
+        print(#function)
         let alertView = AlertView()
         alertView.setUpCustomAlert(
             title: "Loading error",
@@ -243,12 +248,10 @@ private extension RatingViewModel {
             actionText: "Try again"
         )
         alertView.actionButton.addTarget(self, action: #selector(handleAlerAction), for: .touchUpInside)
-        self.userViewItem = (1...5).map {
+        self.userViewItem = (1...10).map {
             UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, instagram: "\($0)")
         }
         isLoading = true
-        reloadCollection()
-        
         router?.trigger(.base(.alert(alertView)))
     }
     

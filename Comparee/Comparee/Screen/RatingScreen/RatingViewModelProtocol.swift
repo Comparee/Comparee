@@ -26,12 +26,19 @@ protocol RatingViewModelOutput {
     var isLoading: Bool { get }
     
     /// Retrieves the current user asynchronously and returns a UsersViewItem if available.
-    /// - Throws: An error if the retrieval process encounters an issue.
     /// - Returns: A UsersViewItem representing the current user.
-    func getCurrentUser() async throws -> UsersViewItem?
+    func getCurrentUser() async -> UsersViewItem?
     
     /// Handles pagination for the rating view model.
     func pagination()
+    
+    /// Performs a hard reload of the data in the collection.
+    func hardReload()
+
+    /// Retrieves the maximum count of items asynchronously.
+    /// - Returns: A boolean value indicating whether the collection has obtained all user data. `
+    /// - Throws: An error if there's an issue with the asynchronous data retrieval process.
+    func getMaxCount() async throws -> Bool
 }
 
 /// Protocol defining the overall requirements for the RatingViewModel.

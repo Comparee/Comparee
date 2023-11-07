@@ -5,6 +5,7 @@
 //  Created by Андрей Логвинов on 9/29/23.
 //
 
+import SDWebImage
 import SkeletonView
 import UIKit
 
@@ -47,16 +48,29 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.preferredMaxLayoutWidth = 6
+        label.lineBreakMode = .byCharWrapping
         return label
+    }()
+    
+    private lazy var ratingStackView: UIStackView = {
+        NSLayoutConstraint.activate([
+            ratingLabel.widthAnchor.constraint(equalToConstant: 54),
+            ratingLabel.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        
+        let stackView = UIStackView(arrangedSubviews: [ratingLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.cornerRadius = 4
+        stackView.clipsToBounds = true
+        stackView.isSkeletonable = true
+        return stackView
     }()
     
     private lazy var instagramImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = IconManager.CompareScreen.instagram
-        imageView.layer.backgroundColor = UIColor.white.cgColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -72,24 +86,10 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [instagramImage])
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.layer.cornerRadius = 4
         stackView.clipsToBounds = true
-        return stackView
-    }()
-    
-    private lazy var ratingHorizontalStackView: UIStackView = {
-        NSLayoutConstraint.activate([
-            ratingLabel.heightAnchor.constraint(equalToConstant: 24)
-        ])
-        
-        let stackView = UIStackView(arrangedSubviews: [ratingLabel])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.layer.cornerRadius = 4
-        stackView.clipsToBounds = true
+        stackView.isSkeletonable = true
         return stackView
     }()
     
@@ -100,13 +100,13 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         ])
         
         let stackView = UIStackView(arrangedSubviews: [nameLabel])
-        stackView.backgroundColor = .white
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.layer.cornerRadius = 4
         stackView.clipsToBounds = true
+        stackView.isSkeletonable = true
         return stackView
     }()
     
@@ -117,6 +117,16 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private lazy var placeStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [placeLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isSkeletonable = true
+        return stackView
+    }()
+    
     private var instagramLink: String?
     
     // MARK: - Initialise
@@ -124,13 +134,21 @@ final class UserRatingCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupViews()
         setConstraints()
-        makeViewsSkeletonable()
-        showSkeleton()
         bindViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        placeLabel.text = nil
+        nameLabel.text = nil
+        ratingLabel.text = nil
+        instagramImage.isHidden = false
+        userImageView.image = UIImage.compareBackground
     }
 }
 
@@ -143,60 +161,20 @@ extension UserRatingCollectionViewCell {
         ratingLabel.text = String(userItem.rating)
         placeLabel.text = String(place)
         
-        ratingLabel.numberOfLines = 0
-        ratingLabel.lineBreakMode = .byWordWrapping
-        ratingLabel.preferredMaxLayoutWidth = 120
-        
         getImage(with: userItem.userId)
         backgroundColor = (userItem.userId == userDefaultsManager.userID) ? ColorManager.Rating.currentUser : .none
-        bindViews()
-        
-        ratingLabel.layoutIfNeeded()
-        ratingHorizontalStackView.layoutIfNeeded()
-    }
-    
-    @MainActor
-    func dismissSkeleton() {
-        userImageView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userImageView.stopSkeletonAnimation()
-        instagramStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        instagramStackView.stopSkeletonAnimation()
-        ratingHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        ratingHorizontalStackView.stopSkeletonAnimation()
-        nameHorizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        nameHorizontalStackView.stopSkeletonAnimation()
-        
-        instagramImage.backgroundColor = .none
-        instagramStackView.backgroundColor = .none
-        ratingHorizontalStackView.backgroundColor = .none
-        nameHorizontalStackView.backgroundColor = .none
     }
 }
 
 // MARK: - Private methods
-private extension UserRatingCollectionViewCell {
-    func showSkeleton() {
-        userImageView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        instagramStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        ratingHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        nameHorizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-    }
-    
-    func makeViewsSkeletonable() {
-        userImageView.isSkeletonable = true
-        instagramImage.isSkeletonable = true
-        instagramStackView.isSkeletonable = true
-        ratingHorizontalStackView.isSkeletonable = true
-        nameHorizontalStackView.isSkeletonable = true
-    }
-    
+extension UserRatingCollectionViewCell {
     func setupViews() {
-        self.contentView.addSubview(placeLabel)
         self.contentView.addSubview(userImageView)
         self.contentView.addSubview(nameHorizontalStackView)
         self.contentView.addSubview(lineView)
         self.contentView.addSubview(instagramStackView)
-        self.contentView.addSubview(ratingHorizontalStackView)
+        self.contentView.addSubview(ratingStackView)
+        self.contentView.addSubview(placeStackView)
         
         userImageView.layer.cornerRadius = 24
     }
@@ -209,8 +187,8 @@ private extension UserRatingCollectionViewCell {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            placeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            placeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            placeStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            placeStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             
             userImageView.widthAnchor.constraint(equalToConstant: 48),
             userImageView.heightAnchor.constraint(equalToConstant: 48),
@@ -223,8 +201,8 @@ private extension UserRatingCollectionViewCell {
             instagramStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             instagramStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            ratingHorizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -63),
-            ratingHorizontalStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            ratingStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -63),
+            ratingStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
             lineView.heightAnchor.constraint(equalToConstant: 1),
             lineView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -238,12 +216,15 @@ private extension UserRatingCollectionViewCell {
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
-            self.userImageView.image = try await UIImage.downloadImage(from: url)
-            self.dismissSkeleton()
+            self.userImageView.sd_setImage(with: url,
+                                           placeholderImage: UIImage.compareBackground,
+                                           options: .scaleDownLargeImages,
+                                           completed: nil)
         }
     }
     
-    @objc func instagramWasTapped() {
+    @objc
+    func instagramWasTapped() {
         let originalLink = "https://www.instagram.com/"
         if let instagramLink,
            let url = URL(string: originalLink + instagramLink) {

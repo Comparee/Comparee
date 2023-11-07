@@ -57,10 +57,19 @@ extension InformationEditingViewModel {
         testReg[index].changeTextState(needChange: text.isEmpty)
     }
     
-    func logInButtonPressed() {
-        if isAllFieldsCorrect {
-            saveNewInformation()
+    func saveButtonPressed() {
+        Task { [weak self] in
+            guard let self else { return }
+    
+            let isNameUnique = await self.isNameUnique(self.name)
+            if isAllFieldsCorrect && isNameUnique{
+                self.saveNewInformation()
+            }
         }
+    }
+    
+    func isNameUnique(_ name: String) async -> Bool {
+        await self.firebaseManager.checkForNameExisting(name: name)
     }
 }
 

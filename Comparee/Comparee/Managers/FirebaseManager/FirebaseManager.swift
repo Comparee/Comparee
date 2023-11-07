@@ -150,6 +150,27 @@ extension FirebaseManager: FirebaseManagerProtocol {
         try await userDocument(userId).delete()
         try await ratingDocument(userId).delete()
     }
+    
+    func checkForNameExisting(name: String) async -> Bool {
+        await withCheckedContinuation { continuation in
+            userCollection.whereField("name", isEqualTo: name)
+                .getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        continuation.resume(returning: false)
+                    } else {
+                        guard let isUserExists = querySnapshot?.documents.isEmpty else {
+                            continuation.resume(returning: false)
+                            return }
+                        
+                        if isUserExists {
+                            continuation.resume(returning: true)
+                        } else {
+                            continuation.resume(returning: false)
+                        }
+                    }
+                }
+        }
+    }
 }
 
 // MARK: - Private methods

@@ -149,7 +149,12 @@ private extension RegistrationViewController {
                 for item in viewModel.output.testReg {
                     switch item.fieldsTypes {
                     case .nickName:
-                        nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                        Task { [weak self] in
+                            guard let self else { return }
+                            
+                            let result = await viewModel.input.isNameUnique(nickNameField.textField.text ?? " ")
+                            nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty, unique: result)
+                        }
                     case .age:
                         ageField.textFieldIsEmty(isEmpty: item.isTextEmpty)
                     default:

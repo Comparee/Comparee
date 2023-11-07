@@ -241,11 +241,16 @@ private extension InformationEditingViewController {
             .sink { [weak self] _ in
                 guard let self else { return }
                 view.endEditing(true)
-                self.viewModel.input.logInButtonPressed()
+                self.viewModel.input.saveButtonPressed()
                 for item in viewModel.output.testReg {
                     switch item.fieldsTypes {
                     case .nickName:
-                        nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty)
+                        Task { [weak self] in
+                            guard let self else { return }
+                            
+                            let result = await viewModel.input.isNameUnique(nickNameField.textField.text ?? " ")
+                            nickNameField.textFieldIsEmty(isEmpty: item.isTextEmpty, unique: result)
+                        }
                     case .age:
                         ageField.textFieldIsEmty(isEmpty: item.isTextEmpty)
                     default:
@@ -282,7 +287,7 @@ extension InformationEditingViewController: UITextFieldDelegate {
         case ageField.textField:
             instagramField.textField.becomeFirstResponder()
         case instagramField.textField:
-            self.viewModel.input.logInButtonPressed()
+            self.viewModel.input.saveButtonPressed()
         default:
             break
         }
