@@ -5,8 +5,8 @@
 //  Created by Андрей Логвинов on 9/28/23.
 //
 
-import UIKit
 import SkeletonView
+import UIKit
 
 final class RatingHeaderView: UICollectionReusableView {
     // MARK: - Private properties

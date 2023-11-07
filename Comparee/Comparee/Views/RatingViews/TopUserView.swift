@@ -7,6 +7,7 @@
 
 import SkeletonView
 import UIKit
+import SDWebImage
 
 final class TopUserView: UIView {
     // MARK: - Injection
@@ -15,11 +16,12 @@ final class TopUserView: UIView {
     // MARK: - Private properties
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-           imageView.image = IconManager.CompareScreen.background
-           imageView.contentMode = .scaleToFill
-           imageView.translatesAutoresizingMaskIntoConstraints = false
-           imageView.clipsToBounds = true
-           return imageView
+        imageView.image = IconManager.CompareScreen.background
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.isSkeletonable = true
+        return imageView
     }()
     
     private lazy var userNameLabel: UILabel = {
@@ -29,6 +31,23 @@ final class TopUserView: UIView {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var nameStack: UIStackView = {
+        NSLayoutConstraint.activate([
+            userNameLabel.widthAnchor.constraint(equalToConstant: 88),
+            userNameLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.cornerRadius = 4
+        stackView.clipsToBounds = true
+        stackView.isSkeletonable = true
+        return stackView
     }()
     
     private lazy var instagramImage: UIImageView = {
@@ -43,11 +62,12 @@ final class TopUserView: UIView {
         let label = UILabel()
         label.font = UIFont.customFont(.sfProTextSemibold, size: 24)
         label.textColor = .white
+        label.text = "0000"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    lazy var horizontalStackView: UIStackView = {
+    private lazy var horizontalStackView: UIStackView = {
         NSLayoutConstraint.activate([
             instagramImage.widthAnchor.constraint(equalToConstant: 32),
             instagramImage.heightAnchor.constraint(equalToConstant: 32)
@@ -60,6 +80,7 @@ final class TopUserView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.layer.cornerRadius = 4
         stackView.clipsToBounds = true
+        stackView.isSkeletonable = true
         return stackView
     }()
     
@@ -68,7 +89,6 @@ final class TopUserView: UIView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
-        makeViewSkeletonable()
         setupViews()
         setConstraints()
         bindViews()
@@ -82,7 +102,7 @@ final class TopUserView: UIView {
     // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()
-        userPhoto.layer.cornerRadius = userPhoto.bounds.width / 2
+        userPhoto.layer.cornerRadius = userPhoto.bounds.height / 2
         userPhoto.layer.borderWidth = 2.0
         userPhoto.layer.borderColor = UIColor.white.cgColor
     }
@@ -104,7 +124,7 @@ extension TopUserView {
     
     func showSkeleton() {
         userPhoto.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
-        userNameLabel.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
+        nameStack.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
         horizontalStackView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
     }
 }
@@ -113,7 +133,7 @@ extension TopUserView {
 private extension TopUserView {
     func setupViews() {
         addSubview(userPhoto)
-        addSubview(userNameLabel)
+        addSubview(nameStack)
         addSubview(horizontalStackView)
     }
     
@@ -124,10 +144,10 @@ private extension TopUserView {
             userPhoto.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             userPhoto.bottomAnchor.constraint(equalTo: userNameLabel.topAnchor, constant: -10),
             
-            userNameLabel.heightAnchor.constraint(equalToConstant: 20),
-            userNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            userNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            userNameLabel.bottomAnchor.constraint(equalTo: horizontalStackView.topAnchor, constant: -4),
+            nameStack.heightAnchor.constraint(equalToConstant: 20),
+            nameStack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            nameStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            nameStack.bottomAnchor.constraint(equalTo: horizontalStackView.topAnchor, constant: -4),
             
             horizontalStackView.heightAnchor.constraint(equalToConstant: 32),
             horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -141,18 +161,12 @@ private extension TopUserView {
         instagramImage.isUserInteractionEnabled = true
     }
     
-    func makeViewSkeletonable() {
-        userPhoto.isSkeletonable = true
-        userNameLabel.isSkeletonable = true
-        horizontalStackView.isSkeletonable = true
-    }
-    
     @MainActor
     func dismissSkeleton() {
         userPhoto.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.1))
         userPhoto.stopSkeletonAnimation()
-        userNameLabel.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
-        userNameLabel.stopSkeletonAnimation()
+        nameStack.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+        nameStack.stopSkeletonAnimation()
         horizontalStackView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
         horizontalStackView.stopSkeletonAnimation()
     }
@@ -162,7 +176,7 @@ private extension TopUserView {
             guard let self else { return }
             
             let url = try await self.storageManager.getUrlForImage(path: userId)
-            self.userPhoto.image = try await UIImage.downloadImage(from: url)
+            self.userPhoto.sd_setImage(with: url)
             self.setCornerRadius()
             self.dismissSkeleton()
         }

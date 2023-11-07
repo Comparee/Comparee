@@ -89,8 +89,8 @@ extension RatingViewModel {
                 self.isLoading = false
                 
                 guard !Task.isCancelled else { return }
-    
-                await self.reloadCollection()
+                
+                self.reloadCollection()
                 
             } catch {
                 await self.showAlert()
@@ -98,7 +98,7 @@ extension RatingViewModel {
         }
     }
     
-    func getCurrentUser() async throws -> UsersViewItem? {
+    func getCurrentUser() async -> UsersViewItem? {
         do {
             // Get the user information from Firebase
             let dbUser = try await firebaseManager.getUser(userId: userDefaultsManager.userID ?? "")
@@ -171,7 +171,7 @@ private extension RatingViewModel {
             
             guard !Task.isCancelled else { return }
             
-            await self.reloadCollection()
+            self.reloadCollection()
             do {
                 guard !Task.isCancelled else { return }
                 
@@ -180,9 +180,10 @@ private extension RatingViewModel {
                 try await self.loadData(page: self.page, itemsPerPage: self.itemsPerPage)
                 guard !Task.isCancelled else  { return }
                 
-                await self.reloadCollection()
+                self.reloadCollection()
+                
             } catch {
-                isLoading = true
+                self.isLoading = true
                 await self.showAlert()
             }
         }
@@ -212,27 +213,20 @@ private extension RatingViewModel {
             newArray.append(newUser)
         }
         
-        await updateUsers(with: newArray)
+        try await Task.sleep(nanoseconds: 250_000_000)
+        updateUsers(with: newArray)
         
         isFirstLoading = false
         isLoading = false
     }
     
-    @MainActor
-    func finishLoading() {
-        isLoading = false
-    }
-    
-    @MainActor
     func updateUsers(with items: [UsersViewItem]) {
         guard !Task.isCancelled else { return }
         
         isFirstLoading ? (self.userViewItem = items) : (self.userViewItem += items)
     }
     
-    @MainActor
     func reloadCollection() {
-        print(#function)
         var snapshot = Snapshot()
         for section in allSections() {
             snapshot.appendSections([section])
@@ -246,6 +240,7 @@ private extension RatingViewModel {
 private extension RatingViewModel {
     @MainActor
     func showAlert() {
+        print(#function)
         let alertView = AlertView()
         alertView.setUpCustomAlert(
             title: "Loading error",
@@ -257,8 +252,6 @@ private extension RatingViewModel {
             UsersViewItem(userId: "\($0)", name: "\($0)", rating: $0, instagram: "\($0)")
         }
         isLoading = true
-        reloadCollection()
-        
         router?.trigger(.base(.alert(alertView)))
     }
     

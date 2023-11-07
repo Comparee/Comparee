@@ -746,10 +746,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D9B89E92A9B6A2A00709A00 /* Build configuration list for PBXNativeTarget "Comparee" */;
 			buildPhases = (
+				0DBEA9792AA230BE0026C441 /* Swift Lint */,
 				0D9B89D12A9B6A2900709A00 /* Sources */,
 				0D9B89D22A9B6A2900709A00 /* Frameworks */,
 				0D9B89D32A9B6A2900709A00 /* Resources */,
-				0DBEA9792AA230BE0026C441 /* Swift Lint */,
 			);
 			buildRules = (
 			);

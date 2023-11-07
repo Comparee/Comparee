@@ -6,8 +6,8 @@
 //
 
 import Combine
-import UIKit
 import SkeletonView
+import UIKit
 
 final class RatingViewController: UIViewController {
     
@@ -22,7 +22,7 @@ final class RatingViewController: UIViewController {
         collectionView.backgroundColor = .none
         return collectionView
     }()
-    let refreshControl = UIRefreshControl()
+    private lazy var refreshControl = UIRefreshControl()
     
     // MARK: - DataSource
     private var dataSource: RatingViewModel.DataSource!
@@ -52,24 +52,12 @@ final class RatingViewController: UIViewController {
         setupViews()
         bindViewModel()
         viewModel.input.viewDidLoad()
-        setupCurrentUser()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         print(#function)
         super.viewWillDisappear(animated)
         viewModel.input.viewWillDisappear()
-    }
-    
-    @objc private func handleRefresh() {
-        print(#function)
-        collectionView.refreshControl?.beginRefreshing()
-        
-        viewModel.input.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.collectionView.refreshControl?.endRefreshing()
-        }
     }
 }
 
@@ -106,15 +94,27 @@ private extension RatingViewController {
     }
     
     func setupCurrentUser() {
-        print(#function)
         Task { [weak self] in
             guard let self else { return }
             
-            let currentUser = try await self.viewModel.output.getCurrentUser()
+            let currentUser = await self.viewModel.output.getCurrentUser()
             guard let currentUser else { return }
             
             self.currentUserView.configure(currentUser, place: currentUser.currentPlace ?? 0)
             self.currentUserView.dismissSkeleton()
+        }
+    }
+    
+    @objc private func handleRefresh() {
+        collectionView.refreshControl?.beginRefreshing()
+        viewModel.input.viewDidLoad()
+        
+        Task {
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                
+                self.collectionView.refreshControl?.endRefreshing()
+            }
         }
     }
 }
@@ -145,15 +145,16 @@ private extension RatingViewController {
                     ) as? UserRatingCollectionViewCell else {
                         return UICollectionViewCell() }
                     
+                    cell.isSkeletonable = true
                     // We add 4 to indexPath.row because the first 3 items are displayed in the header view,
                     // so we start numbering the actual cells from 4 to match their position in the list.
                     let place = indexPath.item + 4
                     
                     if viewModel.output.isLoading {
-                        cell.isSkeletonable = true
+                        
                         cell.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.clouds))
                     } else {
-                        cell.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+                        cell.hideSkeleton()
                         cell.stopSkeletonAnimation()
                         cell.configure(item, place: place)
                     }
@@ -209,6 +210,7 @@ private extension RatingViewController {
                 
                 self.dataSource.apply($0, animatingDifferences: true, completion: nil)
                 self.collectionView.reloadData()
+                self.setupCurrentUser()
             }
             .store(in: &cancellables)
     }
@@ -257,5 +259,4 @@ extension RatingViewController: UICollectionViewDelegate {
             }
         }
     }
-    
 }
